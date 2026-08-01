@@ -25,7 +25,17 @@ dat <- as_tibble(CoppockJEPS)
 # The three appendix parameterizations are rebuilt from the same deposited ideal points
 # and agree with the deposit exactly, which is what isolates the defect to the main
 # ideological similarity matrix.
-similarity_dw <- similarity_from_scores(dat$dwnom_scores)
+# The corrected analysis uses the ideal points from the working archive behind the
+# 2016 corrigendum, not the deposited ones. 68 of the 70 differ, by up to 0.533. The
+# transform is the same in both archives, so the matrices differ only because their
+# inputs do, and that difference is the whole reason the corrigendum's numbers cannot
+# be recovered from the deposit. See recovered/README.md.
+dwnom_corrigendum <- read_csv(here::here("recovered", "dwnom_scores_version_3.csv"),
+                              show_col_types = FALSE)$dwnom_score
+similarity_dw <- similarity_from_scores(dwnom_corrigendum)
+
+# The three appendix parameterizations stay on the deposited scores, which is what
+# reproduces the appendix as published. The corrigendum does not touch them.
 similarity_rank <- similarity_from_scores(
   rank(dat$dwnom_scores, na.last = "keep"),
   transform = function(x, y) (67 - abs(x - y)) / 67

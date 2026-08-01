@@ -1,0 +1,7 @@
+claim,corrigendum,rounding_sampler,reproduces
+direct effect,-0.25,-0.24999999999999994,TRUE
+direct 95% CI lower,-0.625,-0.625,TRUE
+direct 95% CI upper,0.175,NA,FALSE
+indirect effect,-0.15,-0.1499999999999999,TRUE
+indirect 95% CI lower,-0.325,-0.32499999999999996,TRUE
+indirect 95% CI upper,0.2,0.2,TRUE

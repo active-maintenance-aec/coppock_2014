@@ -55,9 +55,9 @@ coppock_2016,figure_2 uncorrected,direct 95% CI upper,-0.075,0,0,Appendix Table 
 coppock_2016,figure_2 uncorrected,indirect effect,-0.225,-0.225,1,,-0.225,1,
 coppock_2016,figure_2 uncorrected,indirect 95% CI lower,-0.325,-0.325,1,pre-3.6 sampler gives -0.3,-0.325,1,
 coppock_2016,figure_2 uncorrected,indirect 95% CI upper,-0.1,-0.025,0,Appendix Table 1 of the 2014 article states -0.1; the corrigendum restates it as -0.025,-0.1,0,paper_internal
-coppock_2016,figure_2 corrected,direct effect,,-0.25,,the deposit carries no corrected analysis to run,-0.2875,0,unresolved
-coppock_2016,figure_2 corrected,direct 95% CI lower,,-0.625,,the deposit carries no corrected analysis to run,-0.5,0,unresolved
-coppock_2016,figure_2 corrected,direct 95% CI upper,,0.175,,the deposit carries no corrected analysis to run,0.075,0,unresolved
-coppock_2016,figure_2 corrected,indirect effect,,-0.15,,the deposit carries no corrected analysis to run,-0.225,0,unresolved
-coppock_2016,figure_2 corrected,indirect 95% CI lower,,-0.325,,the deposit carries no corrected analysis to run,-0.3,0,unresolved
-coppock_2016,figure_2 corrected,indirect 95% CI upper,,0.2,,the deposit carries no corrected analysis to run,0.15,0,unresolved
+coppock_2016,figure_2 corrected,direct effect,,-0.25,,Reproduces exactly once the corrected analysis uses the Version 3 ideal points.,-0.25,1,
+coppock_2016,figure_2 corrected,direct 95% CI lower,,-0.625,,Reproduces exactly once the corrected analysis uses the Version 3 ideal points.,-0.625,1,
+coppock_2016,figure_2 corrected,direct 95% CI upper,,0.175,,"Not identified: the confidence region reaches 0.2, the top of the grid, in the corrigendum surface as well as this one, so the published 0.175 is the last interior grid point rather than a bound the data support.",,,
+coppock_2016,figure_2 corrected,indirect effect,,-0.15,,Reproduces exactly once the corrected analysis uses the Version 3 ideal points.,-0.15,1,
+coppock_2016,figure_2 corrected,indirect 95% CI lower,,-0.325,,"One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv.",-0.35,0,environment
+coppock_2016,figure_2 corrected,indirect 95% CI upper,,0.2,,"One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv.",0.175,0,environment

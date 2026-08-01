@@ -1,16 +1,16 @@
 claim,version,value
-Figure 3 panel A (lower support): direct effect,corrected,-0.45
-Figure 3 panel A (lower support): direct 95% CI lower,corrected,-0.75
-Figure 3 panel A (lower support): direct 95% CI upper,corrected,-0.05
-Figure 3 panel A (lower support): indirect effect,corrected,-0.15
+Figure 3 panel A (lower support): direct effect,corrected,-0.425
+Figure 3 panel A (lower support): direct 95% CI lower,corrected,-0.775
+Figure 3 panel A (lower support): direct 95% CI upper,corrected,0.05
+Figure 3 panel A (lower support): indirect effect,corrected,-0.1
 Figure 3 panel A (lower support): indirect 95% CI lower,corrected,-0.325
-Figure 3 panel A (lower support): indirect 95% CI upper,corrected,0.125
-Figure 3 panel B (higher support): direct effect,corrected,-0.2
-Figure 3 panel B (higher support): direct 95% CI lower,corrected,-0.45
+Figure 3 panel A (lower support): indirect 95% CI upper,corrected,0.15
+Figure 3 panel B (higher support): direct effect,corrected,-0.125
+Figure 3 panel B (higher support): direct 95% CI lower,corrected,-0.65
 Figure 3 panel B (higher support): direct 95% CI upper,corrected,NA
-Figure 3 panel B (higher support): indirect effect,corrected,-0.3
-Figure 3 panel B (higher support): indirect 95% CI lower,corrected,-0.425
-Figure 3 panel B (higher support): indirect 95% CI upper,corrected,0.175
+Figure 3 panel B (higher support): indirect effect,corrected,-0.225
+Figure 3 panel B (higher support): indirect 95% CI lower,corrected,-0.45
+Figure 3 panel B (higher support): indirect 95% CI upper,corrected,NA
 Figure 3 panel A (lower support): direct effect,uncorrected,-0.475
 Figure 3 panel A (lower support): direct 95% CI lower,uncorrected,-0.8
 Figure 3 panel A (lower support): direct 95% CI upper,uncorrected,-0.125

@@ -1,10 +1,10 @@
 quantity,no_spillover,absolute_distance,absolute_distance_uncorrected
-"Direct Effect, High Support",0.05,-0.2,-0.1875
-"Direct 95% CI, High Support","[-0.225,0.35]","[-0.45,NA]","[-0.4,0.075]"
-"Indirect Effect, High Support",NA,-0.3,-0.3
-"Indirect 95% CI, High Support",NA,"[-0.425,0.175]","[-0.425,-0.175]"
-"Direct Effect, Low Support",-0.375,-0.45,-0.475
-"Direct 95% CI, Low Support","[-0.675,-0.05]","[-0.75,-0.05]","[-0.8,-0.125]"
-"Indirect Effect, Low Support",NA,-0.15,-0.175
-"Indirect 95% CI, Low Support",NA,"[-0.325,0.125]","[-0.325,0]"
+"Direct Effect, High Support",0.05,-0.125,-0.1875
+"Direct 95% CI, High Support","[-0.225,0.35]","[-0.65,NA]","[-0.4,0.075]"
+"Indirect Effect, High Support",NA,-0.225,-0.3
+"Indirect 95% CI, High Support",NA,"[-0.45,NA]","[-0.425,-0.175]"
+"Direct Effect, Low Support",-0.375,-0.425,-0.475
+"Direct 95% CI, Low Support","[-0.675,-0.05]","[-0.775,0.05]","[-0.8,-0.125]"
+"Indirect Effect, Low Support",NA,-0.1,-0.175
+"Indirect 95% CI, Low Support",NA,"[-0.325,0.15]","[-0.325,0]"
 Corresponding Figure,1b,3,3
