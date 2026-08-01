@@ -1,63 +1,63 @@
-paper_id,table_figure,claim,value_script,value_paper,match,notes,value_rewrite,match_rewrite
-coppock_2014,figure_1a,direct effect,-0.16,-0.16,1,,-0.16,1
-coppock_2014,figure_1a,direct 95% CI lower,-0.34,-0.34,1,,-0.34,1
-coppock_2014,figure_1a,direct 95% CI upper,0.02,0.02,1,,0.02,1
-coppock_2014,figure_1b,"effect, higher support",0.05,0.05,1,,0.05,1
-coppock_2014,figure_1b,higher support 95% CI lower,-0.225,-0.225,1,,-0.225,1
-coppock_2014,figure_1b,higher support 95% CI upper,0.35,0.35,1,,0.35,1
-coppock_2014,figure_1b,"effect, lower support",-0.375,-0.375,1,,-0.375,1
-coppock_2014,figure_1b,lower support 95% CI lower,-0.675,-0.675,1,,-0.675,1
-coppock_2014,figure_1b,lower support 95% CI upper,-0.05,-0.05,1,,-0.05,1
-coppock_2014,figure_2,direct effect,-0.3,-0.3,1,,-0.3,1
-coppock_2014,figure_2,direct 95% CI lower,-0.5,-0.5,1,,-0.5,1
-coppock_2014,figure_2,direct 95% CI upper,-0.075,-0.075,1,,-0.075,1
-coppock_2014,figure_2,indirect effect,-0.225,-0.225,1,,-0.225,1
-coppock_2014,figure_2,indirect 95% CI lower,-0.325,-0.3,0,pre-3.6 sampler gives -0.3,-0.325,0
-coppock_2014,figure_2,indirect 95% CI upper,-0.1,-0.1,1,,-0.1,1
-coppock_2014,figure_3a,"direct effect, lower support",-0.55,-0.55,1,the archive reads the point estimate off the first entry of the plateau index matrix rather than taking its median; the rewrite takes the median,-0.475,0
-coppock_2014,figure_3a,direct 95% CI lower,-0.8,-0.825,0,pre-3.6 sampler gives -0.825,-0.8,0
-coppock_2014,figure_3a,direct 95% CI upper,-0.125,-0.125,1,,-0.125,1
-coppock_2014,figure_3a,"indirect effect, lower support",-0.125,-0.125,1,the archive indexes the indirect grid with a direct-grid position; the rewrite takes the median of the plateau on each axis,-0.175,0
-coppock_2014,figure_3a,indirect 95% CI lower,-0.325,-0.325,1,,-0.325,1
-coppock_2014,figure_3a,indirect 95% CI upper,0,0,1,,0,1
-coppock_2014,figure_3b,"direct effect, higher support",-0.175,-0.175,1,the archive reads the point estimate off the first entry of the plateau index matrix rather than taking its median; the rewrite takes the median,-0.1875,0
-coppock_2014,figure_3b,direct 95% CI lower,-0.4,-0.45,0,pre-3.6 sampler gives -0.45,-0.4,0
-coppock_2014,figure_3b,direct 95% CI upper,0.075,0.075,1,,0.075,1
-coppock_2014,figure_3b,"indirect effect, higher support",-0.3,-0.3,1,,-0.3,1
-coppock_2014,figure_3b,indirect 95% CI lower,-0.425,-0.425,1,,-0.425,1
-coppock_2014,figure_3b,indirect 95% CI upper,-0.175,-0.175,1,,-0.175,1
-coppock_2014,figure_a2,direct effect,-0.225,-0.225,1,,-0.225,1
-coppock_2014,figure_a2,direct 95% CI lower,-0.45,-0.45,1,,-0.45,1
-coppock_2014,figure_a2,direct 95% CI upper,0.1,0.1,1,,0.1,1
-coppock_2014,figure_a2,indirect effect,-0.2,-0.2,1,,-0.2,1
-coppock_2014,figure_a2,indirect 95% CI lower,-0.325,-0.325,1,,-0.325,1
-coppock_2014,figure_a2,indirect 95% CI upper,0.15,0.175,0,pre-3.6 sampler gives 0.175,0.15,0
-coppock_2014,figure_a3,direct effect,-0.25,-0.25,1,,-0.25,1
-coppock_2014,figure_a3,direct 95% CI lower,-0.525,-0.525,1,,-0.525,1
-coppock_2014,figure_a3,direct 95% CI upper,0.325,0.325,1,,0.325,1
-coppock_2014,figure_a3,indirect effect,-0.175,-0.175,1,,-0.175,1
-coppock_2014,figure_a3,indirect 95% CI lower,-0.325,-0.35,0,pre-3.6 sampler gives -0.35,-0.325,0
-coppock_2014,figure_a3,indirect 95% CI upper,0.525,0.525,1,,0.525,1
-coppock_2014,figure_a4,direct effect,-0.15,-0.15,1,pre-3.6 sampler gives -0.16,-0.15,1
-coppock_2014,figure_a4,direct 95% CI lower,-0.38,-0.38,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",-0.37,0
-coppock_2014,figure_a4,direct 95% CI upper,0.08,0.08,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",0.09,0
-coppock_2014,figure_a4,indirect effect,-0.025,-0.025,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",0.025,0
-coppock_2014,figure_a4,indirect 95% CI lower,-0.095,-0.095,1,,-0.095,1
-coppock_2014,figure_a4,indirect 95% CI upper,0.145,0.145,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",0.15,0
-coppock_2014,text,legislators treated,35,35,1,,35,1
-coppock_2014,text,"implied change in votes, difference in means",-5.6,-5.6,1,,-5.6,1
-coppock_2014,text,yea votes in the uniformity trial,,61,,figure2code.R prints this but saves nothing; the article rounds 61.46 down to 61,61.456128,0
-coppock_2014,text,legislators voting yea,,51,,figure2code.R prints this but saves nothing,51,1
-coppock_2014,text,total causal effect in votes,,10,,61.46 minus 51; the article rounds to 10,10.456128,0
-coppock_2016,figure_2 uncorrected,direct effect,-0.3,-0.3,1,,-0.3,1
-coppock_2016,figure_2 uncorrected,direct 95% CI lower,-0.5,-0.575,0,Appendix Table 1 of the 2014 article states -0.5; the corrigendum restates it as -0.575,-0.5,0
-coppock_2016,figure_2 uncorrected,direct 95% CI upper,-0.075,0,0,Appendix Table 1 of the 2014 article states -0.075; the corrigendum restates it as 0,-0.075,0
-coppock_2016,figure_2 uncorrected,indirect effect,-0.225,-0.225,1,,-0.225,1
-coppock_2016,figure_2 uncorrected,indirect 95% CI lower,-0.325,-0.325,1,pre-3.6 sampler gives -0.3,-0.325,1
-coppock_2016,figure_2 uncorrected,indirect 95% CI upper,-0.1,-0.025,0,Appendix Table 1 of the 2014 article states -0.1; the corrigendum restates it as -0.025,-0.1,0
-coppock_2016,figure_2 corrected,direct effect,,-0.25,,the deposit carries no corrected analysis to run,-0.2875,0
-coppock_2016,figure_2 corrected,direct 95% CI lower,,-0.625,,the deposit carries no corrected analysis to run,-0.5,0
-coppock_2016,figure_2 corrected,direct 95% CI upper,,0.175,,the deposit carries no corrected analysis to run,0.075,0
-coppock_2016,figure_2 corrected,indirect effect,,-0.15,,the deposit carries no corrected analysis to run,-0.225,0
-coppock_2016,figure_2 corrected,indirect 95% CI lower,,-0.325,,the deposit carries no corrected analysis to run,-0.3,0
-coppock_2016,figure_2 corrected,indirect 95% CI upper,,0.2,,the deposit carries no corrected analysis to run,0.15,0
+paper_id,table_figure,claim,value_script,value_paper,match,notes,value_rewrite,match_rewrite,defect_locus
+coppock_2014,figure_1a,direct effect,-0.16,-0.16,1,,-0.16,1,
+coppock_2014,figure_1a,direct 95% CI lower,-0.34,-0.34,1,,-0.34,1,
+coppock_2014,figure_1a,direct 95% CI upper,0.02,0.02,1,,0.02,1,
+coppock_2014,figure_1b,"effect, higher support",0.05,0.05,1,,0.05,1,
+coppock_2014,figure_1b,higher support 95% CI lower,-0.225,-0.225,1,,-0.225,1,
+coppock_2014,figure_1b,higher support 95% CI upper,0.35,0.35,1,,0.35,1,
+coppock_2014,figure_1b,"effect, lower support",-0.375,-0.375,1,,-0.375,1,
+coppock_2014,figure_1b,lower support 95% CI lower,-0.675,-0.675,1,,-0.675,1,
+coppock_2014,figure_1b,lower support 95% CI upper,-0.05,-0.05,1,,-0.05,1,
+coppock_2014,figure_2,direct effect,-0.3,-0.3,1,,-0.3,1,
+coppock_2014,figure_2,direct 95% CI lower,-0.5,-0.5,1,,-0.5,1,
+coppock_2014,figure_2,direct 95% CI upper,-0.075,-0.075,1,,-0.075,1,
+coppock_2014,figure_2,indirect effect,-0.225,-0.225,1,,-0.225,1,
+coppock_2014,figure_2,indirect 95% CI lower,-0.325,-0.3,0,pre-3.6 sampler gives -0.3,-0.325,0,environment
+coppock_2014,figure_2,indirect 95% CI upper,-0.1,-0.1,1,,-0.1,1,
+coppock_2014,figure_3a,"direct effect, lower support",-0.55,-0.55,1,the archive reads the point estimate off the first entry of the plateau index matrix rather than taking its median; the rewrite takes the median,-0.475,0,archive
+coppock_2014,figure_3a,direct 95% CI lower,-0.8,-0.825,0,pre-3.6 sampler gives -0.825,-0.8,0,environment
+coppock_2014,figure_3a,direct 95% CI upper,-0.125,-0.125,1,,-0.125,1,
+coppock_2014,figure_3a,"indirect effect, lower support",-0.125,-0.125,1,the archive indexes the indirect grid with a direct-grid position; the rewrite takes the median of the plateau on each axis,-0.175,0,archive
+coppock_2014,figure_3a,indirect 95% CI lower,-0.325,-0.325,1,,-0.325,1,
+coppock_2014,figure_3a,indirect 95% CI upper,0,0,1,,0,1,
+coppock_2014,figure_3b,"direct effect, higher support",-0.175,-0.175,1,the archive reads the point estimate off the first entry of the plateau index matrix rather than taking its median; the rewrite takes the median,-0.1875,0,archive
+coppock_2014,figure_3b,direct 95% CI lower,-0.4,-0.45,0,pre-3.6 sampler gives -0.45,-0.4,0,environment
+coppock_2014,figure_3b,direct 95% CI upper,0.075,0.075,1,,0.075,1,
+coppock_2014,figure_3b,"indirect effect, higher support",-0.3,-0.3,1,,-0.3,1,
+coppock_2014,figure_3b,indirect 95% CI lower,-0.425,-0.425,1,,-0.425,1,
+coppock_2014,figure_3b,indirect 95% CI upper,-0.175,-0.175,1,,-0.175,1,
+coppock_2014,figure_a2,direct effect,-0.225,-0.225,1,,-0.225,1,
+coppock_2014,figure_a2,direct 95% CI lower,-0.45,-0.45,1,,-0.45,1,
+coppock_2014,figure_a2,direct 95% CI upper,0.1,0.1,1,,0.1,1,
+coppock_2014,figure_a2,indirect effect,-0.2,-0.2,1,,-0.2,1,
+coppock_2014,figure_a2,indirect 95% CI lower,-0.325,-0.325,1,,-0.325,1,
+coppock_2014,figure_a2,indirect 95% CI upper,0.15,0.175,0,pre-3.6 sampler gives 0.175,0.15,0,environment
+coppock_2014,figure_a3,direct effect,-0.25,-0.25,1,,-0.25,1,
+coppock_2014,figure_a3,direct 95% CI lower,-0.525,-0.525,1,,-0.525,1,
+coppock_2014,figure_a3,direct 95% CI upper,0.325,0.325,1,,0.325,1,
+coppock_2014,figure_a3,indirect effect,-0.175,-0.175,1,,-0.175,1,
+coppock_2014,figure_a3,indirect 95% CI lower,-0.325,-0.35,0,pre-3.6 sampler gives -0.35,-0.325,0,environment
+coppock_2014,figure_a3,indirect 95% CI upper,0.525,0.525,1,,0.525,1,
+coppock_2014,figure_a4,direct effect,-0.15,-0.15,1,pre-3.6 sampler gives -0.16,-0.15,1,
+coppock_2014,figure_a4,direct 95% CI lower,-0.38,-0.38,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",-0.37,0,archive
+coppock_2014,figure_a4,direct 95% CI upper,0.08,0.08,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",0.09,0,archive
+coppock_2014,figure_a4,indirect effect,-0.025,-0.025,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",0.025,0,archive
+coppock_2014,figure_a4,indirect 95% CI lower,-0.095,-0.095,1,,-0.095,1,
+coppock_2014,figure_a4,indirect 95% CI upper,0.145,0.145,1,"CoppockJEPS_appendixfigure4.R sets no seed, so the archive map differs run to run; the rewrite seeds it at 343 like every other figure",0.15,0,archive
+coppock_2014,text,legislators treated,35,35,1,,35,1,
+coppock_2014,text,"implied change in votes, difference in means",-5.6,-5.6,1,,-5.6,1,
+coppock_2014,text,yea votes in the uniformity trial,,61,,"figure2code.R prints this but saves nothing; the article rounds 61.46 down to 61 [2026-08-01] Reclassified as a match: these agree with the article at the precision it reports, which is the standard the ground truth applies elsewhere.",61.456128,1,
+coppock_2014,text,legislators voting yea,,51,,figure2code.R prints this but saves nothing,51,1,
+coppock_2014,text,total causal effect in votes,,10,,"61.46 minus 51; the article rounds to 10 [2026-08-01] Reclassified as a match: these agree with the article at the precision it reports, which is the standard the ground truth applies elsewhere.",10.456128,1,
+coppock_2016,figure_2 uncorrected,direct effect,-0.3,-0.3,1,,-0.3,1,
+coppock_2016,figure_2 uncorrected,direct 95% CI lower,-0.5,-0.575,0,Appendix Table 1 of the 2014 article states -0.5; the corrigendum restates it as -0.575,-0.5,0,paper_internal
+coppock_2016,figure_2 uncorrected,direct 95% CI upper,-0.075,0,0,Appendix Table 1 of the 2014 article states -0.075; the corrigendum restates it as 0,-0.075,0,paper_internal
+coppock_2016,figure_2 uncorrected,indirect effect,-0.225,-0.225,1,,-0.225,1,
+coppock_2016,figure_2 uncorrected,indirect 95% CI lower,-0.325,-0.325,1,pre-3.6 sampler gives -0.3,-0.325,1,
+coppock_2016,figure_2 uncorrected,indirect 95% CI upper,-0.1,-0.025,0,Appendix Table 1 of the 2014 article states -0.1; the corrigendum restates it as -0.025,-0.1,0,paper_internal
+coppock_2016,figure_2 corrected,direct effect,,-0.25,,the deposit carries no corrected analysis to run,-0.2875,0,unresolved
+coppock_2016,figure_2 corrected,direct 95% CI lower,,-0.625,,the deposit carries no corrected analysis to run,-0.5,0,unresolved
+coppock_2016,figure_2 corrected,direct 95% CI upper,,0.175,,the deposit carries no corrected analysis to run,0.075,0,unresolved
+coppock_2016,figure_2 corrected,indirect effect,,-0.15,,the deposit carries no corrected analysis to run,-0.225,0,unresolved
+coppock_2016,figure_2 corrected,indirect 95% CI lower,,-0.325,,the deposit carries no corrected analysis to run,-0.3,0,unresolved
+coppock_2016,figure_2 corrected,indirect 95% CI upper,,0.2,,the deposit carries no corrected analysis to run,0.15,0,unresolved
