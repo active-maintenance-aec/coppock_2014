@@ -1,0 +1,31 @@
+file,dataverse_file_id,file_persistent_id,bytes,md5_served,md5_published,unf,served_as
+Coppock 2014.pdf,2529577,doi:10.7910/DVN/28664/BNXVOO,371999,c4e7581749c0685b5d0065eb2a3d8d91,c4e7581749c0685b5d0065eb2a3d8d91,,Coppock 2014.pdf
+CoppockJEPS.RData,2529596,doi:10.7910/DVN/28664/5TA5YV,283609,572d6ff32097a1f4f63a818d60563b9c,572d6ff32097a1f4f63a818d60563b9c,UNF:5:ECfTTdIm0c6wXbuWTB/wLA==,CoppockJEPS.tab
+CoppockJEPS_10000Randomizations.R,2529586,doi:10.7910/DVN/28664/FEJCMF,816,2438c2230ce16f0cf284e3ccc1f42b82,2438c2230ce16f0cf284e3ccc1f42b82,,CoppockJEPS_10000Randomizations.R
+CoppockJEPS_appendixfigure1.pdf,2529572,doi:10.7910/DVN/28664/IGP4DD,4540,a0f86348e7e1c5fed70d77805d125a37,a0f86348e7e1c5fed70d77805d125a37,,CoppockJEPS_appendixfigure1.pdf
+CoppockJEPS_appendixfigure2.pdf,2529584,doi:10.7910/DVN/28664/OZIGKC,11138,3190654979a76addc69711a85f386982,3190654979a76addc69711a85f386982,,CoppockJEPS_appendixfigure2.pdf
+CoppockJEPS_appendixfigure2.R,2529566,doi:10.7910/DVN/28664/AKTBNQ,4102,23303b08e05ff85dab1fb8d44160d2f0,23303b08e05ff85dab1fb8d44160d2f0,,CoppockJEPS_appendixfigure2.R
+CoppockJEPS_appendixfigure3.pdf,2529569,doi:10.7910/DVN/28664/AOTGIP,14244,4f91ecedbd6d7aa931eca792c054addc,4f91ecedbd6d7aa931eca792c054addc,,CoppockJEPS_appendixfigure3.pdf
+CoppockJEPS_appendixfigure3.R,2529582,doi:10.7910/DVN/28664/PNW6LZ,4158,7ea7d56d1e0a5cb984d2fbb4f2666fd4,7ea7d56d1e0a5cb984d2fbb4f2666fd4,,CoppockJEPS_appendixfigure3.R
+CoppockJEPS_appendixfigure4.pdf,2529593,doi:10.7910/DVN/28664/XYRKNN,25111,b54a63625f1eff1a749e6a2a99361d7f,b54a63625f1eff1a749e6a2a99361d7f,,CoppockJEPS_appendixfigure4.pdf
+CoppockJEPS_appendixfigure4.R,2529585,doi:10.7910/DVN/28664/JXLGFT,4053,ffa1faefdc72d4a22b954222c517b051,ffa1faefdc72d4a22b954222c517b051,,CoppockJEPS_appendixfigure4.R
+CoppockJEPS_appendixfigure5.R,2529589,doi:10.7910/DVN/28664/IJ3URH,6759,5f8513d00134da506d3c8cf0a72955d2,5f8513d00134da506d3c8cf0a72955d2,,CoppockJEPS_appendixfigure5.R
+CoppockJEPS_appendixfigure5a.pdf,2529576,doi:10.7910/DVN/28664/TPQRCJ,5925,38892f996657e550899021e2832ee216,38892f996657e550899021e2832ee216,,CoppockJEPS_appendixfigure5a.pdf
+CoppockJEPS_appendixfigure5b.pdf,2529587,doi:10.7910/DVN/28664/GF6GNZ,5915,58e78954f5bb8cd27237e7df257033b3,58e78954f5bb8cd27237e7df257033b3,,CoppockJEPS_appendixfigure5b.pdf
+CoppockJEPS_appendixtable.R,2529570,doi:10.7910/DVN/28664/NU9JVG,3420,f884f0a9bccdfd86ce9432f40e80afcb,f884f0a9bccdfd86ce9432f40e80afcb,,CoppockJEPS_appendixtable.R
+CoppockJEPS_datapreparation.R,2529579,doi:10.7910/DVN/28664/UTCHQG,11732,d7be70e7f0d8553c5fb62a898637af2a,d7be70e7f0d8553c5fb62a898637af2a,,CoppockJEPS_datapreparation.R
+CoppockJEPS_figure1a.pdf,2529580,doi:10.7910/DVN/28664/KQNO0Q,5689,1fbcfa4713dd9fe3281807f8c3af25e9,1fbcfa4713dd9fe3281807f8c3af25e9,,CoppockJEPS_figure1a.pdf
+CoppockJEPS_figure1acode.R,2529567,doi:10.7910/DVN/28664/P1HX1L,2539,eb00e3461141c3e85979760d97b12292,eb00e3461141c3e85979760d97b12292,,CoppockJEPS_figure1acode.R
+CoppockJEPS_figure1b.pdf,2529583,doi:10.7910/DVN/28664/7ILMHH,12788,59bf637e18547f9ac4cdb5bab00af3eb,59bf637e18547f9ac4cdb5bab00af3eb,,CoppockJEPS_figure1b.pdf
+CoppockJEPS_figure1bcode.R,2529578,doi:10.7910/DVN/28664/NBYCZA,4245,dd8b3fc60ab53dae017eef10cd0816fb,dd8b3fc60ab53dae017eef10cd0816fb,,CoppockJEPS_figure1bcode.R
+CoppockJEPS_figure2.pdf,2529592,doi:10.7910/DVN/28664/BO6LMP,9567,b84a9c6843798376491f60a9985611ae,b84a9c6843798376491f60a9985611ae,,CoppockJEPS_figure2.pdf
+CoppockJEPS_figure2code.R,2529568,doi:10.7910/DVN/28664/YIFKE8,4444,7956baa52e045faa2fc2d22b7a02009c,7956baa52e045faa2fc2d22b7a02009c,,CoppockJEPS_figure2code.R
+CoppockJEPS_figure3a.pdf,2529590,doi:10.7910/DVN/28664/FVYGP8,9858,5fd3e966c7f4be21e4c45fc96ccbfd0c,5fd3e966c7f4be21e4c45fc96ccbfd0c,,CoppockJEPS_figure3a.pdf
+CoppockJEPS_figure3b.pdf,2529591,doi:10.7910/DVN/28664/LMYN0X,9688,72a24e12219b3298c497821ff7225c04,72a24e12219b3298c497821ff7225c04,,CoppockJEPS_figure3b.pdf
+CoppockJEPS_figure3code.R,2529573,doi:10.7910/DVN/28664/HHRMLC,6927,8e91307993d1ef990ec6d92dbd0ec974,8e91307993d1ef990ec6d92dbd0ec974,,CoppockJEPS_figure3code.R
+CoppockJEPS_rollcalldata.csv,2529571,doi:10.7910/DVN/28664/LTLQXJ,5706,a0c32546787e497afff6c965e60a1af4,a0c32546787e497afff6c965e60a1af4,,CoppockJEPS_rollcalldata.csv
+hd_court_ordered.dbf,2529581,doi:10.7910/DVN/28664/OGNLS5,3630,f26ae2310af3d33a0e0637bcaae37728,f26ae2310af3d33a0e0637bcaae37728,,hd_court_ordered.dbf
+hd_court_ordered.shp,2529575,doi:10.7910/DVN/28664/VNU1OS,2143700,f0f4cac2e3b7f03bcde2236b246312c1,f0f4cac2e3b7f03bcde2236b246312c1,,hd_court_ordered.shp
+hd_court_ordered.shx,2529588,doi:10.7910/DVN/28664/8XKNVU,660,51a40a66e80fe60c3b084b558df565ba,51a40a66e80fe60c3b084b558df565ba,,hd_court_ordered.shx
+Information Spillovers Appendix.pdf,2529574,doi:10.7910/DVN/28664/QXQW3C,206192,d9298e69d0ac51e57b8357643519df1f,d9298e69d0ac51e57b8357643519df1f,,Information Spillovers Appendix.pdf
+nm.replication.dta,2529597,doi:10.7910/DVN/28664/RJNWVR,11410,90697d67a4c0a3d3358d21a1f36e129e,90697d67a4c0a3d3358d21a1f36e129e,UNF:5:A/RxIISBjCkx8e7rH6+tVQ==,nm.replication.tab
