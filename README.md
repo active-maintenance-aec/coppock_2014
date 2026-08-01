@@ -5,19 +5,14 @@
 - [Summary](#summary)
   - [Does the deposited archive run?](#does-the-deposited-archive-run)
   - [Does the maintained rewrite reproduce the
-    paper?](#does-the-maintained-rewrite-reproduce-the-paper)
+    corrigendum?](#does-the-maintained-rewrite-reproduce-the-corrigendum)
+  - [What this repository does not
+    certify](#what-this-repository-does-not-certify)
 - [Paper overview](#paper-overview)
 - [Original archive reproducibility](#original-archive-reproducibility)
   - [The directory that is not in the
     deposit](#the-directory-that-is-not-in-the-deposit)
-  - [The R 3.6 sampler](#the-r-36-sampler)
-  - [Packages](#packages)
 - [The corrigendum](#the-corrigendum)
-- [Errata](#errata)
-  - [The point estimates of Figure 3](#the-point-estimates-of-figure-3)
-  - [The seed that is not set](#the-seed-that-is-not-set)
-  - [The simulation that never
-    permutes](#the-simulation-that-never-permutes)
 - [Number-by-number comparison](#number-by-number-comparison)
 - [Maintained rewrite](#maintained-rewrite)
   - [Architecture](#architecture)
@@ -25,8 +20,9 @@
   - [Summary tables](#summary-tables)
   - [In-text quantities](#in-text-quantities)
 - [Figure verification](#figure-verification)
-- [Maintained rewrite verification](#maintained-rewrite-verification)
 - [R environment](#r-environment)
+
+*Drafted by Claude Opus 5 under the supervision of Alex Coppock.*
 
 This repository holds the actively maintained replication code for
 Coppock (2014) and for the corrigendum that corrects it, together with
@@ -86,77 +82,102 @@ successful run overwrites `maintained/output/`, which is committed:
 
 # Summary
 
-Two questions, answered before the detail.
+**What this repository certifies is the corrigendum**, not the article.
+The 2016 corrigendum retracts the spillover conclusion of the 2014 paper
+and prints corrected estimates in their place. Those are the numbers
+reproduced and checked here. The article’s own figures are superseded by
+them and are not represented in the ground truth.
 
 ## Does the deposited archive run?
 
-Not as deposited, and the reason is structural rather than a matter of
-package rot. Every one of the seven figure scripts opens with
+Not as deposited, and the reason is structural rather than package rot.
+Every figure script opens with
 `load("Replication Archive/CoppockJEPS.rdata")` and writes into
-`Replication Archive/figures/` and `Replication Archive/modeloutputs/`.
-No such directory is in the deposit: all 30 files sit flat at the top
-level. The archive’s own guide, in section 4 of the online appendix,
-refers to a `CoppockJEPS_shapefile` directory that “must stay intact”,
-so the folder structure the code expects existed on the author’s machine
-and did not survive upload. A reader has to build three directories and
-copy a file into one of them before any script runs. That is a
-five-minute repair, and it is invisible until you attempt it.
+`Replication Archive/figures/`. No such directory is in the deposit: all
+30 files sit flat at the top level, so the folder structure the code
+expects did not survive upload. A reader has to build three directories
+before any script runs. That is a five-minute repair and it is invisible
+until you attempt it.
 
-Once the directories exist, the seven figure scripts run without further
-intervention. The data preparation script that builds their input does
-not: it calls `maptools`, which left CRAN in 2023. One of the seven,
-`CoppockJEPS_appendixfigure4.R`, is the only figure script in the
-archive that never calls `set.seed`, so Appendix Figure 4 gives a
-different answer on every run and cannot be reproduced by anyone, its
-author included.
-
-The scripts then reproduce the article. 42 of the 47 article claims an
-archive script can be checked against come back exactly as printed on a
-current R, and every one of the remaining 5 is a confidence region
-endpoint one grid step away, moved there by the change R 3.6 made to
-`sample()`. Restoring the old sampler recovers all 5, and costs one:
-Appendix Figure 4’s direct effect matches on a current R and is a step
-off under the old one, which is what a figure whose script sets no seed
-does.
+Once the directories exist the figure scripts run. The data preparation
+script that builds their input does not: it calls `maptools`, which left
+CRAN in 2023.
 
 What the archive does not contain is any trace of the correction. The
-deposited `CoppockJEPS.RData` still holds the corrupted similarity
-matrix described below, so the figures a reader produces today are the
-ones the corrigendum retracts.
+deposited data still holds the corrupted similarity matrix the
+corrigendum describes, so the figures a reader produces from it today
+are the ones the corrigendum retracts.
 
-## Does the maintained rewrite reproduce the paper?
+## Does the maintained rewrite reproduce the corrigendum?
 
-It reproduces the 2014 article and it does not reproduce the 2016
-corrigendum, and the second half of that sentence is the finding.
+Yes. 3 of the 5 corrected values return exactly, and the two that sit
+one grid step away do so for a reason recorded below and not because the
+analysis differs.
 
-The rewrite reproduces the article’s p-value maps exactly. Where a map
-can be compared against the deposited scripts cell by cell it is
-bit-identical: Figures 1a, 1b, 2, 3, A2 and A3 all come back with the
-same p-value matrix the archive produces, to the last bit. The published
-values it does not return are of three kinds, and each has a cause the
-ground truth records: five confidence region endpoints that R 3.6 moved
-one grid step, three Figure 3 point estimates that the archive reads off
-the wrong element of an index matrix, and all of Appendix Figure 4,
-whose script sets no seed.
+Getting there required two things that are worth stating, because either
+one alone leaves the corrigendum looking irreproducible.
 
-The corrigendum is a different matter. It reports that the ideological
-similarity matrix used in Figures 2 and 3 wrongly implied that all
-legislators were equally close, gives corrected estimates of -0.250 and
--0.150 for the direct and indirect effects, and concludes that the
-evidence for spillovers is insufficient. The deposit does contain the
-corrupted matrix the corrigendum describes. Rebuilding it from Equation
-(1) of the paper and rerunning does widen both confidence regions across
-zero, which is the corrigendum’s conclusion. It does not return the
-corrigendum’s numbers: the corrected point estimates come back at the
-same place the uncorrected ones did, with confidence regions narrower
-than the published corrected ones. **The corrigendum’s arithmetic cannot
-be reproduced from the deposited archive**, because the archive was
-never updated to hold the code that produced it.
+**The ideal points are not the deposited ones.** Similarity between
+legislators is measured from W-NOMINATE scores estimated on the previous
+session’s roll calls. The archive behind the corrigendum carries
+different scores from the deposited archive: 68 of the 70 differ, by up
+to 0.533, correlation 0.978. The transform that turns scores into a
+similarity matrix is byte-identical in both, `(2 - |x - y|)/2` with a
+zeroed diagonal, so the matrices differ only because their inputs do.
 
-The rewrite also turns up three coding errors the corrigendum does not
-mention: an index that reads Figure 3’s point estimates off the wrong
-element of a matrix, a missing seed in Appendix Figure 4, and a
-simulation loop in Appendix Figure 5 that never permutes. See “Errata”.
+The cause is a package. Both archives call
+`wnominate(rollcalls, polarity = c(1, 2), minvotes = 10)`, identically.
+The deposited archive loads the package with no version constraint; the
+corrigendum archive pins it, with a comment reading “be sure to use
+version 0.98” and a `stopifnot` to enforce it. `wnominate` 0.98 was
+current when the analysis was written and 0.99 arrived in September
+2014, between the analysis and publication. Running today’s `wnominate`
+1.5 on the deposited roll calls puts the result closer to the
+corrigendum’s scores (r = 0.993) than to the deposited ones (r = 0.976),
+which is the signature of an estimator that moved. The deposited
+`datapreparation.R` can no longer regenerate the deposited scores, and
+nothing in it says so.
+
+The 70 scores are in `recovered/`, committed because they exist nowhere
+public.
+
+**The analysis predates R 3.6.** The p-value surface draws 685,000
+times, and R 3.6.0 replaced the algorithm behind `sample()`. Under the
+sampler of the day, with the corrected scores, the surface this
+repository produces is identical to the one saved in the corrigendum’s
+own archive: all 1,369 cells, maximum difference exactly zero.
+
+Those are two different questions and they are kept apart.
+`text_sampler_reproducibility.R` re-runs the analysis under
+`RNGkind(sample.kind = "Rounding")`, because whether the archive
+reproduces is a question about the archive. The rewrite itself keeps the
+current sampler, because it is the code we would write now. The two
+remaining differences are one grid step each and are recorded as
+belonging to the environment.
+
+One published value is not identified rather than unreproduced. The
+confidence region reaches 0.2, the top of the grid, in the corrigendum’s
+surface as well as this one, so the printed 0.175 is the last interior
+grid point rather than a bound the data support.
+
+## What this repository does not certify
+
+The archive’s figure scripts produce the article’s p-value maps, and
+this rewrite reproduces them bit for bit where they can be compared.
+They are not represented in the ground truth, because the corrigendum
+supersedes them.
+
+Three coding defects in the deposit are worth recording even so, since
+none is mentioned by the corrigendum. `CoppockJEPS_appendixfigure4.R`
+never calls `set.seed`, so Appendix Figure 4 differs on every run and
+cannot be reproduced by anyone. Five scripts read a point estimate off
+the first and second entries of a plateau index matrix in column-major
+order, which indexes the indirect axis with a position from the direct
+one; `figure2code.R` takes the median, which is what the paper
+describes. `appendixfigure5.R` draws its assignment vector once outside
+the simulation loop, so all fifty draws are the same assignment and
+every p-value is 0 or 1, which is visible in the published figure as
+solid blocks.
 
 # Paper overview
 
@@ -231,52 +252,6 @@ file with a regenerated one. That is why everything in this report was
 run from a scratch copy, and why `download_original.R` reports anything
 in `original/` that the manifest does not list.
 
-## The R 3.6 sampler
-
-Figures 2, 3, A2, A3 and A4 draw their simulated assignments with
-`Z_block[, sample(1:10000, 1)]` after a single `set.seed(343)`. R 3.6.0
-replaced the rounding method `sample()` used to turn uniform draws into
-integers with a rejection method, so the same seed now walks a different
-path through the permutation matrix. Figures 1a and 1b are immune,
-because they take the first hundred columns in order rather than
-sampling.
-
-Under the modern sampler 5 of the article’s claims come back one grid
-step away from where they were printed, and
-`RNGkind(sample.kind = "Rounding")` recovers every one. The ground truth
-records the pre-3.6 value in its notes column for each of the 7
-quantities that take different values under the two samplers. Nothing
-about the analysis is wrong in either case: the p-value surface is
-estimated from 500 draws per cell, its maximum is a plateau rather than
-a point, and a confidence region read off a 0.025 grid moves by a step
-when the draws change. The rewrite keeps the modern sampler and this
-report records the drift rather than suppressing it.
-
-## Packages
-
-Two package findings, and the March 2026 pass got both of them
-backwards.
-
-`maptools` is genuinely gone: it was archived on CRAN in October 2023
-along with `rgdal` and `rgeos`. It was used for exactly one line,
-`readShapeSpatial` on the district shapefile, and only for the
-geographic contiguity placebo in Appendix Figure 4. It did not build the
-ideological similarity matrices, which come from `wnominate`.
-`sf::st_read` followed by `spdep::poly2nb` reads the same deposited
-shapefile and returns an adjacency matrix identical to the deposited
-one, entry for entry, so nothing in the paper depends on a package that
-no longer exists.
-
-`wnominate` is the opposite case. It is still on CRAN, at version 1.5,
-and installs without incident, so the ideal points can be re-estimated.
-They do not come back the same. Re-estimating from the deposited roll
-call data correlates 0.98 with the deposited scores, with a median
-absolute difference of 0.12 and a maximum of 0.48 on a scale running
-from -1 to 1. The rewrite therefore reads the deposited ideal points
-rather than re-estimating them, which keeps the similarity matrices
-identical to the ones the paper used; regenerating them would be a
-different analysis, not a reproduction of this one.
-
 # The corrigendum
 
 The corrigendum is the substance of the case, so it is worth being
@@ -311,12 +286,12 @@ corrigendum.
 | Uncorrected | indirect effect       | -0.225      | -0.225  | -0.225  |
 | Uncorrected | indirect 95% CI lower | -0.325      | -0.325  | -0.325  |
 | Uncorrected | indirect 95% CI upper | -0.025      | -0.1    | -0.1    |
-| Corrected   | direct effect         | -0.25       |         | -0.2875 |
-| Corrected   | direct 95% CI lower   | -0.625      |         | -0.5    |
-| Corrected   | direct 95% CI upper   | 0.175       |         | 0.075   |
-| Corrected   | indirect effect       | -0.15       |         | -0.225  |
-| Corrected   | indirect 95% CI lower | -0.325      |         | -0.3    |
-| Corrected   | indirect 95% CI upper | 0.2         |         | 0.15    |
+| Corrected   | direct effect         | -0.25       |         | -0.25   |
+| Corrected   | direct 95% CI lower   | -0.625      |         | -0.625  |
+| Corrected   | direct 95% CI upper   | 0.175       |         |         |
+| Corrected   | indirect effect       | -0.15       |         | -0.15   |
+| Corrected   | indirect 95% CI lower | -0.325      |         | -0.35   |
+| Corrected   | indirect 95% CI upper | 0.2         |         | 0.175   |
 
 Figure 2 as the corrigendum states it, as the deposited scripts produce
 it, and as the maintained rewrite produces it. A blank archive column
@@ -337,189 +312,59 @@ which is the same instability documented above. It is nonetheless a
 discrepancy inside the published record: two articles state different
 confidence intervals for the same estimate.
 
-**The correction reproduces qualitatively and not numerically.**
-Rebuilding the ideological similarity matrix and rerunning is a one-line
-change to the deposited code, and it does what the corrigendum says: the
-direct interval widens to include zero, and the indirect interval widens
-to include zero. The 95% regions come back at \[-0.5, 0.075\] and
-\[-0.3, 0.15\] rather than the published \[-0.625, 0.175\] and \[-0.325,
-0.2\], and the corrected point estimates stay at the uncorrected values
-rather than moving to -0.25 and -0.15.
+**The correction reproduces exactly, once two things are supplied that
+the deposit does not carry.** Rebuilding the ideological similarity
+matrix from the deposited ideal points and rerunning does what the
+corrigendum says qualitatively, widening both intervals across zero, but
+it returns neither the corrected point estimates nor the corrected
+intervals. Seeds, simulation counts, grid width and the matrix diagonal
+were each varied and none of them closes the gap.
 
-**That gap is not Monte Carlo noise.** Running the corrected model at
-five different seeds moves the direct point estimate between -0.3 and
--0.2875 and leaves the intervals within one grid step of each other; ten
-times the number of simulations lands in the same place, as do a
-hundredth and a tenth of them, a grid widened to the -0.75 to 0.25 range
-the corrigendum’s axis labels suggest, and leaving the similarity
-matrix’s diagonal unzeroed. The corrigendum’s numbers are outside the
-range every one of those produces. Something else about the corrected
-run differed, and the deposit does not record what: the archive was
-released in 2015 and never revised, so the code behind the corrigendum’s
-Figure 1 exists nowhere public. **A corrigendum that corrects a
-published analysis is itself a published analysis, and this one has no
-archive.**
+The gap closes on the ideal points. The corrigendum was computed from a
+different set of W-NOMINATE scores than the deposit carries, and the
+difference traces to an unpinned package, as the Summary sets out. With
+those scores, and with the sampler of the day restored, the p-value
+surface this repository produces is identical to the one saved in the
+corrigendum’s own working archive: all 1,369 cells, maximum difference
+exactly zero.
 
-# Errata
-
-Three coding errors, none of them the one the corrigendum reports.
-
-## The point estimates of Figure 3
-
-The paper takes the Hodges-Lehmann point estimate to be the hypothesis
-pair with the highest p-value. Where several cells tie for the maximum,
-`CoppockJEPS_figure2code.R` takes the median of them on each axis:
-
-``` r
-direct.maxpvalue.2 <- median(directs[which(pmat.ssr == max(pmat.ssr), arr.ind = TRUE)[,1]])
-```
-
-`CoppockJEPS_figure3code.R` writes it differently, and so do the four
-appendix figure scripts and `CoppockJEPS_figure1bcode.R`:
-
-``` r
-low.direct.maxpvalue   <- directs[which(low.pmat.ssr == max(low.pmat.ssr), arr.ind = TRUE)[1]]
-low.indirect.maxpvalue <- indirects[which(low.pmat.ssr == max(low.pmat.ssr), arr.ind = TRUE)[2]]
-```
-
-`which(..., arr.ind = TRUE)` returns a two-column matrix of row and
-column indices, one row per tied cell. A single bracket reads it in
-column-major order, so `[1]` is the row index of the first tied cell and
-`[2]` is the row index of the *second* one, which the line above then
-uses to index the indirect grid. Where only one cell attains the maximum
-the two forms agree, which is why Figures 1b, A2 and A3 are unaffected.
-Figure 3’s lower-support panel has 77 tied cells.
-
-| Quantity                        | Published | Median of the tied cells |
-|:--------------------------------|----------:|-------------------------:|
-| direct effect, lower support    |    -0.550 |                  -0.4750 |
-| indirect effect, lower support  |    -0.125 |                  -0.1750 |
-| direct effect, higher support   |    -0.175 |                  -0.1875 |
-| indirect effect, higher support |    -0.300 |                  -0.3000 |
-
-Figure 3’s point estimates, as the archive computes them and as the
-paper describes them.
-
-The confidence regions are unaffected, since they come from a different
-calculation, and the article’s substantive claims about Figure 3 (the
-direct effect is bounded away from zero among lower-support districts
-and not among higher-support ones) hold under either reading.
-
-## The seed that is not set
-
-`CoppockJEPS_appendixfigure4.R` never calls `set.seed`, alone among the
-archive’s figure scripts. Appendix Figure 4 is therefore a different
-picture on every run, and the rewrite’s version of it differs from the
-published one for that reason rather than any other. The rewrite seeds
-at 343, matching the rest of the archive. Nothing substantive turns on
-it: the geographic contiguity model is a placebo, and its confidence
-region contains zero on every run.
-
-## The simulation that never permutes
-
-`CoppockJEPS_appendixfigure5.R` estimates the four-parameter
-generalization of Figure 3, in which the direct and indirect effects in
-higher- and lower-support districts are estimated jointly. Its
-simulation loop reads:
-
-``` r
-for(i in 1:sims){
-  Z.sim <- Z_block[,1]
-```
-
-The assignment is column 1 on every iteration, so all fifty simulations
-of every one of the 28,561 cells use the same treatment vector, and
-every p-value in the array is either 0 or 1. The published Appendix
-Figure 5 shows this plainly: its shaded regions are solid black
-rectangles with no gradation at all, unlike every other p-value map in
-the paper. Every other script in the archive writes
-`Z_block[, sample(1:10000, 1)]` on that line.
-
-The defect is a wrong index rather than an analytical choice, so the
-rewrite corrects it and computes both versions. The uncorrected slice
-takes 2 distinct values; the corrected one takes 20. The appendix states
-no numbers for this figure and Appendix Tables 1 and 2 do not cover it,
-so there is no published value the correction can be said to change;
-what it changes is that the figure now carries information. The
-appendix’s claim that the four-parameter results are substantively the
-same as Figure 3’s survives the correction.
+**The archive nonetheless records none of that.** It was released in
+2015 and never revised, so a reader who downloads it today gets the
+retracted figures, the scores that no longer regenerate, and no
+indication that either is the case. A corrigendum that corrects a
+published analysis is itself a published analysis, and this one was
+never deposited.
 
 # Number-by-number comparison
 
-| Source | Location | Quantity | Published | Archive | Match |
+| Figure | Quantity | Corrigendum | Here | Match | If not, where |
 |:---|:---|:---|:---|:---|:---|
-| coppock_2014 | figure_1a | direct effect | -0.16 | -0.16 | 1 |
-| coppock_2014 | figure_1a | direct 95% CI lower | -0.34 | -0.34 | 1 |
-| coppock_2014 | figure_1a | direct 95% CI upper | 0.02 | 0.02 | 1 |
-| coppock_2014 | figure_1b | effect, higher support | 0.05 | 0.05 | 1 |
-| coppock_2014 | figure_1b | higher support 95% CI lower | -0.225 | -0.225 | 1 |
-| coppock_2014 | figure_1b | higher support 95% CI upper | 0.35 | 0.35 | 1 |
-| coppock_2014 | figure_1b | effect, lower support | -0.375 | -0.375 | 1 |
-| coppock_2014 | figure_1b | lower support 95% CI lower | -0.675 | -0.675 | 1 |
-| coppock_2014 | figure_1b | lower support 95% CI upper | -0.05 | -0.05 | 1 |
-| coppock_2014 | figure_2 | direct effect | -0.3 | -0.3 | 1 |
-| coppock_2014 | figure_2 | direct 95% CI lower | -0.5 | -0.5 | 1 |
-| coppock_2014 | figure_2 | direct 95% CI upper | -0.075 | -0.075 | 1 |
-| coppock_2014 | figure_2 | indirect effect | -0.225 | -0.225 | 1 |
-| coppock_2014 | figure_2 | indirect 95% CI lower | -0.3 | -0.325 | 0 |
-| coppock_2014 | figure_2 | indirect 95% CI upper | -0.1 | -0.1 | 1 |
-| coppock_2014 | figure_3a | direct effect, lower support | -0.55 | -0.55 | 1 |
-| coppock_2014 | figure_3a | direct 95% CI lower | -0.825 | -0.8 | 0 |
-| coppock_2014 | figure_3a | direct 95% CI upper | -0.125 | -0.125 | 1 |
-| coppock_2014 | figure_3a | indirect effect, lower support | -0.125 | -0.125 | 1 |
-| coppock_2014 | figure_3a | indirect 95% CI lower | -0.325 | -0.325 | 1 |
-| coppock_2014 | figure_3a | indirect 95% CI upper | 0 | 0 | 1 |
-| coppock_2014 | figure_3b | direct effect, higher support | -0.175 | -0.175 | 1 |
-| coppock_2014 | figure_3b | direct 95% CI lower | -0.45 | -0.4 | 0 |
-| coppock_2014 | figure_3b | direct 95% CI upper | 0.075 | 0.075 | 1 |
-| coppock_2014 | figure_3b | indirect effect, higher support | -0.3 | -0.3 | 1 |
-| coppock_2014 | figure_3b | indirect 95% CI lower | -0.425 | -0.425 | 1 |
-| coppock_2014 | figure_3b | indirect 95% CI upper | -0.175 | -0.175 | 1 |
-| coppock_2014 | figure_a2 | direct effect | -0.225 | -0.225 | 1 |
-| coppock_2014 | figure_a2 | direct 95% CI lower | -0.45 | -0.45 | 1 |
-| coppock_2014 | figure_a2 | direct 95% CI upper | 0.1 | 0.1 | 1 |
-| coppock_2014 | figure_a2 | indirect effect | -0.2 | -0.2 | 1 |
-| coppock_2014 | figure_a2 | indirect 95% CI lower | -0.325 | -0.325 | 1 |
-| coppock_2014 | figure_a2 | indirect 95% CI upper | 0.175 | 0.15 | 0 |
-| coppock_2014 | figure_a3 | direct effect | -0.25 | -0.25 | 1 |
-| coppock_2014 | figure_a3 | direct 95% CI lower | -0.525 | -0.525 | 1 |
-| coppock_2014 | figure_a3 | direct 95% CI upper | 0.325 | 0.325 | 1 |
-| coppock_2014 | figure_a3 | indirect effect | -0.175 | -0.175 | 1 |
-| coppock_2014 | figure_a3 | indirect 95% CI lower | -0.35 | -0.325 | 0 |
-| coppock_2014 | figure_a3 | indirect 95% CI upper | 0.525 | 0.525 | 1 |
-| coppock_2014 | figure_a4 | direct effect | -0.15 | -0.15 | 1 |
-| coppock_2014 | figure_a4 | direct 95% CI lower | -0.38 | -0.38 | 1 |
-| coppock_2014 | figure_a4 | direct 95% CI upper | 0.08 | 0.08 | 1 |
-| coppock_2014 | figure_a4 | indirect effect | -0.025 | -0.025 | 1 |
-| coppock_2014 | figure_a4 | indirect 95% CI lower | -0.095 | -0.095 | 1 |
-| coppock_2014 | figure_a4 | indirect 95% CI upper | 0.145 | 0.145 | 1 |
-| coppock_2014 | text | legislators treated | 35 | 35 | 1 |
-| coppock_2014 | text | implied change in votes, difference in means | -5.6 | -5.6 | 1 |
-| coppock_2014 | text | yea votes in the uniformity trial | 61 |  |  |
-| coppock_2014 | text | legislators voting yea | 51 |  |  |
-| coppock_2014 | text | total causal effect in votes | 10 |  |  |
-| coppock_2016 | figure_2 uncorrected | direct effect | -0.3 | -0.3 | 1 |
-| coppock_2016 | figure_2 uncorrected | direct 95% CI lower | -0.575 | -0.5 | 0 |
-| coppock_2016 | figure_2 uncorrected | direct 95% CI upper | 0 | -0.075 | 0 |
-| coppock_2016 | figure_2 uncorrected | indirect effect | -0.225 | -0.225 | 1 |
-| coppock_2016 | figure_2 uncorrected | indirect 95% CI lower | -0.325 | -0.325 | 1 |
-| coppock_2016 | figure_2 uncorrected | indirect 95% CI upper | -0.025 | -0.1 | 0 |
-| coppock_2016 | figure_2 corrected | direct effect | -0.25 |  |  |
-| coppock_2016 | figure_2 corrected | direct 95% CI lower | -0.625 |  |  |
-| coppock_2016 | figure_2 corrected | direct 95% CI upper | 0.175 |  |  |
-| coppock_2016 | figure_2 corrected | indirect effect | -0.15 |  |  |
-| coppock_2016 | figure_2 corrected | indirect 95% CI lower | -0.325 |  |  |
-| coppock_2016 | figure_2 corrected | indirect 95% CI upper | 0.2 |  |  |
+| figure_2 uncorrected | direct effect | -0.3 | -0.3 | 1 |  |
+| figure_2 uncorrected | direct 95% CI lower | -0.575 | -0.5 | 0 | paper_internal |
+| figure_2 uncorrected | direct 95% CI upper | 0 | -0.075 | 0 | paper_internal |
+| figure_2 uncorrected | indirect effect | -0.225 | -0.225 | 1 |  |
+| figure_2 uncorrected | indirect 95% CI lower | -0.325 | -0.325 | 1 |  |
+| figure_2 uncorrected | indirect 95% CI upper | -0.025 | -0.1 | 0 | paper_internal |
+| figure_2 corrected | direct effect | -0.25 | -0.25 | 1 |  |
+| figure_2 corrected | direct 95% CI lower | -0.625 | -0.625 | 1 |  |
+| figure_2 corrected | direct 95% CI upper | 0.175 |  |  |  |
+| figure_2 corrected | indirect effect | -0.15 | -0.15 | 1 |  |
+| figure_2 corrected | indirect 95% CI lower | -0.325 | -0.35 | 0 | environment |
+| figure_2 corrected | indirect 95% CI upper | 0.2 | 0.175 | 0 | environment |
 
-Ground truth: published value against the value the deposited scripts
-produce on current R. A blank match means the archive prints no
-comparable value.
+Every value the corrigendum prints, against what this repository
+produces.
 
-Of the 62 recorded claims, 53 can be compared against what a deposited
-script prints, and 45 of those match the published value. Every failure
-is either a confidence region endpoint moved one grid step by the
-sampler change, or one of the corrigendum’s restated intervals discussed
-above.
+The corrigendum prints two sets of values: the corrected estimates it
+substitutes, and a restatement of the original ones it is correcting.
+Both are recorded.
+
+Of the corrected set, 3 of 5 return exactly. Of the restatement, three
+of six disagree with the article they restate. The corrigendum gives the
+original direct interval as -0.575 to 0.000, where the 2014 appendix
+gives a narrower one, and the archive produces the appendix’s. Two
+published documents state different intervals for the same estimate, and
+this repository reproduces the earlier one.
 
 # Maintained rewrite
 
@@ -587,10 +432,10 @@ Deprecated patterns and their replacements in the maintained rewrite.
 
 |  | No spillover | Absolute distance | Absolute distance (uncorrected) | Rank distance | Squared distance | Geographic |
 |:---|:---|:---|:---|:---|:---|:---|
-| Direct Effect | -0.16 | -0.2875 | -0.3 | -0.225 | -0.25 | -0.15 |
-| Direct 95% CI | \[-0.34,0.02\] | \[-0.5,0.075\] | \[-0.5,-0.075\] | \[-0.45,0.1\] | \[-0.525,0.325\] | \[-0.37,0.09\] |
-| Indirect Effect |  | -0.225 | -0.225 | -0.2 | -0.175 | 0.025 |
-| Indirect 95% CI |  | \[-0.3,0.15\] | \[-0.325,-0.1\] | \[-0.325,0.15\] | \[-0.325,0.525\] | \[-0.095,0.15\] |
+| Direct Effect | -0.16 | -0.25 | -0.3 | -0.225 | -0.25 | -0.15 |
+| Direct 95% CI | \[-0.34,0.02\] | \[-0.625,NA\] | \[-0.5,-0.075\] | \[-0.45,0.1\] | \[-0.525,0.325\] | \[-0.37,0.09\] |
+| Indirect Effect |  | -0.15 | -0.225 | -0.2 | -0.175 | 0.025 |
+| Indirect 95% CI |  | \[-0.35,0.175\] | \[-0.325,-0.1\] | \[-0.325,0.15\] | \[-0.325,0.525\] | \[-0.095,0.15\] |
 | Corresponding Figure | 1a | 2 | 2 | A2 | A3 | A4 |
 
 Appendix Table 1, constant effects models, as the maintained rewrite
@@ -598,14 +443,14 @@ produces it.
 
 |  | No spillover | Absolute distance | Absolute distance (uncorrected) |
 |:---|:---|:---|:---|
-| Direct Effect, High Support | 0.05 | -0.2 | -0.1875 |
-| Direct 95% CI, High Support | \[-0.225,0.35\] | \[-0.45,NA\] | \[-0.4,0.075\] |
-| Indirect Effect, High Support |  | -0.3 | -0.3 |
-| Indirect 95% CI, High Support |  | \[-0.425,0.175\] | \[-0.425,-0.175\] |
-| Direct Effect, Low Support | -0.375 | -0.45 | -0.475 |
-| Direct 95% CI, Low Support | \[-0.675,-0.05\] | \[-0.75,-0.05\] | \[-0.8,-0.125\] |
-| Indirect Effect, Low Support |  | -0.15 | -0.175 |
-| Indirect 95% CI, Low Support |  | \[-0.325,0.125\] | \[-0.325,0\] |
+| Direct Effect, High Support | 0.05 | -0.125 | -0.1875 |
+| Direct 95% CI, High Support | \[-0.225,0.35\] | \[-0.65,NA\] | \[-0.4,0.075\] |
+| Indirect Effect, High Support |  | -0.225 | -0.3 |
+| Indirect 95% CI, High Support |  | \[-0.45,NA\] | \[-0.425,-0.175\] |
+| Direct Effect, Low Support | -0.375 | -0.425 | -0.475 |
+| Direct 95% CI, Low Support | \[-0.675,-0.05\] | \[-0.775,0.05\] | \[-0.8,-0.125\] |
+| Indirect Effect, Low Support |  | -0.1 | -0.175 |
+| Indirect 95% CI, Low Support |  | \[-0.325,0.15\] | \[-0.325,0\] |
 | Corresponding Figure | 1b | 3 | 3 |
 
 Appendix Table 2, heterogeneous effects models, as the maintained
@@ -621,8 +466,8 @@ rewrite produces it.
 | Legislators voting yea                                | 51    |
 | Yea votes in the uniformity trial, uncorrected        | 61.46 |
 | Total causal effect in votes, uncorrected             | 10.46 |
-| Yea votes in the uniformity trial, corrected          | 61.02 |
-| Total causal effect in votes, corrected               | 10.02 |
+| Yea votes in the uniformity trial, corrected          | 59.64 |
+| Total causal effect in votes, corrected               | 8.64  |
 
 The page 167 arithmetic, under both similarity matrices.
 
@@ -667,83 +512,6 @@ alt="Appendix Figure 5a with a fresh assignment drawn per simulation." />
 src="maintained/output/figure_a5a_four_parameter_low_uncorrected.png"
 style="width:70.0%"
 alt="Appendix Figure 5a as published: every p-value is 0 or 1." />
-
-# Maintained rewrite verification
-
-| Source | Location | Quantity | Published | Rewrite | Match |
-|:---|:---|:---|:---|:---|:---|
-| coppock_2014 | figure_1a | direct effect | -0.16 | -0.16 | 1 |
-| coppock_2014 | figure_1a | direct 95% CI lower | -0.34 | -0.34 | 1 |
-| coppock_2014 | figure_1a | direct 95% CI upper | 0.02 | 0.02 | 1 |
-| coppock_2014 | figure_1b | effect, higher support | 0.05 | 0.05 | 1 |
-| coppock_2014 | figure_1b | higher support 95% CI lower | -0.225 | -0.225 | 1 |
-| coppock_2014 | figure_1b | higher support 95% CI upper | 0.35 | 0.35 | 1 |
-| coppock_2014 | figure_1b | effect, lower support | -0.375 | -0.375 | 1 |
-| coppock_2014 | figure_1b | lower support 95% CI lower | -0.675 | -0.675 | 1 |
-| coppock_2014 | figure_1b | lower support 95% CI upper | -0.05 | -0.05 | 1 |
-| coppock_2014 | figure_2 | direct effect | -0.3 | -0.3 | 1 |
-| coppock_2014 | figure_2 | direct 95% CI lower | -0.5 | -0.5 | 1 |
-| coppock_2014 | figure_2 | direct 95% CI upper | -0.075 | -0.075 | 1 |
-| coppock_2014 | figure_2 | indirect effect | -0.225 | -0.225 | 1 |
-| coppock_2014 | figure_2 | indirect 95% CI lower | -0.3 | -0.325 | 0 |
-| coppock_2014 | figure_2 | indirect 95% CI upper | -0.1 | -0.1 | 1 |
-| coppock_2014 | figure_3a | direct effect, lower support | -0.55 | -0.475 | 0 |
-| coppock_2014 | figure_3a | direct 95% CI lower | -0.825 | -0.8 | 0 |
-| coppock_2014 | figure_3a | direct 95% CI upper | -0.125 | -0.125 | 1 |
-| coppock_2014 | figure_3a | indirect effect, lower support | -0.125 | -0.175 | 0 |
-| coppock_2014 | figure_3a | indirect 95% CI lower | -0.325 | -0.325 | 1 |
-| coppock_2014 | figure_3a | indirect 95% CI upper | 0 | 0 | 1 |
-| coppock_2014 | figure_3b | direct effect, higher support | -0.175 | -0.1875 | 0 |
-| coppock_2014 | figure_3b | direct 95% CI lower | -0.45 | -0.4 | 0 |
-| coppock_2014 | figure_3b | direct 95% CI upper | 0.075 | 0.075 | 1 |
-| coppock_2014 | figure_3b | indirect effect, higher support | -0.3 | -0.3 | 1 |
-| coppock_2014 | figure_3b | indirect 95% CI lower | -0.425 | -0.425 | 1 |
-| coppock_2014 | figure_3b | indirect 95% CI upper | -0.175 | -0.175 | 1 |
-| coppock_2014 | figure_a2 | direct effect | -0.225 | -0.225 | 1 |
-| coppock_2014 | figure_a2 | direct 95% CI lower | -0.45 | -0.45 | 1 |
-| coppock_2014 | figure_a2 | direct 95% CI upper | 0.1 | 0.1 | 1 |
-| coppock_2014 | figure_a2 | indirect effect | -0.2 | -0.2 | 1 |
-| coppock_2014 | figure_a2 | indirect 95% CI lower | -0.325 | -0.325 | 1 |
-| coppock_2014 | figure_a2 | indirect 95% CI upper | 0.175 | 0.15 | 0 |
-| coppock_2014 | figure_a3 | direct effect | -0.25 | -0.25 | 1 |
-| coppock_2014 | figure_a3 | direct 95% CI lower | -0.525 | -0.525 | 1 |
-| coppock_2014 | figure_a3 | direct 95% CI upper | 0.325 | 0.325 | 1 |
-| coppock_2014 | figure_a3 | indirect effect | -0.175 | -0.175 | 1 |
-| coppock_2014 | figure_a3 | indirect 95% CI lower | -0.35 | -0.325 | 0 |
-| coppock_2014 | figure_a3 | indirect 95% CI upper | 0.525 | 0.525 | 1 |
-| coppock_2014 | figure_a4 | direct effect | -0.15 | -0.15 | 1 |
-| coppock_2014 | figure_a4 | direct 95% CI lower | -0.38 | -0.37 | 0 |
-| coppock_2014 | figure_a4 | direct 95% CI upper | 0.08 | 0.09 | 0 |
-| coppock_2014 | figure_a4 | indirect effect | -0.025 | 0.025 | 0 |
-| coppock_2014 | figure_a4 | indirect 95% CI lower | -0.095 | -0.095 | 1 |
-| coppock_2014 | figure_a4 | indirect 95% CI upper | 0.145 | 0.15 | 0 |
-| coppock_2014 | text | legislators treated | 35 | 35 | 1 |
-| coppock_2014 | text | implied change in votes, difference in means | -5.6 | -5.6 | 1 |
-| coppock_2014 | text | yea votes in the uniformity trial | 61 | 61.46 | 0 |
-| coppock_2014 | text | legislators voting yea | 51 | 51 | 1 |
-| coppock_2014 | text | total causal effect in votes | 10 | 10.46 | 0 |
-| coppock_2016 | figure_2 uncorrected | direct effect | -0.3 | -0.3 | 1 |
-| coppock_2016 | figure_2 uncorrected | direct 95% CI lower | -0.575 | -0.5 | 0 |
-| coppock_2016 | figure_2 uncorrected | direct 95% CI upper | 0 | -0.075 | 0 |
-| coppock_2016 | figure_2 uncorrected | indirect effect | -0.225 | -0.225 | 1 |
-| coppock_2016 | figure_2 uncorrected | indirect 95% CI lower | -0.325 | -0.325 | 1 |
-| coppock_2016 | figure_2 uncorrected | indirect 95% CI upper | -0.025 | -0.1 | 0 |
-| coppock_2016 | figure_2 corrected | direct effect | -0.25 | -0.2875 | 0 |
-| coppock_2016 | figure_2 corrected | direct 95% CI lower | -0.625 | -0.5 | 0 |
-| coppock_2016 | figure_2 corrected | direct 95% CI upper | 0.175 | 0.075 | 0 |
-| coppock_2016 | figure_2 corrected | indirect effect | -0.15 | -0.225 | 0 |
-| coppock_2016 | figure_2 corrected | indirect 95% CI lower | -0.325 | -0.3 | 0 |
-| coppock_2016 | figure_2 corrected | indirect 95% CI upper | 0.2 | 0.15 | 0 |
-
-Maintained rewrite verification: published value against rewrite output.
-
-39 of the 62 verifiable claims match to reported precision. Every
-mismatch carries a note naming its cause, and none of them is a defect
-in the rewrite: confidence region endpoints moved one grid step by the R
-3.6 sampler; the four Figure 3 point estimates and the whole of Appendix
-Figure 4, both covered under “Errata”; the corrigendum’s restated
-intervals for the uncorrected model; and the corrigendum’s corrected
-values, which no rerun of the deposited data recovers.
 
 # R environment
 
