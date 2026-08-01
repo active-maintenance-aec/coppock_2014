@@ -68,7 +68,14 @@ net_exposure <- function(similarity, z, expected_1, expected_0) {
 # summarize_pvalue_grid ----
 # Hodges-Lehmann point estimate (the median of the cells attaining the highest
 # p-value) and the 95% confidence region (the extent of the rows and columns
-# containing any hypothesis with p > 0.05), following the original scripts.
+# containing any hypothesis with p > 0.05).
+#
+# The median is the reading CoppockJEPS_figure2code.R uses. Every other archive script
+# that draws a two-dimensional map instead writes which(pmat == max(pmat), arr.ind =
+# TRUE)[1] and [2], which picks the first and second entries of the plateau index matrix
+# in column-major order and, in the [2] case, uses a row position to index the column
+# axis. Where the plateau is a single cell the two agree; where it is not, they do not.
+# See the errata section of the report.
 summarize_pvalue_grid <- function(pmat, directs, indirects) {
   peak <- which(pmat == max(pmat), arr.ind = TRUE)
   list(

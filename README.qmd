@@ -96,6 +96,7 @@ corrigendum <- gt |> filter(paper_id == "coppock_2016")
 n_article_match <- sum(article$match == 1, na.rm = TRUE)
 n_article_verifiable <- sum(!is.na(article$match))
 n_sampler <- sum(str_detect(replace_na(gt$notes, ""), "pre-3.6"))
+n_article_fail <- sum(article$match == 0, na.rm = TRUE)
 ```
 
 Two questions, answered before the detail.
@@ -104,19 +105,21 @@ Two questions, answered before the detail.
 
 Not as deposited, and the reason is structural rather than a matter of package rot. Every one of the seven figure scripts opens with `load("Replication Archive/CoppockJEPS.rdata")` and writes into `Replication Archive/figures/` and `Replication Archive/modeloutputs/`. No such directory is in the deposit: all `r nrow(manifest)` files sit flat at the top level. The archive's own guide, in section 4 of the online appendix, refers to a `CoppockJEPS_shapefile` directory that "must stay intact", so the folder structure the code expects existed on the author's machine and did not survive upload. A reader has to build three directories and copy a file into one of them before any script runs. That is a five-minute repair, and it is invisible until you attempt it.
 
-Once the directories exist, the seven figure scripts run without further intervention. The data preparation script that builds their input does not: it calls `maptools`, which left CRAN in 2023.
+Once the directories exist, the seven figure scripts run without further intervention. The data preparation script that builds their input does not: it calls `maptools`, which left CRAN in 2023. One of the seven, `CoppockJEPS_appendixfigure4.R`, is the only figure script in the archive that never calls `set.seed`, so Appendix Figure 4 gives a different answer on every run and cannot be reproduced by anyone, its author included.
 
-Once the directories exist the scripts reproduce the article. `r n_article_match` of the `r n_article_verifiable` article claims an archive script can be checked against come back exactly as printed on a current R, and every one of the remaining `r n_sampler` is a single grid step that moves because R 3.6 changed `sample()`; all `r n_article_verifiable` reproduce under the sampler R shipped in 2015. What the archive does not contain is any trace of the correction. The deposited `CoppockJEPS.RData` still holds the corrupted similarity matrix described below, so the figures a reader produces today are the ones the corrigendum retracts.
+The scripts then reproduce the article. `r n_article_match` of the `r n_article_verifiable` article claims an archive script can be checked against come back exactly as printed on a current R, and every one of the remaining `r n_article_fail` is a confidence region endpoint one grid step away, moved there by the change R 3.6 made to `sample()`. Restoring the old sampler recovers all `r n_article_fail`, and costs one: Appendix Figure 4's direct effect matches on a current R and is a step off under the old one, which is what a figure whose script sets no seed does.
+
+What the archive does not contain is any trace of the correction. The deposited `CoppockJEPS.RData` still holds the corrupted similarity matrix described below, so the figures a reader produces today are the ones the corrigendum retracts.
 
 ## Does the maintained rewrite reproduce the paper?
 
 It reproduces the 2014 article and it does not reproduce the 2016 corrigendum, and the second half of that sentence is the finding.
 
-The rewrite reproduces every number in the article's Appendix Tables 1 and 2 that does not depend on drawing random columns, exactly: all of Figure 1a, all of Figure 1b, and every point estimate in Figures 2, A2 and A3. The values that do depend on random draws land within one grid step of the published ones, because R 3.6 changed `sample()` and this rewrite keeps the modern sampler.
+The rewrite reproduces the article's p-value maps exactly. Where a map can be compared against the deposited scripts cell by cell it is bit-identical: Figures 1a, 1b, 2, 3, A2 and A3 all come back with the same p-value matrix the archive produces, to the last bit. The published values it does not return are of three kinds, and each has a cause the ground truth records: five confidence region endpoints that R 3.6 moved one grid step, three Figure 3 point estimates that the archive reads off the wrong element of an index matrix, and all of Appendix Figure 4, whose script sets no seed.
 
 The corrigendum is a different matter. It reports that the ideological similarity matrix used in Figures 2 and 3 wrongly implied that all legislators were equally close, gives corrected estimates of `r sprintf("%.3f", filter(corrigendum, table_figure == "figure_2 corrected", claim == "direct effect")$value_paper)` and `r sprintf("%.3f", filter(corrigendum, table_figure == "figure_2 corrected", claim == "indirect effect")$value_paper)` for the direct and indirect effects, and concludes that the evidence for spillovers is insufficient. The deposit does contain the corrupted matrix the corrigendum describes. Rebuilding it from Equation (1) of the paper and rerunning does widen both confidence regions across zero, which is the corrigendum's conclusion. It does not return the corrigendum's numbers: the corrected point estimates come back at the same place the uncorrected ones did, with confidence regions narrower than the published corrected ones. **The corrigendum's arithmetic cannot be reproduced from the deposited archive**, because the archive was never updated to hold the code that produced it.
 
-The rewrite also corrects one clear coding error the corrigendum does not mention, in the four-parameter appendix model, and records what changes. See "Errata".
+The rewrite also turns up three coding errors the corrigendum does not mention: an index that reads Figure 3's point estimates off the wrong element of a matrix, a missing seed in Appendix Figure 4, and a simulation loop in Appendix Figure 5 that never permutes. See "Errata".
 
 # Paper overview
 
@@ -152,7 +155,7 @@ tibble(
     "Fails on a missing directory; runs once it exists",
     "Fails on a missing directory; runs once it exists",
     "Fails on a missing directory; runs once it exists",
-    "Fails on a missing directory; runs once it exists",
+    "Fails on a missing directory; runs once it exists, and sets no seed",
     "Fails on a missing directory; runs once it exists, and its simulation never permutes",
     "Fails: loads seven files by bare name and writes to a hardcoded /Users/Alex path"
   ),
@@ -165,7 +168,7 @@ tibble(
     "As above",
     "As above",
     "As above",
-    "As above",
+    "As above; set.seed(343), as every other script does",
     "As above; draw a fresh assignment per simulation",
     "Run from the modeloutputs directory; redirect the output"
   )
@@ -196,7 +199,7 @@ More seriously, `CoppockJEPS_datapreparation.R` ends by writing `CoppockJEPS.rda
 
 Figures 2, 3, A2, A3 and A4 draw their simulated assignments with `Z_block[, sample(1:10000, 1)]` after a single `set.seed(343)`. R 3.6.0 replaced the rounding method `sample()` used to turn uniform draws into integers with a rejection method, so the same seed now walks a different path through the permutation matrix. Figures 1a and 1b are immune, because they take the first hundred columns in order rather than sampling.
 
-Restoring the old sampler with `RNGkind(sample.kind = "Rounding")` recovers the published values. Under the modern sampler `r n_sampler` of the article's claims come back one grid step away from where they were printed, and the ground truth records the pre-3.6 value for each in its notes column. Nothing about the analysis is wrong in either case: the p-value surface is estimated from 500 draws per cell, its maximum is a plateau rather than a point, and a confidence region read off a 0.025 grid moves by a step when the draws change. The rewrite keeps the modern sampler and this report records the drift rather than suppressing it.
+Under the modern sampler `r n_article_fail` of the article's claims come back one grid step away from where they were printed, and `RNGkind(sample.kind = "Rounding")` recovers every one. The ground truth records the pre-3.6 value in its notes column for each of the `r n_sampler` quantities that take different values under the two samplers. Nothing about the analysis is wrong in either case: the p-value surface is estimated from 500 draws per cell, its maximum is a plateau rather than a point, and a confidence region read off a 0.025 grid moves by a step when the draws change. The rewrite keeps the modern sampler and this report records the drift rather than suppressing it.
 
 ## Packages
 
@@ -239,9 +242,53 @@ Three things in that table are worth separating.
 
 **The correction reproduces qualitatively and not numerically.** Rebuilding the ideological similarity matrix and rerunning is a one-line change to the deposited code, and it does what the corrigendum says: the direct interval widens to include zero, and the indirect interval widens to include zero. The 95% regions come back at [-0.5, 0.075] and [-0.3, 0.15] rather than the published [-0.625, 0.175] and [-0.325, 0.2], and the corrected point estimates stay at the uncorrected values rather than moving to -0.25 and -0.15.
 
-**That gap is not Monte Carlo noise.** Running the corrected model at five different seeds, and at ten times the number of simulations, moves the direct point estimate between -0.3 and -0.2875 and leaves the intervals within one grid step of each other. The corrigendum's numbers are outside that range. Something else about the corrected run differed, and the deposit does not record what: the archive was released in 2015 and never revised, so the code behind the corrigendum's Figure 1 exists nowhere public. **A corrigendum that corrects a published analysis is itself a published analysis, and this one has no archive.**
+**That gap is not Monte Carlo noise.** Running the corrected model at five different seeds moves the direct point estimate between -0.3 and -0.2875 and leaves the intervals within one grid step of each other; ten times the number of simulations lands in the same place, as do a hundredth and a tenth of them, a grid widened to the -0.75 to 0.25 range the corrigendum's axis labels suggest, and leaving the similarity matrix's diagonal unzeroed. The corrigendum's numbers are outside the range every one of those produces. Something else about the corrected run differed, and the deposit does not record what: the archive was released in 2015 and never revised, so the code behind the corrigendum's Figure 1 exists nowhere public. **A corrigendum that corrects a published analysis is itself a published analysis, and this one has no archive.**
 
 # Errata
+
+Three coding errors, none of them the one the corrigendum reports.
+
+## The point estimates of Figure 3
+
+The paper takes the Hodges-Lehmann point estimate to be the hypothesis pair with the highest p-value. Where several cells tie for the maximum, `CoppockJEPS_figure2code.R` takes the median of them on each axis:
+
+``` r
+direct.maxpvalue.2 <- median(directs[which(pmat.ssr == max(pmat.ssr), arr.ind = TRUE)[,1]])
+```
+
+`CoppockJEPS_figure3code.R` writes it differently, and so do the four appendix figure scripts and `CoppockJEPS_figure1bcode.R`:
+
+``` r
+low.direct.maxpvalue   <- directs[which(low.pmat.ssr == max(low.pmat.ssr), arr.ind = TRUE)[1]]
+low.indirect.maxpvalue <- indirects[which(low.pmat.ssr == max(low.pmat.ssr), arr.ind = TRUE)[2]]
+```
+
+`which(..., arr.ind = TRUE)` returns a two-column matrix of row and column indices, one row per tied cell. A single bracket reads it in column-major order, so `[1]` is the row index of the first tied cell and `[2]` is the row index of the *second* one, which the line above then uses to index the indirect grid. Where only one cell attains the maximum the two forms agree, which is why Figures 1b, A2 and A3 are unaffected. Figure 3's lower-support panel has 77 tied cells.
+
+```{r fig3_errata}
+figure_3 <- read_csv(here::here("maintained", "output", "figure_3_hetero_spillover.csv"),
+                     show_col_types = FALSE)
+
+gt |>
+  filter(table_figure %in% c("figure_3a", "figure_3b"), str_detect(claim, "effect,")) |>
+  select(claim, value_paper, value_rewrite) |>
+  kable(
+    booktabs = TRUE,
+    col.names = c("Quantity", "Published", "Median of the tied cells"),
+    caption = "Figure 3's point estimates, as the archive computes them and as the paper describes them."
+  ) |>
+  latex_only(\(k) k |>
+    kable_styling(latex_options = "hold_position", font_size = 9) |>
+    column_spec(1, width = "7cm"))
+```
+
+The confidence regions are unaffected, since they come from a different calculation, and the article's substantive claims about Figure 3 (the direct effect is bounded away from zero among lower-support districts and not among higher-support ones) hold under either reading.
+
+## The seed that is not set
+
+`CoppockJEPS_appendixfigure4.R` never calls `set.seed`, alone among the archive's figure scripts. Appendix Figure 4 is therefore a different picture on every run, and the rewrite's version of it differs from the published one for that reason rather than any other. The rewrite seeds at 343, matching the rest of the archive. Nothing substantive turns on it: the geographic contiguity model is a placebo, and its confidence region contains zero on every run.
+
+## The simulation that never permutes
 
 `CoppockJEPS_appendixfigure5.R` estimates the four-parameter generalization of Figure 3, in which the direct and indirect effects in higher- and lower-support districts are estimated jointly. Its simulation loop reads:
 
@@ -297,6 +344,8 @@ The rewrite lives in `maintained/`: one cleaning script, nine figure scripts, tw
 Every spillover figure is therefore computed twice, once from each matrix, and both versions go into `output/`. Nothing is transcribed: the corrigendum's numbers appear in the ground truth as comparison targets and nowhere in the code.
 
 The p-value grid itself is one function, `pvalue_grid()` in `helpers.R`, taking the similarity matrix, the expected exposures and the observed exposure as separate arguments. That separation is deliberate. The difference between the published analysis and the corrected one is exactly which matrix goes into the simulation while the observed regressor stays the same, and a helper that fixed either of them internally would hide the only choice in the paper that matters.
+
+The rewrite's p-value matrices were checked cell by cell against the ones the deposited scripts save. Six of the seven are bit-identical: Figure 1a's 71 cells, Figure 1b's 2,205, Figure 2's 1,369, Figure 3's 1,305, Appendix Figure 2's 1,681 and Appendix Figure 3's 2,401, with a maximum absolute deviation of exactly zero in every case. Appendix Figure 4 is the exception, and only because its script sets no seed. Agreement at that level is what makes the point-estimate differences interpretable: the surfaces are the same, so any difference in what is read off them is a difference in the reading.
 
 The test statistic goes through `.lm.fit` rather than `lm`. The rewrite fits about eleven million regressions; `lm` takes 0.295 milliseconds each and `.lm.fit` takes 0.0035, and the two agree on the sum of squared residuals to floating point. That is the difference between a five-minute run and an hour-long one, and a reproduction check nobody runs is not a check.
 
@@ -386,45 +435,33 @@ The article states that 61 legislators would have voted yea in the uniformity tr
 
 The correction's visible consequence is the width of the shaded region. The uncorrected map is a tight blob well away from both axes; the corrected map spreads across zero on both.
 
-::: {layout-ncol=2}
-
-```{r fig2_corrected, out.width="100%", fig.cap="Figure 2, corrected similarity matrix."}
+```{r fig2_corrected, out.width="70%", fig.cap="Figure 2, corrected similarity matrix."}
 knitr::include_graphics(figure_path("figure_2_ideo_spillover"))
 ```
 
-```{r fig2_uncorrected, out.width="100%", fig.cap="Figure 2 as published, all-ones similarity matrix."}
+```{r fig2_uncorrected, out.width="70%", fig.cap="Figure 2 as published, all-ones similarity matrix."}
 knitr::include_graphics(figure_path("figure_2_ideo_spillover_uncorrected"))
 ```
 
-:::
-
-::: {layout-ncol=2}
-
-```{r fig3a, out.width="100%", fig.cap="Figure 3a, lower-support districts, corrected."}
+```{r fig3a, out.width="70%", fig.cap="Figure 3a, lower-support districts, corrected."}
 knitr::include_graphics(figure_path("figure_3a_hetero_spillover_low"))
 ```
 
-```{r fig3b, out.width="100%", fig.cap="Figure 3b, higher-support districts, corrected."}
+```{r fig3b, out.width="70%", fig.cap="Figure 3b, higher-support districts, corrected."}
 knitr::include_graphics(figure_path("figure_3b_hetero_spillover_high"))
 ```
-
-:::
 
 ```{r fig1a, out.width="70%", fig.cap="Figure 1a, the no-spillover constant effects model, which reproduces exactly."}
 knitr::include_graphics(figure_path("figure_1a_no_spillover"))
 ```
 
-::: {layout-ncol=2}
-
-```{r figa5_corrected, out.width="100%", fig.cap="Appendix Figure 5a with a fresh assignment drawn per simulation."}
+```{r figa5_corrected, out.width="70%", fig.cap="Appendix Figure 5a with a fresh assignment drawn per simulation."}
 knitr::include_graphics(figure_path("figure_a5a_four_parameter_low"))
 ```
 
-```{r figa5_uncorrected, out.width="100%", fig.cap="Appendix Figure 5a as published: every p-value is 0 or 1."}
+```{r figa5_uncorrected, out.width="70%", fig.cap="Appendix Figure 5a as published: every p-value is 0 or 1."}
 knitr::include_graphics(figure_path("figure_a5a_four_parameter_low_uncorrected"))
 ```
-
-:::
 
 # Maintained rewrite verification
 
@@ -443,7 +480,7 @@ gt |>
     column_spec(3, width = "5cm"))
 ```
 
-`r n_rewrite_match` of the `r n_rewrite_verifiable` verifiable claims match to reported precision. The mismatches fall into three groups, and none is a defect in the rewrite: confidence region endpoints moved one grid step by the R 3.6 sampler, the corrigendum's restated intervals for the uncorrected model, and the corrigendum's corrected values, which no rerun of the deposited data recovers.
+`r n_rewrite_match` of the `r n_rewrite_verifiable` verifiable claims match to reported precision. Every mismatch carries a note naming its cause, and none of them is a defect in the rewrite: confidence region endpoints moved one grid step by the R 3.6 sampler; the four Figure 3 point estimates and the whole of Appendix Figure 4, both covered under "Errata"; the corrigendum's restated intervals for the uncorrected model; and the corrigendum's corrected values, which no rerun of the deposited data recovers.
 
 # R environment
 

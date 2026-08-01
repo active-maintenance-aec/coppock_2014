@@ -1,5 +1,6 @@
 # coppock_2014/maintained/figure_1b_no_spillover_hetero.R
-# Output: maintained/output/figure_1b_no_spillover_hetero.pdf
+# Output: maintained/output/figure_1b_no_spillover_hetero.csv
+#         maintained/output/figure_1b_no_spillover_hetero.pdf
 #         maintained/output/figure_1b_no_spillover_hetero.png
 #         maintained/data/figure_1b.rds
 # Depends on: maintained/data/spillovers.rds, helpers.R
@@ -61,16 +62,22 @@ fit <- list(
   low_ci = cates_low[find_breaks(apply(pmat, 2, max) > 0.05)]
 )
 write_rds(fit, here::here("maintained", "data", "figure_1b.rds"))
-print(tibble(
-  claim = c("Figure 1b: effect in higher-support districts",
-            "Figure 1b: higher-support 95% CI lower",
-            "Figure 1b: higher-support 95% CI upper",
-            "Figure 1b: effect in lower-support districts",
-            "Figure 1b: lower-support 95% CI lower",
-            "Figure 1b: lower-support 95% CI upper"),
-  value = c(fit$high_point, fit$high_ci[1], fit$high_ci[2],
-            fit$low_point, fit$low_ci[1], fit$low_ci[2])
-))
+estimates <- tibble(
+  claim = c("Figure 1b: effect, higher support",
+            "Figure 1b: higher support 95% CI lower",
+            "Figure 1b: higher support 95% CI upper",
+            "Figure 1b: effect, lower support",
+            "Figure 1b: lower support 95% CI lower",
+            "Figure 1b: lower support 95% CI upper"),
+  value = round(c(fit$high_point, fit$high_ci[1], fit$high_ci[2],
+                  fit$low_point, fit$low_ci[1], fit$low_ci[2]), 6)
+)
+
+# The plotted values must land in a committed file, not only the console, or the
+# ground truth's value_rewrite cannot be traced to anything.
+write_csv(estimates,
+          here::here("maintained", "output", "figure_1b_no_spillover_hetero.csv"))
+print(estimates)
 
 # Figure ----
 gg_df <- expand_grid(x = cates_high, y = cates_low) |>

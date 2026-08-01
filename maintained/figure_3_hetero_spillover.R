@@ -1,5 +1,6 @@
 # coppock_2014/maintained/figure_3_hetero_spillover.R
-# Output: maintained/output/figure_3a_hetero_spillover_low.pdf
+# Output: maintained/output/figure_3_hetero_spillover.csv
+#         maintained/output/figure_3a_hetero_spillover_low.pdf
 #         maintained/output/figure_3a_hetero_spillover_low.png
 #         maintained/output/figure_3b_hetero_spillover_high.pdf
 #         maintained/output/figure_3b_hetero_spillover_high.png
@@ -77,17 +78,22 @@ report_panel <- function(fit, panel, version) {
   tibble(
     claim = str_glue("Figure 3 {panel}: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper')}"),
     version = version,
-    value = c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
-              fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2])
+    value = round(c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
+                    fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2]), 6)
   )
 }
 
-print(bind_rows(
+estimates <- bind_rows(
   report_panel(corrected$low, "panel A (lower support)", "corrected"),
   report_panel(corrected$high, "panel B (higher support)", "corrected"),
   report_panel(uncorrected$low, "panel A (lower support)", "uncorrected"),
   report_panel(uncorrected$high, "panel B (higher support)", "uncorrected")
-), n = 24)
+)
+
+# The plotted values must land in a committed file, not only the console, or the
+# ground truth's value_rewrite cannot be traced to anything.
+write_csv(estimates, here::here("maintained", "output", "figure_3_hetero_spillover.csv"))
+print(estimates, n = 24)
 
 # Figures ----
 draw_map <- function(fit, arrow_y, arrow_x) {

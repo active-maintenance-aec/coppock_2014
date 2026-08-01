@@ -1,5 +1,6 @@
 # coppock_2014/maintained/figure_a3_squared_spillover.R
-# Output: maintained/output/figure_a3_squared_spillover.pdf
+# Output: maintained/output/figure_a3_squared_spillover.csv
+#         maintained/output/figure_a3_squared_spillover.pdf
 #         maintained/output/figure_a3_squared_spillover.png
 #         maintained/data/figure_a3.rds
 # Depends on: maintained/data/spillovers.rds, helpers.R
@@ -29,11 +30,16 @@ fit <- pvalue_grid(
 )
 
 write_rds(fit, here::here("maintained", "data", "figure_a3.rds"))
-print(tibble(
+estimates <- tibble(
   claim = str_glue("figure_a3: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper')}"),
-  value = c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
-            fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2])
-))
+  value = round(c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
+                  fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2]), 6)
+)
+
+# The plotted values must land in a committed file, not only the console, or the
+# ground truth's value_rewrite cannot be traced to anything.
+write_csv(estimates, here::here("maintained", "output", "figure_a3_squared_spillover.csv"))
+print(estimates)
 
 # Figure ----
 g <- make_pvalue_tile(tile_grid(fit)) +

@@ -1,5 +1,6 @@
 # coppock_2014/maintained/figure_a1_ideal_points.R
-# Output: maintained/output/figure_a1_ideal_points.pdf
+# Output: maintained/output/figure_a1_ideal_points.csv
+#         maintained/output/figure_a1_ideal_points.pdf
 #         maintained/output/figure_a1_ideal_points.png
 # Depends on: maintained/data/spillovers.rds, helpers.R
 # Description: Appendix Figure 1. Distribution of the estimated W-NOMINATE ideal points
@@ -22,9 +23,12 @@ g <- ggplot(gg_df, aes(x = dwnom_scores)) +
 
 save_figure(g, "figure_a1_ideal_points", width = 6, height = 5)
 
-print(tibble(
+estimates <- tibble(
   claim = c("Appendix Figure A1: legislators with an ideal point",
             "Appendix Figure A1: minimum score",
             "Appendix Figure A1: maximum score"),
-  value = c(nrow(gg_df), min(gg_df$dwnom_scores), max(gg_df$dwnom_scores))
-))
+  value = round(c(nrow(gg_df), min(gg_df$dwnom_scores), max(gg_df$dwnom_scores)), 6)
+)
+
+write_csv(estimates, here::here("maintained", "output", "figure_a1_ideal_points.csv"))
+print(estimates)

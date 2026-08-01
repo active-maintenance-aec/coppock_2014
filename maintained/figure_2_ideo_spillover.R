@@ -70,7 +70,8 @@ estimates <- tibble(
             corrected$indirect_point, corrected$indirect_ci[1], corrected$indirect_ci[2],
             uncorrected$direct_point, uncorrected$direct_ci[1], uncorrected$direct_ci[2],
             uncorrected$indirect_point, uncorrected$indirect_ci[1], uncorrected$indirect_ci[2])
-)
+) |>
+  mutate(value = round(value, 6))
 
 # The plotted values must land in a committed file, not only the console, or the
 # ground truth's value_rewrite cannot be traced to anything.

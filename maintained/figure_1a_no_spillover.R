@@ -1,5 +1,6 @@
 # coppock_2014/maintained/figure_1a_no_spillover.R
-# Output: maintained/output/figure_1a_no_spillover.pdf
+# Output: maintained/output/figure_1a_no_spillover.csv
+#         maintained/output/figure_1a_no_spillover.pdf
 #         maintained/output/figure_1a_no_spillover.png
 #         maintained/data/figure_1a.rds
 # Depends on: maintained/data/spillovers.rds, helpers.R
@@ -44,8 +45,17 @@ fit <- list(
   ate_ci = ates[find_breaks(pmat > 0.05)]
 )
 write_rds(fit, here::here("maintained", "data", "figure_1a.rds"))
-print(tibble(claim = c("Figure 1a: ATE", "Figure 1a: 95% CI lower", "Figure 1a: 95% CI upper"),
-             value = c(fit$ate_point, fit$ate_ci[1], fit$ate_ci[2])))
+
+estimates <- tibble(
+  claim = c("Figure 1a: direct effect", "Figure 1a: direct 95% CI lower",
+            "Figure 1a: direct 95% CI upper"),
+  value = round(c(fit$ate_point, fit$ate_ci[1], fit$ate_ci[2]), 6)
+)
+
+# The plotted values must land in a committed file, not only the console, or the
+# ground truth's value_rewrite cannot be traced to anything.
+write_csv(estimates, here::here("maintained", "output", "figure_1a_no_spillover.csv"))
+print(estimates)
 
 # Figure ----
 gg_df <- tibble(ate = ates, pvalue = pmat)
