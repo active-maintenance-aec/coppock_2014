@@ -13,7 +13,12 @@
   - [The directory that is not in the
     deposit](#the-directory-that-is-not-in-the-deposit)
 - [The corrigendum](#the-corrigendum)
+- [The extraction and the two
+  instruments](#the-extraction-and-the-two-instruments)
+  - [What the extraction found that the ground truth had
+    not](#what-the-extraction-found-that-the-ground-truth-had-not)
 - [Number-by-number comparison](#number-by-number-comparison)
+  - [Coverage float by float](#coverage-float-by-float)
 - [Maintained rewrite](#maintained-rewrite)
   - [Architecture](#architecture)
   - [Deprecated patterns replaced](#deprecated-patterns-replaced)
@@ -57,10 +62,15 @@ in version control even though the bytes themselves are not.
 **Repository layout.** `maintained/` is the maintained rewrite: one
 script per published figure or table, writing to `output/`, which is
 committed so a reader can compare a fresh run against it without
-downloading anything. `ground_truth/` ties every published number to the
-code that produces it. `original/` is created by the download script and
-is deliberately absent from the repository. This file is the
-reproducibility report, also available as a PDF in `report/`.
+downloading anything. `maintained/in_text_claims.R` prints every claim
+the published record makes, each beside the sentence that makes it.
+`ground_truth/` ties every published number to the code that produces
+it: `published_claims.csv` is the extraction of every number the
+article, its appendix and the corrigendum print, and
+`build_ground_truth.R` assembles the comparison and runs the coverage
+gate. `original/` is created by the download script and is deliberately
+absent from the repository. This file is the reproducibility report,
+also available as a PDF in `report/`.
 
 **License.** CC0 1.0 Universal, matching the terms of the deposit this
 repository maintains. See `LICENSE`.
@@ -85,8 +95,15 @@ successful run overwrites `maintained/output/`, which is committed:
 **What this repository certifies is the corrigendum**, not the article.
 The 2016 corrigendum retracts the spillover conclusion of the 2014 paper
 and prints corrected estimates in their place. Those are the numbers
-reproduced and checked here. The article’s own figures are superseded by
-them and are not represented in the ground truth.
+this rewrite stands behind.
+
+Coverage is a separate question from certification, and the ground truth
+covers the whole published record: every number the article prints,
+every cell of its two appendix tables, and every number in the
+corrigendum. Where the corrigendum supersedes an article value, the row
+records both and says so. Two of the findings below sit entirely outside
+the corrigendum’s scope and would have been invisible to a check
+organized around the corrected figures.
 
 ## Does the deposited archive run?
 
@@ -163,9 +180,13 @@ grid point rather than a bound the data support.
 ## What this repository does not certify
 
 The archive’s figure scripts produce the article’s p-value maps, and
-this rewrite reproduces them bit for bit where they can be compared.
-They are not represented in the ground truth, because the corrigendum
-supersedes them.
+this rewrite reproduces them bit for bit where they can be compared. The
+estimates read off those maps are in the ground truth, but as a record
+of what the deposit does rather than as results anyone should now use:
+the corrigendum supersedes the two figures that carry the coding error,
+and the rewrite reads its point estimates by the method the article
+describes rather than the one its code implements, which moves three of
+them.
 
 Three coding defects in the deposit are worth recording even so, since
 none is mentioned by the corrigendum. `CoppockJEPS_appendixfigure4.R`
@@ -278,24 +299,25 @@ reference distribution is far too narrow, and the confidence regions
 that come out of it are far too tight. That is the mechanism behind the
 corrigendum.
 
-| Version     | Quantity              | Corrigendum | Archive | Rewrite |
-|:------------|:----------------------|:------------|:--------|:--------|
-| Uncorrected | direct effect         | -0.3        | -0.3    | -0.3    |
-| Uncorrected | direct 95% CI lower   | -0.575      | -0.5    | -0.5    |
-| Uncorrected | direct 95% CI upper   | 0           | -0.075  | -0.075  |
-| Uncorrected | indirect effect       | -0.225      | -0.225  | -0.225  |
-| Uncorrected | indirect 95% CI lower | -0.325      | -0.325  | -0.325  |
-| Uncorrected | indirect 95% CI upper | -0.025      | -0.1    | -0.1    |
-| Corrected   | direct effect         | -0.25       |         | -0.25   |
-| Corrected   | direct 95% CI lower   | -0.625      |         | -0.625  |
-| Corrected   | direct 95% CI upper   | 0.175       |         |         |
-| Corrected   | indirect effect       | -0.15       |         | -0.15   |
-| Corrected   | indirect 95% CI lower | -0.325      |         | -0.35   |
-| Corrected   | indirect 95% CI upper | 0.2         |         | 0.175   |
+| Version     | Quantity              | Corrigendum | Rewrite |
+|:------------|:----------------------|:------------|:--------|
+| Uncorrected | indirect effect       | -0.225      | -0.225  |
+| Uncorrected | direct effect         | -0.300      | -0.3    |
+| Uncorrected | indirect 95% CI lower | -0.325      | -0.325  |
+| Uncorrected | indirect 95% CI upper | -0.025      | -0.1    |
+| Uncorrected | direct 95% CI lower   | -0.575      | -0.5    |
+| Uncorrected | direct 95% CI upper   | 0.000       | -0.075  |
+| Corrected   | indirect effect       | -0.150      | -0.15   |
+| Corrected   | direct effect         | -0.250      | -0.25   |
+| Corrected   | indirect 95% CI lower | -0.325      | -0.35   |
+| Corrected   | indirect 95% CI upper | 0.200       | 0.175   |
+| Corrected   | direct 95% CI lower   | -0.625      | -0.625  |
+| Corrected   | direct 95% CI upper   | 0.175       |         |
 
-Figure 2 as the corrigendum states it, as the deposited scripts produce
-it, and as the maintained rewrite produces it. A blank archive column
-means the deposit contains no corrected analysis to run.
+Figure 2 as the corrigendum states it and as the maintained rewrite
+produces it. The uncorrected rows are the analysis the article
+published; the corrected rows are the correction the corrigendum
+substitutes.
 
 Three things in that table are worth separating.
 
@@ -335,26 +357,6 @@ indication that either is the case. A corrigendum that corrects a
 published analysis is itself a published analysis, and this one was
 never deposited.
 
-# Number-by-number comparison
-
-| Figure | Quantity | Corrigendum | Here | Match | If not, where |
-|:---|:---|:---|:---|:---|:---|
-| figure_2 uncorrected | direct effect | -0.3 | -0.3 | 1 |  |
-| figure_2 uncorrected | direct 95% CI lower | -0.575 | -0.5 | 0 | paper_internal |
-| figure_2 uncorrected | direct 95% CI upper | 0 | -0.075 | 0 | paper_internal |
-| figure_2 uncorrected | indirect effect | -0.225 | -0.225 | 1 |  |
-| figure_2 uncorrected | indirect 95% CI lower | -0.325 | -0.325 | 1 |  |
-| figure_2 uncorrected | indirect 95% CI upper | -0.025 | -0.1 | 0 | paper_internal |
-| figure_2 corrected | direct effect | -0.25 | -0.25 | 1 |  |
-| figure_2 corrected | direct 95% CI lower | -0.625 | -0.625 | 1 |  |
-| figure_2 corrected | direct 95% CI upper | 0.175 |  |  |  |
-| figure_2 corrected | indirect effect | -0.15 | -0.15 | 1 |  |
-| figure_2 corrected | indirect 95% CI lower | -0.325 | -0.35 | 0 | environment |
-| figure_2 corrected | indirect 95% CI upper | 0.2 | 0.175 | 0 | environment |
-
-Every value the corrigendum prints, against what this repository
-produces.
-
 The corrigendum prints two sets of values: the corrected estimates it
 substitutes, and a restatement of the original ones it is correcting.
 Both are recorded.
@@ -362,9 +364,163 @@ Both are recorded.
 Of the corrected set, 3 of 5 return exactly. Of the restatement, three
 of six disagree with the article they restate. The corrigendum gives the
 original direct interval as -0.575 to 0.000, where the 2014 appendix
-gives a narrower one, and the archive produces the appendix’s. Two
-published documents state different intervals for the same estimate, and
-this repository reproduces the earlier one.
+gives a narrower one, and the deposited scripts produce the appendix’s.
+Two published documents state different intervals for the same estimate,
+and this repository reproduces the earlier one.
+
+# The extraction and the two instruments
+
+Two things stand between a published sentence and a silent error, and
+they are separate files that reach the same number by separate routes.
+
+**The extraction.** `ground_truth/published_claims.csv` records every
+numeric token in the article, its online appendix and the corrigendum,
+together with the numbers those documents spell out in words. It has 140
+rows, classified by hand as 15 definitional, 25 descriptive, 77
+pipeline, 23 structural. A `pipeline` claim is an estimate the code
+produces; a `descriptive` claim asserts a shape, a sign or a comparison
+rather than a value; `structural` and `definitional` claims are design
+facts and properties of the formulas. The extraction is what makes
+coverage a question with an answer: 115 of the 140 rows are claims the
+pipeline can reach, and each must be printed by a claim block.
+
+**The ground truth.** `ground_truth/coppock_2014_ground_truth.csv` has
+116 rows, each pairing what a document prints against what
+`maintained/output/` produces. 89 carry a value comparison, of which 69
+agree at the precision the page prints and 20 do not; 25 are descriptive
+claims carrying a computed truth value instead, and all 25 hold. It is
+generated by `ground_truth/build_ground_truth.R`, which reads every
+rewrite value out of `maintained/output/` rather than transcribing it.
+
+**The second instrument.** `maintained/in_text_claims.R` carries each
+sentence verbatim in a block comment and recomputes its number from the
+same committed output, reaching it by its own path. Where the ground
+truth reads a cell of appendix Table 1 out of
+`table_1_constant_effects.csv`, the claims file reads the same cell out
+of the figure script’s own CSV. It never reads the ground truth.
+
+**The gate.** `build_ground_truth.R` runs the claims file as a program,
+under `capture.output` and in its own environment, and stops the build
+unless the number of printed claims equals the number of extraction rows
+that require one, the two sets of identifiers are equal in both
+directions, every printed value equals the ground truth’s at the same
+precision, every extracted transcription equals the ground truth’s, and
+every row carrying an adverse verdict from either instrument names where
+the fault lies. A block that errors, prints nothing, or quietly reads an
+empty selection fails it.
+
+**There is no errata document.** Every value in this article that the
+data do not support is already corrected by a published corrigendum,
+which carries its own DOI and its own citation, so a note here would
+duplicate the published record rather than add to it. The one exception
+is recorded below and has not been written up unilaterally.
+
+## What the extraction found that the ground truth had not
+
+| Claim | Published | Here | Where |
+|:---|:---|:---|:---|
+| 2^35 possible random assignments, called 30 trillion two sentences later | 30 | 0.03436 | paper_internal |
+| Figure 1b lower-support estimate in the text, against -0.375 in appendix Table 2 | -0.37 | -0.375 | matches |
+| Figure 3a direct effect, read as the median over the plateau the article describes | -0.550 | -0.475 | archive |
+| Appendix Table 1 geographic indirect effect, from the one unseeded figure script | -0.025 | 0.025 | archive |
+
+Four claims outside the corrigendum’s scope, none of them reachable by a
+check organized around published floats.
+
+The first is the only one that could warrant a correction of its own.
+The article writes the number of possible matched-pair random
+assignments twice: once as $2^{35} = 3.4 \times 10^{10}$, which the
+deposit confirms, and once, two sentences later, as “the 30 trillion
+random assignments”. Thirty trillion is $3 \times 10^{13}$, three orders
+of magnitude above the count the same paragraph gives. Nothing turns on
+it, no estimate moves, and the corrigendum does not mention it.
+
+The second is not an error. Appendix Table 2 gives -0.375 and the
+pipeline reproduces it; the main text prints -0.37, which is the same
+number truncated rather than rounded, and at two decimals the two sit
+exactly on the rounding boundary.
+
+The third and fourth are properties of the deposited code rather than of
+the article. `CoppockJEPS_figure3code.R` takes its point estimate from
+the first and second entries of the plateau index matrix in column-major
+order, so where the plateau spans more than one cell it reads a row
+position off the direct axis and uses it to index the indirect one;
+Figure 3’s lower-support plateau spans 77 cells.
+`CoppockJEPS_appendixfigure4.R` never calls `set.seed`, so the sign the
+appendix prints for the geographic placebo’s indirect effect is a
+property of one draw.
+
+# Number-by-number comparison
+
+| Document                    | Rows | Compared | Agreeing | Descriptive | Holding |
+|:----------------------------|-----:|---------:|---------:|------------:|--------:|
+| Article and appendix (2014) |  100 |       78 |       63 |          21 |      21 |
+| Corrigendum (2016)          |   16 |       11 |        6 |           4 |       4 |
+
+The ground truth by document. Every published number in both is covered;
+the full table is the committed ground truth CSV.
+
+`value_script`, the column recording what the deposited scripts print,
+is empty throughout. This repository has no portable
+`extract_archive_values.R`, so the rule that the archive column be
+generated rather than typed is unmet here, and an empty column is a more
+honest statement of that than a transcribed one. What the deposited code
+produces is recorded instead in the section below, where the rewrite’s
+p-value surfaces are compared with the archive’s cell by cell.
+
+## Coverage float by float
+
+A float with one row in the ground truth is not a covered float, so the
+table below states the fraction. The p-value maps print no numbers on
+their faces beyond axis ticks chosen by the plotting device, so what
+each one asserts is the estimate and confidence region read off it,
+which the article states in prose, in appendix Table 1 or 2, or in both.
+
+| Float | Claims covered | Notes |
+|:---|:---|:---|
+| Figure 1a | 4 of 4 |  |
+| Figure 1b | 3 of 3 |  |
+| Figure 2 | 5 of 5 |  |
+| Figure 3 | 9 of 9 |  |
+| Appendix Figure 1 | no stated values | Prints no numbers; the 68 ideal points it plots are counted instead |
+| Appendix Figure 2 | 7 of 7 |  |
+| Appendix Figure 3 | 8 of 8 |  |
+| Appendix Figure 4 | 8 of 8 |  |
+| Appendix Figure 5 | 2 of 2 | Prints no numbers and has no summary table; covered by the parameter count and the comparison with Figure 3 |
+| Appendix Table 1 | 27 of 27 |  |
+| Appendix Table 2 | 18 of 18 |  |
+| Corrigendum Figure 1 | 12 of 12 |  |
+| Corrigendum Figure 2 | no stated values | The corrigendum states no values for its corrected Figure 3, so there is nothing to compare against |
+
+Coverage of every float in the article, its appendix and the
+corrigendum.
+
+| Location | Quantity | Published | Here | Where the fault lies |
+|:---|:---|:---|:---|:---|
+| Text, p. 162 | The same set of random assignments, in units of 10^12 | 30 | 0.03436 | paper_internal |
+| Text, p. 166 | Figure 3a direct effect, lower-support districts | -0.550 | -0.475 | archive |
+| Text, p. 166 | Figure 3a indirect effect, lower-support districts | -0.125 | -0.175 | archive |
+| Text, p. 166 | Figure 3b direct effect, higher-support districts | -0.175 | -0.1875 | archive |
+| Appendix Table 1 | Indirect 95% CI, rank_distance, bound 2 | 0.175 | 0.15 | unresolved |
+| Appendix Table 1 | Indirect 95% CI, squared_distance, bound 1 | -0.35 | -0.325 | unresolved |
+| Appendix Table 1 | Direct 95% CI, geographic_contiguity, bound 1 | -0.38 | -0.37 | archive |
+| Appendix Table 1 | Direct 95% CI, geographic_contiguity, bound 2 | 0.08 | 0.09 | archive |
+| Appendix Table 1 | Indirect Effect, geographic_contiguity | -0.025 | 0.025 | archive |
+| Appendix Table 1 | Indirect 95% CI, geographic_contiguity, bound 2 | 0.145 | 0.15 | archive |
+| Appendix Table 2 | Direct Effect, High Support, absolute_distance_uncorrected | -0.175 | -0.1875 | archive |
+| Appendix Table 2 | Direct 95% CI, High Support, absolute_distance_uncorrected, bound 1 | -0.45 | -0.4 | unresolved |
+| Appendix Table 2 | Direct Effect, Low Support, absolute_distance_uncorrected | -0.55 | -0.475 | archive |
+| Appendix Table 2 | Direct 95% CI, Low Support, absolute_distance_uncorrected, bound 1 | -0.825 | -0.8 | unresolved |
+| Appendix Table 2 | Indirect Effect, Low Support, absolute_distance_uncorrected | -0.125 | -0.175 | archive |
+| figure_2 uncorrected | indirect 95% CI upper | -0.025 | -0.1 | paper_internal |
+| figure_2 uncorrected | direct 95% CI lower | -0.575 | -0.5 | paper_internal |
+| figure_2 uncorrected | direct 95% CI upper | 0.000 | -0.075 | paper_internal |
+| figure_2 corrected | indirect 95% CI lower | -0.325 | -0.35 | environment |
+| figure_2 corrected | indirect 95% CI upper | 0.200 | 0.175 | environment |
+| figure_2 corrected | direct 95% CI upper | 0.175 | not identified | paper_internal |
+
+Every row where a published value and this repository disagree, with the
+cause.
 
 # Maintained rewrite
 
@@ -519,7 +675,7 @@ alt="Appendix Figure 5a as published: every p-value is 0 or 1." />
 |:----------|:-----------------------|
 | R version | 4.6.0                  |
 | Platform  | aarch64-apple-darwin23 |
-| Date run  | 2026-08-01             |
+| Date run  | 2026-08-03             |
 
 | Package | Version |
 |:--------|:--------|

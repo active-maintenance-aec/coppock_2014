@@ -30,10 +30,16 @@ fit <- pvalue_grid(
 )
 
 write_rds(fit, here::here("maintained", "data", "figure_a3.rds"))
+
+# The appendix says this model supports the hypothesis that both effects are zero, so
+# the p-value at that cell is a published claim and belongs in the committed output.
+p_at_origin <- fit$pmat[which.min(abs(fit$directs)), which.min(abs(fit$indirects))]
+
 estimates <- tibble(
-  claim = str_glue("figure_a3: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper')}"),
+  claim = str_glue("figure_a3: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper', 'p-value at the zero-zero hypothesis')}"),
   value = round(c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
-                  fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2]), 6)
+                  fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2],
+                  p_at_origin), 6)
 )
 
 # The plotted values must land in a committed file, not only the console, or the

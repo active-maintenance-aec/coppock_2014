@@ -74,12 +74,16 @@ uncorrected <- subgroup_grids(spillovers$similarity_dw_deposited,
 write_rds(list(corrected = corrected, uncorrected = uncorrected),
           here::here("maintained", "data", "figure_3.rds"))
 
+# The Results section says no hypothesis with a positive direct effect receives
+# positive probability in the lower-support panel, which is a claim about the part of
+# the surface to the right of the zero line rather than about a point estimate.
 report_panel <- function(fit, panel, version) {
   tibble(
-    claim = str_glue("Figure 3 {panel}: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper')}"),
+    claim = str_glue("Figure 3 {panel}: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper', 'highest p-value at a positive direct effect')}"),
     version = version,
     value = round(c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
-                    fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2]), 6)
+                    fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2],
+                    max(fit$pmat[fit$directs > 0, ])), 6)
   )
 }
 

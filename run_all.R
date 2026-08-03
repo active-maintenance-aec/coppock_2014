@@ -35,6 +35,16 @@ source(here::here("maintained", "table_2_hetero_effects.R"))
 
 # In-text quantities ----
 source(here::here("maintained", "text_total_causal_effect.R"))
+source(here::here("maintained", "text_design_parameters.R"))
+
+# Ground truth and the coverage gate ----
+# build_ground_truth.R assembles the comparison table and then runs in_text_claims.R
+# under capture.output, so a claim block that errors or prints nothing stops the build.
+# in_text_claims.R is run again here for the human-readable log. Both are sourced into
+# their own environments: they read the same outputs and name objects for what those
+# hold, so a bare source() would leave one file's accessors in place of the other's.
+source(here::here("ground_truth", "build_ground_truth.R"), local = new.env())
+source(here::here("maintained", "in_text_claims.R"), local = new.env())
 
 # Deposited archive, again ----
 # The check at the top of this file is a precondition: it says original/ was intact

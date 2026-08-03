@@ -1,5 +1,6 @@
 # coppock_2014/maintained/figure_2_ideo_spillover.R
-# Output: maintained/output/figure_2_ideo_spillover.pdf
+# Output: maintained/output/figure_2_ideo_spillover.csv
+#         maintained/output/figure_2_ideo_spillover.pdf
 #         maintained/output/figure_2_ideo_spillover.png
 #         maintained/output/figure_2_ideo_spillover_uncorrected.pdf
 #         maintained/output/figure_2_ideo_spillover_uncorrected.png

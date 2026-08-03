@@ -34,10 +34,16 @@ fit <- pvalue_grid(
 )
 
 write_rds(fit, here::here("maintained", "data", "figure_a4.rds"))
+
+# The appendix says many hypotheses with a zero indirect effect are given large
+# p-values, which is a claim about the column of the surface at indirect = 0.
+p_zero_indirect <- max(fit$pmat[, which.min(abs(fit$indirects))])
+
 estimates <- tibble(
-  claim = str_glue("figure_a4: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper')}"),
+  claim = str_glue("figure_a4: {c('direct effect', 'direct 95% CI lower', 'direct 95% CI upper', 'indirect effect', 'indirect 95% CI lower', 'indirect 95% CI upper', 'highest p-value at a zero indirect effect')}"),
   value = round(c(fit$direct_point, fit$direct_ci[1], fit$direct_ci[2],
-                  fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2]), 6)
+                  fit$indirect_point, fit$indirect_ci[1], fit$indirect_ci[2],
+                  p_zero_indirect), 6)
 )
 
 # The plotted values must land in a committed file, not only the console, or the

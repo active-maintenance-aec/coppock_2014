@@ -46,10 +46,14 @@ fit <- list(
 )
 write_rds(fit, here::here("maintained", "data", "figure_1a.rds"))
 
+# The p-value at the sharp null is the quantity the Results section describes as
+# "slightly higher than 0.05", so it belongs in the committed output rather than only
+# on the face of the plot.
 estimates <- tibble(
   claim = c("Figure 1a: direct effect", "Figure 1a: direct 95% CI lower",
-            "Figure 1a: direct 95% CI upper"),
-  value = round(c(fit$ate_point, fit$ate_ci[1], fit$ate_ci[2]), 6)
+            "Figure 1a: direct 95% CI upper", "Figure 1a: p-value at the zero hypothesis"),
+  value = round(c(fit$ate_point, fit$ate_ci[1], fit$ate_ci[2],
+                  pmat[which.min(abs(ates))]), 6)
 )
 
 # The plotted values must land in a committed file, not only the console, or the

@@ -1,0 +1,14 @@
+claim,value
+Legislators in the chamber,70
+Legislators assigned to treatment,35
+Legislators assigned to control,35
+Matched pairs,35
+Possible matched-pair random assignments,34359738368
+Randomizations in the deposited randomization matrix,10000
+Roll call votes behind the ideal points,17
+Legislators with an ideal point,68
+Largest difference between two ideal point ranks,67
+Smallest similarity score under Equation (1),0.006817609071731567
+Largest similarity score under Equation (1),1
+Smallest amount by which Equation (3) exceeds Equation (1),0
+Legislator pairs where Equation (3) equals Equation (1),1

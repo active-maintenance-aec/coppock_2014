@@ -1,0 +1,141 @@
+claim_id,location,claim_type,value_paper,needs_block,claim,notes
+abstract_effect_twice,"Abstract, p. 159",descriptive,2,TRUE,The total causal effect of the intervention is twice as large as originally reported,
+intro_treated,"Introduction, p. 160",structural,35,TRUE,Legislators sent information,
+intro_legislators,"Introduction, p. 160",structural,70,TRUE,Legislators in the chamber,
+context_session_year,"Experimental Context, p. 161",definitional,2008,FALSE,Year of the New Mexico special session,A date; the deposit carries no timestamp. Verified against the article's own methods section
+context_bill_number,"Experimental Context, p. 161",definitional,24,FALSE,"Senate Bill 24, the bill under study","A bill number, not a quantity"
+context_treated,"Experimental Context, p. 161",structural,35,TRUE,"Representatives sent survey estimates of support, restated",
+context_legislators,"Experimental Context, p. 161",structural,70,TRUE,"State representatives, restated",
+method_treatments_introduced,"Method, p. 162",structural,35,TRUE,Treatments introduced into the information sharing network,
+method_assignments_exponent,"Method, pp. 161-162",structural,35,TRUE,The exponent in 2^35: the number of matched pairs,
+method_assignments_sci,"Method, pp. 161-162",pipeline,3.4,TRUE,"Possible matched-pair random assignments, in units of 10^10",
+method_assignments_trillion,"Method, p. 162",pipeline,30,TRUE,"The same set of possible random assignments, restated in trillions",Two sentences after the article writes the same quantity as 3.4 x 10^10
+method_two_potential_outcomes,"Method, p. 162",definitional,2,FALSE,Potential outcomes per unit under the most parsimonious mapping,"A property of the mapping described, not a quantity in the data"
+method_two_dimensions,"Method, p. 162",definitional,2,FALSE,Dimensions the potential outcome space is reduced to,Direct and indirect exposure; visible in the two arguments of pvalue_grid()
+method_key_votes,"Method, p. 162",structural,17,TRUE,Key votes the W-NOMINATE scores are estimated from,
+method_first_dimension,"Method, p. 162",definitional,1,FALSE,W-NOMINATE dimension used,Verified at the call site: the deposit takes legislators$coord1D
+method_ideology_range,"Method, p. 162",descriptive,1,TRUE,Each legislator is assigned a W-NOMINATE ideology score between -1 and 1,
+method_eq1_constants,"Method, Equation (1), p. 162",definitional,2,FALSE,The constant 2 in the numerator and denominator of Equation (1),Verified at the call site: similarity_from_scores() in helpers.R
+method_eq1_range,"Method, p. 162",descriptive,1,TRUE,"For ideology values between -1 and 1, Equation (1) varies between 0 and 1",
+method_remaining_legislators,"Method, p. 163",structural,69,TRUE,Legislators remaining once one is treated,
+method_remaining_treated,"Method, p. 163",structural,34,TRUE,"Of the remaining legislators, the number that can still be treated",
+method_sd_increase,"Method, p. 163",definitional,1,FALSE,One standard deviation increase in net exposure,A units statement; the standardization is at the call site in net_exposure()
+method_confidence_level,"Method, p. 164",definitional,95,FALSE,"Confidence level, used throughout the article and appendix",Verified at the call site: find_breaks(max p > 0.05)
+results_f1a_point,"Results, p. 165",pipeline,-0.16,TRUE,Figure 1a: the p-value is maximized at -0.16,
+results_f1a_p_at_zero,"Results, p. 165",descriptive,0.05,TRUE,Figure 1a: the p-value at the zero hypothesis is slightly higher than 0.05,
+results_f1a_ci_lower,"Results, p. 165",pipeline,-0.34,TRUE,Figure 1a: 95% confidence region lower bound,
+results_f1a_ci_upper,"Results, p. 165",pipeline,0.02,TRUE,Figure 1a: 95% confidence region upper bound,
+results_f1b_high_point,"Results, p. 165",pipeline,0.05,TRUE,Figure 1b: treatment effect in higher-support districts,
+results_f1b_low_point,"Results, p. 165",pipeline,-0.37,TRUE,Figure 1b: treatment effect in lower-support districts,Appendix Table 2 gives -0.375 for the same quantity
+results_f1b_bounded_low_only,"Results, p. 165",descriptive,0,TRUE,Figure 1b: the confidence region is bounded away from zero for the low-support districts only,
+results_f2_direct_point,"Results, p. 165",pipeline,-0.300,TRUE,Figure 2: direct effect point estimate,
+results_f2_indirect_point,"Results, p. 165",pipeline,-0.225,TRUE,Figure 2: indirect effect point estimate,
+results_f2_direct_pp,"Results, p. 165",pipeline,30,TRUE,Figure 2: treated legislators were 30 percentage points less likely to vote for the bill,
+results_f2_indirect_pp,"Results, p. 165",pipeline,22.5,TRUE,Figure 2: a one standard deviation increase in second-hand exposure lowers the probability of voting yea by 22.5 percentage points,
+results_f2_ci_excludes_zero,"Results, p. 165",descriptive,0,TRUE,Figure 2: the 95% confidence region does not cross zero for either the direct or the indirect effect,
+results_f3a_direct_point,"Results, p. 166",pipeline,-0.550,TRUE,Figure 3a: direct effect point estimate among lower-support districts,
+results_f3a_indirect_point,"Results, p. 166",pipeline,-0.125,TRUE,Figure 3a: indirect effect point estimate among lower-support districts,
+results_f3a_no_positive_direct,"Results, p. 166",descriptive,0,TRUE,Figure 3a: no hypotheses with a direct effect above zero receive positive probability,
+results_f3a_indirect_touches_zero,"Results, p. 166",descriptive,0,TRUE,"Figure 3a: the indirect confidence region extends up to, but not across, the zero line",
+results_f3b_direct_point,"Results, p. 166",pipeline,-0.175,TRUE,Figure 3b: direct effect point estimate among higher-support districts,
+results_f3b_indirect_point,"Results, p. 166",pipeline,-0.300,TRUE,Figure 3b: indirect effect point estimate among higher-support districts,
+results_f3b_direct_crosses_zero,"Results, p. 166",descriptive,0,TRUE,Figure 3b: the direct effect cannot be distinguished from zero in the high-support districts,
+results_f3b_indirect_bounded_away,"Results, p. 166",descriptive,0,TRUE,Figure 3b: the indirect effect is strongly negative and its confidence region is bounded away from zero,
+results_f3_low_stronger_than_high,"Results, p. 166",descriptive,0,TRUE,Direct treatment effects are stronger among legislators from low-support than from high-support districts,
+figure_1_axis_ticks,"Figure 1, p. 166",structural,,FALSE,Axis tick labels,"Tick positions chosen by the plotting device, not by the analysis. What the figure asserts is checked through its point estimates and confidence bounds, which have rows of their own"
+figure_2_axis_ticks,"Figure 2, p. 167",structural,,FALSE,Axis tick labels,"Tick positions chosen by the plotting device, not by the analysis. What the figure asserts is checked through its point estimates and confidence bounds, which have rows of their own"
+figure_3_axis_ticks,"Figure 3, p. 168",structural,,FALSE,Axis tick labels,"Tick positions chosen by the plotting device, not by the analysis. What the figure asserts is checked through its point estimates and confidence bounds, which have rows of their own"
+figures_pvalue_scale,Figures 1-3 and appendix Figures 2-5,definitional,1,FALSE,The p-value colour scale runs from 0.0 to 1.0,"Fixed at the call site: scale_fill_gradient(limits = c(0, 1)) in helpers.R"
+conclusion_treated,"Conclusion, p. 167",structural,35,TRUE,"Treated legislators, in the arithmetic 35 x -0.16 = -5.6",
+conclusion_dim_estimate,"Conclusion, p. 167",pipeline,-0.16,TRUE,"The difference-in-means estimate, in the arithmetic 35 x -0.16 = -5.6",
+conclusion_votes_changed,"Conclusion, p. 167",pipeline,-5.6,TRUE,Votes the treatment letters changed under the difference in means,
+conclusion_votes_spelled,"Conclusion, p. 167",descriptive,5.5,TRUE,The same quantity written out as five and a half votes,
+conclusion_uniformity_yeas,"Conclusion, p. 167",pipeline,61,TRUE,Legislators who would have voted for the bill in the uniformity trial,
+conclusion_actual_yeas,"Conclusion, p. 167",pipeline,51,TRUE,Legislators who actually voted for the bill,
+conclusion_total_effect,"Conclusion, p. 167",pipeline,10,TRUE,"Estimated total causal effect, in votes",
+conclusion_nearly_doubled,"Conclusion, p. 167",descriptive,2,TRUE,The magnitude of the total causal effect has nearly doubled,
+app_date,"Online appendix, title page",definitional,,FALSE,"Date of the appendix, 31 March 2014",A date; nothing in the deposit records it
+app_sections,"Online appendix, p. 1",structural,4,FALSE,Sections in the appendix,"A property of the document. Verified by reading it: alternative specifications, heterogeneity, reference tables, replication guide"
+app_fig1_axis_ticks,"Appendix Figure 1, p. 1",structural,,FALSE,Axis tick labels of the ideal point histogram,Tick positions chosen by the plotting device. What the figure plots is counted in figure_a1_ideal_points.csv
+app_eq1_score_range,"Online appendix, section 1, p. 2",descriptive,1,TRUE,Equation (1) generates a similarity score between zero and 1 for all legislator pairs,
+app_eq1_constants,"Online appendix, Equation (1), p. 2",definitional,2,FALSE,"The constant 2 in Equation (1), restated in the appendix",Verified at the call site: similarity_from_scores() in helpers.R
+app_eq2_denominator,"Online appendix, Equation (2), p. 2",definitional,67,TRUE,The denominator of the rank similarity formula: the largest possible difference between two ideal point ranks,
+app_a2_both_negative,"Online appendix, section 1.1, p. 2",descriptive,,TRUE,Under the rank model both direct and indirect exposure appear to decrease the probability of voting for SB24,
+app_fig2_axis_ticks,"Appendix Figure 2, p. 2",structural,,FALSE,Axis tick labels,Tick positions chosen by the plotting device; the figure's estimates have rows of their own
+app_eq3_constants,"Online appendix, Equation (3), p. 3",definitional,4,FALSE,The constant 4 in the squared-distance similarity formula,Verified at the call site: the transform argument in figure_a3's similarity_from_scores() call
+app_eq3_higher_than_eq1,"Online appendix, section 1.2, p. 3",descriptive,0,TRUE,"For any pair of ideal points, Equation (3) returns a higher value than Equation (1)",
+app_a3_same_sign_more_uncertain,"Online appendix, section 1.2, p. 3",descriptive,,TRUE,The squared-distance estimates have the same sign and similar magnitude to the main analysis but are more uncertain,
+app_a3_zero_supported,"Online appendix, section 1.2, p. 3",descriptive,0.05,TRUE,Under the squared-distance model the data support the hypothesis that the direct and indirect effects are both zero,
+app_fig3_axis_ticks,"Appendix Figure 3, p. 3",structural,,FALSE,Axis tick labels,Tick positions chosen by the plotting device; the figure's estimates have rows of their own
+app_a4_direct_crosses_zero,"Online appendix, section 1.3, p. 4",descriptive,0,TRUE,Under the geographic placebo the 95% confidence region for the direct effect does cross zero,
+app_a4_zero_indirect_large_p,"Online appendix, section 1.3, p. 4",descriptive,0.05,TRUE,Under the geographic placebo many hypotheses with a zero indirect effect are given large p-values,
+app_fig4_axis_ticks,"Appendix Figure 4, p. 4",structural,,FALSE,Axis tick labels,Tick positions chosen by the plotting device; the figure's estimates have rows of their own
+app_four_parameters,"Online appendix, section 2, p. 4",structural,4,TRUE,Parameters in the generalized causal model of appendix Equation (4),
+app_low_support_indicator,"Online appendix, section 2, p. 4",definitional,1,FALSE,The value of x_i marking a low-support district,Verified at the call site: low_support enters figure_a5 as an indicator
+app_high_support_indicator,"Online appendix, section 2, p. 4",definitional,0,FALSE,The value of x_i marking a high-support district,Verified at the call site: low_support enters figure_a5 as an indicator
+app_a5_same_results,"Online appendix, section 2, p. 4",descriptive,,TRUE,The four-parameter model gives the same substantive results as Figure 3,
+app_fig5_axis_ticks,"Appendix Figure 5, p. 5",structural,,FALSE,Axis tick labels,Tick positions chosen by the plotting device; the figure's estimates have rows of their own
+t1_ns_direct,"Appendix Table 1, p. 5",pipeline,-0.16,TRUE,"Appendix Table 1: No Spillover, direct effect",
+t1_ns_direct_lo,"Appendix Table 1, p. 5",pipeline,-0.34,TRUE,"Appendix Table 1: No Spillover, direct 95% CI lower bound",
+t1_ns_direct_hi,"Appendix Table 1, p. 5",pipeline,0.02,TRUE,"Appendix Table 1: No Spillover, direct 95% CI upper bound",
+t1_ad_direct,"Appendix Table 1, p. 5",pipeline,-0.3,TRUE,"Appendix Table 1: Absolute Distance, direct effect",
+t1_ad_direct_lo,"Appendix Table 1, p. 5",pipeline,-0.5,TRUE,"Appendix Table 1: Absolute Distance, direct 95% CI lower bound",
+t1_ad_direct_hi,"Appendix Table 1, p. 5",pipeline,-0.075,TRUE,"Appendix Table 1: Absolute Distance, direct 95% CI upper bound",
+t1_ad_indirect,"Appendix Table 1, p. 5",pipeline,-0.225,TRUE,"Appendix Table 1: Absolute Distance, indirect effect",
+t1_ad_indirect_lo,"Appendix Table 1, p. 5",pipeline,-0.3,TRUE,"Appendix Table 1: Absolute Distance, indirect 95% CI lower bound",
+t1_ad_indirect_hi,"Appendix Table 1, p. 5",pipeline,-0.1,TRUE,"Appendix Table 1: Absolute Distance, indirect 95% CI upper bound",
+t1_rd_direct,"Appendix Table 1, p. 5",pipeline,-0.225,TRUE,"Appendix Table 1: Rank Distance, direct effect",
+t1_rd_direct_lo,"Appendix Table 1, p. 5",pipeline,-0.45,TRUE,"Appendix Table 1: Rank Distance, direct 95% CI lower bound",
+t1_rd_direct_hi,"Appendix Table 1, p. 5",pipeline,0.1,TRUE,"Appendix Table 1: Rank Distance, direct 95% CI upper bound",
+t1_rd_indirect,"Appendix Table 1, p. 5",pipeline,-0.2,TRUE,"Appendix Table 1: Rank Distance, indirect effect",
+t1_rd_indirect_lo,"Appendix Table 1, p. 5",pipeline,-0.325,TRUE,"Appendix Table 1: Rank Distance, indirect 95% CI lower bound",
+t1_rd_indirect_hi,"Appendix Table 1, p. 5",pipeline,0.175,TRUE,"Appendix Table 1: Rank Distance, indirect 95% CI upper bound",
+t1_sd_direct,"Appendix Table 1, p. 5",pipeline,-0.25,TRUE,"Appendix Table 1: Squared Distance, direct effect",
+t1_sd_direct_lo,"Appendix Table 1, p. 5",pipeline,-0.525,TRUE,"Appendix Table 1: Squared Distance, direct 95% CI lower bound",
+t1_sd_direct_hi,"Appendix Table 1, p. 5",pipeline,0.325,TRUE,"Appendix Table 1: Squared Distance, direct 95% CI upper bound",
+t1_sd_indirect,"Appendix Table 1, p. 5",pipeline,-0.175,TRUE,"Appendix Table 1: Squared Distance, indirect effect",
+t1_sd_indirect_lo,"Appendix Table 1, p. 5",pipeline,-0.35,TRUE,"Appendix Table 1: Squared Distance, indirect 95% CI lower bound",
+t1_sd_indirect_hi,"Appendix Table 1, p. 5",pipeline,0.525,TRUE,"Appendix Table 1: Squared Distance, indirect 95% CI upper bound",
+t1_gc_direct,"Appendix Table 1, p. 5",pipeline,-0.15,TRUE,"Appendix Table 1: Geographic Contiguity, direct effect",
+t1_gc_direct_lo,"Appendix Table 1, p. 5",pipeline,-0.38,TRUE,"Appendix Table 1: Geographic Contiguity, direct 95% CI lower bound",
+t1_gc_direct_hi,"Appendix Table 1, p. 5",pipeline,0.08,TRUE,"Appendix Table 1: Geographic Contiguity, direct 95% CI upper bound",
+t1_gc_indirect,"Appendix Table 1, p. 5",pipeline,-0.025,TRUE,"Appendix Table 1: Geographic Contiguity, indirect effect",
+t1_gc_indirect_lo,"Appendix Table 1, p. 5",pipeline,-0.095,TRUE,"Appendix Table 1: Geographic Contiguity, indirect 95% CI lower bound",
+t1_gc_indirect_hi,"Appendix Table 1, p. 5",pipeline,0.145,TRUE,"Appendix Table 1: Geographic Contiguity, indirect 95% CI upper bound",
+t2_ns_high_direct,"Appendix Table 2, p. 5",pipeline,0.05,TRUE,"Appendix Table 2: No Spillover, direct effect, high support",
+t2_ns_high_direct_lo,"Appendix Table 2, p. 5",pipeline,-0.225,TRUE,"Appendix Table 2: No Spillover, direct 95% CI lower bound, high support",
+t2_ns_high_direct_hi,"Appendix Table 2, p. 5",pipeline,0.35,TRUE,"Appendix Table 2: No Spillover, direct 95% CI upper bound, high support",
+t2_ns_low_direct,"Appendix Table 2, p. 5",pipeline,-0.375,TRUE,"Appendix Table 2: No Spillover, direct effect, low support",
+t2_ns_low_direct_lo,"Appendix Table 2, p. 5",pipeline,-0.675,TRUE,"Appendix Table 2: No Spillover, direct 95% CI lower bound, low support",
+t2_ns_low_direct_hi,"Appendix Table 2, p. 5",pipeline,-0.05,TRUE,"Appendix Table 2: No Spillover, direct 95% CI upper bound, low support",
+t2_ad_high_direct,"Appendix Table 2, p. 5",pipeline,-0.175,TRUE,"Appendix Table 2: Absolute Distance, direct effect, high support",
+t2_ad_high_direct_lo,"Appendix Table 2, p. 5",pipeline,-0.45,TRUE,"Appendix Table 2: Absolute Distance, direct 95% CI lower bound, high support",
+t2_ad_high_direct_hi,"Appendix Table 2, p. 5",pipeline,0.075,TRUE,"Appendix Table 2: Absolute Distance, direct 95% CI upper bound, high support",
+t2_ad_high_indirect,"Appendix Table 2, p. 5",pipeline,-0.3,TRUE,"Appendix Table 2: Absolute Distance, indirect effect, high support",
+t2_ad_high_indirect_lo,"Appendix Table 2, p. 5",pipeline,-0.425,TRUE,"Appendix Table 2: Absolute Distance, indirect 95% CI lower bound, high support",
+t2_ad_high_indirect_hi,"Appendix Table 2, p. 5",pipeline,-0.175,TRUE,"Appendix Table 2: Absolute Distance, indirect 95% CI upper bound, high support",
+t2_ad_low_direct,"Appendix Table 2, p. 5",pipeline,-0.55,TRUE,"Appendix Table 2: Absolute Distance, direct effect, low support",
+t2_ad_low_direct_lo,"Appendix Table 2, p. 5",pipeline,-0.825,TRUE,"Appendix Table 2: Absolute Distance, direct 95% CI lower bound, low support",
+t2_ad_low_direct_hi,"Appendix Table 2, p. 5",pipeline,-0.125,TRUE,"Appendix Table 2: Absolute Distance, direct 95% CI upper bound, low support",
+t2_ad_low_indirect,"Appendix Table 2, p. 5",pipeline,-0.125,TRUE,"Appendix Table 2: Absolute Distance, indirect effect, low support",
+t2_ad_low_indirect_lo,"Appendix Table 2, p. 5",pipeline,-0.325,TRUE,"Appendix Table 2: Absolute Distance, indirect 95% CI lower bound, low support",
+t2_ad_low_indirect_hi,"Appendix Table 2, p. 5",pipeline,0,TRUE,"Appendix Table 2: Absolute Distance, indirect 95% CI upper bound, low support",
+app_randomizations,"Online appendix, section 4, p. 6",structural,10000,TRUE,Matched pair randomizations the first archive script generates,
+app_file_list_numbers,"Online appendix, section 4, pp. 6-7",structural,,FALSE,The 1 to 11 numbering of the replication file list,"List numerals, not claims"
+corr_nearly_twice,"Corrigendum, p. 206",descriptive,2,TRUE,The 2014 article estimated the total effect of treatment to be nearly twice as large,
+corr_uncertainty_larger,"Corrigendum, p. 206",descriptive,,TRUE,"When corrected, the uncertainty attending the indirect effect estimates is larger",
+corr_orig_indirect_point,"Corrigendum, p. 206",pipeline,-0.225,TRUE,The original highest p-value indirect effect,
+corr_orig_direct_point,"Corrigendum, p. 206",pipeline,-0.300,TRUE,The original highest p-value direct effect,
+corr_orig_indirect_ci_lower,"Corrigendum, p. 206",pipeline,-0.325,TRUE,"The original indirect 95% confidence interval, lower bound",
+corr_orig_indirect_ci_upper,"Corrigendum, p. 206",pipeline,-0.025,TRUE,"The original indirect 95% confidence interval, upper bound",
+corr_orig_direct_ci_lower,"Corrigendum, p. 206",pipeline,-0.575,TRUE,"The original direct 95% confidence interval, lower bound",
+corr_orig_direct_ci_upper,"Corrigendum, p. 206",pipeline,0.000,TRUE,"The original direct 95% confidence interval, upper bound",
+corr_new_indirect_point,"Corrigendum, p. 206",pipeline,-0.150,TRUE,The corrected highest p-value indirect effect,
+corr_new_direct_point,"Corrigendum, p. 206",pipeline,-0.250,TRUE,The corrected highest p-value direct effect,
+corr_new_indirect_ci_lower,"Corrigendum, p. 206",pipeline,-0.325,TRUE,"The corrected indirect 95% confidence interval, lower bound",
+corr_new_indirect_ci_upper,"Corrigendum, p. 206",pipeline,0.200,TRUE,"The corrected indirect 95% confidence interval, upper bound",
+corr_new_direct_ci_lower,"Corrigendum, p. 206",pipeline,-0.625,TRUE,"The corrected direct 95% confidence interval, lower bound",
+corr_new_direct_ci_upper,"Corrigendum, p. 207",pipeline,0.175,TRUE,"The corrected direct 95% confidence interval, upper bound",
+corr_wider_cis,"Corrigendum, pp. 206-207",descriptive,,TRUE,The corrected 95% confidence intervals are much wider than the original ones,
+corr_insufficient_evidence,"Corrigendum, p. 206",descriptive,,TRUE,There is insufficient statistical evidence to conclude that indirect exposure altered legislator behavior,
+corr_figure_numbers,"Corrigendum, pp. 207-208",structural,,FALSE,The corrigendum's own Figure 1 and Figure 2 numbering,"Float numerals, not claims"

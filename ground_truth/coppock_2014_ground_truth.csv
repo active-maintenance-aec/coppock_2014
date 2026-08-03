@@ -1,13 +1,117 @@
-paper_id,table_figure,claim,value_script,value_paper,match,notes,value_rewrite,match_rewrite,defect_locus
-coppock_2016,figure_2 uncorrected,direct effect,-0.3,-0.3,1,,-0.3,1,
-coppock_2016,figure_2 uncorrected,direct 95% CI lower,-0.5,-0.575,0,Appendix Table 1 of the 2014 article states -0.5; the corrigendum restates it as -0.575,-0.5,0,paper_internal
-coppock_2016,figure_2 uncorrected,direct 95% CI upper,-0.075,0,0,Appendix Table 1 of the 2014 article states -0.075; the corrigendum restates it as 0,-0.075,0,paper_internal
-coppock_2016,figure_2 uncorrected,indirect effect,-0.225,-0.225,1,,-0.225,1,
-coppock_2016,figure_2 uncorrected,indirect 95% CI lower,-0.325,-0.325,1,pre-3.6 sampler gives -0.3,-0.325,1,
-coppock_2016,figure_2 uncorrected,indirect 95% CI upper,-0.1,-0.025,0,Appendix Table 1 of the 2014 article states -0.1; the corrigendum restates it as -0.025,-0.1,0,paper_internal
-coppock_2016,figure_2 corrected,direct effect,,-0.25,,Reproduces exactly once the corrected analysis uses the Version 3 ideal points.,-0.25,1,
-coppock_2016,figure_2 corrected,direct 95% CI lower,,-0.625,,Reproduces exactly once the corrected analysis uses the Version 3 ideal points.,-0.625,1,
-coppock_2016,figure_2 corrected,direct 95% CI upper,,0.175,,"Not identified: the confidence region reaches 0.2, the top of the grid, in the corrigendum surface as well as this one, so the published 0.175 is the last interior grid point rather than a bound the data support.",,,
-coppock_2016,figure_2 corrected,indirect effect,,-0.15,,Reproduces exactly once the corrected analysis uses the Version 3 ideal points.,-0.15,1,
-coppock_2016,figure_2 corrected,indirect 95% CI lower,,-0.325,,"One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv.",-0.35,0,environment
-coppock_2016,figure_2 corrected,indirect 95% CI upper,,0.2,,"One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv.",0.175,0,environment
+paper_id,claim_id,table_figure,claim,value_script,value_paper,match,value_rewrite,match_rewrite,holds,defect_locus,notes
+coppock_2014,abstract_effect_twice,"Abstract, p. 159",The total causal effect is twice as large as originally reported,NA,2,NA,1.8671657188554547,NA,1,NA,
+coppock_2014,intro_treated,"Text, p. 160",Legislators sent information,NA,35,NA,35,1,NA,NA,
+coppock_2014,intro_legislators,"Text, p. 160",Legislators in the chamber,NA,70,NA,70,1,NA,NA,
+coppock_2014,context_treated,"Text, p. 161","Representatives sent survey estimates, restated",NA,35,NA,35,1,NA,NA,
+coppock_2014,context_legislators,"Text, p. 161","State representatives, restated",NA,70,NA,70,1,NA,NA,
+coppock_2014,method_treatments_introduced,"Text, p. 162",Treatments introduced into the information sharing network,NA,35,NA,35,1,NA,NA,
+coppock_2014,method_assignments_exponent,"Text, pp. 161-162","Matched pairs, the exponent in 2^35",NA,35,NA,35,1,NA,NA,
+coppock_2014,method_assignments_sci,"Text, pp. 161-162","Possible matched-pair random assignments, in units of 10^10",NA,3.4,NA,3.4359738368,1,NA,NA,
+coppock_2014,method_assignments_trillion,"Text, p. 162","The same set of random assignments, in units of 10^12",NA,30,NA,0.034359738368,0,NA,paper_internal,"Two sentences earlier the article writes this quantity as 3.4 x 10^10, which the deposit confirms. 2^35 is 34.4 billion, so the trillions figure is out by three orders of magnitude. The corrigendum does not touch it"
+coppock_2014,method_key_votes,"Text, p. 162",Key votes behind the W-NOMINATE scores,NA,17,NA,17,1,NA,NA,
+coppock_2014,method_ideology_range,"Text, p. 162",Every W-NOMINATE score lies between -1 and 1,NA,1,NA,0.997371,NA,1,NA,Largest ideal point in absolute value across the 68 legislators who have one
+coppock_2014,method_eq1_range,"Text, p. 162",Equation (1) varies between 0 and 1,NA,1,NA,1,NA,1,NA,Smallest and largest similarity score across distinct legislator pairs
+coppock_2014,method_remaining_legislators,"Text, p. 163",Legislators remaining once one is treated,NA,69,NA,69,1,NA,NA,
+coppock_2014,method_remaining_treated,"Text, p. 163","Of those, the number that can still be treated",NA,34,NA,34,1,NA,NA,
+coppock_2014,results_f1a_point,"Text, p. 165",Figure 1a point estimate,NA,-0.16,NA,-0.16,1,NA,NA,
+coppock_2014,results_f1a_p_at_zero,"Text, p. 165",Figure 1a p-value at the sharp null is slightly higher than 0.05,NA,0.05,NA,0.07,NA,1,NA,
+coppock_2014,results_f1a_ci_lower,"Text, p. 165",Figure 1a confidence region lower bound,NA,-0.34,NA,-0.34,1,NA,NA,
+coppock_2014,results_f1a_ci_upper,"Text, p. 165",Figure 1a confidence region upper bound,NA,0.02,NA,0.02,1,NA,NA,
+coppock_2014,results_f1b_high_point,"Text, p. 165","Figure 1b point estimate, higher-support districts",NA,0.05,NA,0.05,1,NA,NA,
+coppock_2014,results_f1b_low_point,"Text, p. 165","Figure 1b point estimate, lower-support districts",NA,-0.37,NA,-0.375,1,NA,NA,"Appendix Table 2 gives -0.375 for the same quantity and the pipeline reproduces it. The main text truncates where it would round, which lands exactly on the boundary at the two decimals it prints, so the row is a match rather than a disagreement"
+coppock_2014,results_f1b_bounded_low_only,"Text, p. 165",The confidence region is bounded away from zero for the low-support districts only,NA,0,NA,0.35,NA,1,NA,"Higher-support upper bound lies above zero, lower-support upper bound below it"
+coppock_2014,results_f2_direct_point,"Text, p. 165",Figure 2 direct effect,NA,-0.300,NA,-0.3,1,NA,NA,
+coppock_2014,results_f2_indirect_point,"Text, p. 165",Figure 2 indirect effect,NA,-0.225,NA,-0.225,1,NA,NA,
+coppock_2014,results_f2_direct_pp,"Text, p. 165",Figure 2 direct effect on the percentage point scale,NA,30,NA,30,1,NA,NA,
+coppock_2014,results_f2_indirect_pp,"Text, p. 165",Figure 2 indirect effect on the percentage point scale,NA,22.5,NA,22.5,1,NA,NA,
+coppock_2014,results_f2_ci_excludes_zero,"Text, p. 165",Neither Figure 2 confidence region crosses zero,NA,0,NA,-0.075,NA,1,NA,Both upper bounds lie below zero
+coppock_2014,results_f3a_direct_point,"Text, p. 166","Figure 3a direct effect, lower-support districts",NA,-0.550,NA,-0.475,0,NA,archive,"The article describes the Hodges-Lehmann estimate, which is the median over the plateau of highest p-values. CoppockJEPS_figure3code.R instead reads the first and second entries of the plateau index matrix in column-major order. The lower-support plateau spans 77 cells, so the two readings diverge"
+coppock_2014,results_f3a_indirect_point,"Text, p. 166","Figure 3a indirect effect, lower-support districts",NA,-0.125,NA,-0.175,0,NA,archive,Same plateau indexing defect as the direct effect above; the second entry of a column-major index matrix is a row position used to index the indirect axis
+coppock_2014,results_f3a_no_positive_direct,"Text, p. 166",No hypothesis with a positive direct effect receives positive probability,NA,0,NA,0.004,NA,1,NA,"The highest p-value to the right of the zero line is small but not zero, so the sentence holds at the 0.05 level the confidence regions use rather than literally"
+coppock_2014,results_f3a_indirect_touches_zero,"Text, p. 166",The Figure 3a indirect confidence region extends up to but not across zero,NA,0,NA,0,NA,1,NA,
+coppock_2014,results_f3b_direct_point,"Text, p. 166","Figure 3b direct effect, higher-support districts",NA,-0.175,NA,-0.1875,0,NA,archive,"Plateau indexing, as in Figure 3a"
+coppock_2014,results_f3b_indirect_point,"Text, p. 166","Figure 3b indirect effect, higher-support districts",NA,-0.300,NA,-0.3,1,NA,NA,"The higher-support plateau is a single cell, so the two readings agree here"
+coppock_2014,results_f3b_direct_crosses_zero,"Text, p. 166",The Figure 3b direct effect cannot be distinguished from zero,NA,0,NA,0.075,NA,1,NA,
+coppock_2014,results_f3b_indirect_bounded_away,"Text, p. 166",The Figure 3b indirect confidence region is bounded away from zero,NA,0,NA,-0.175,NA,1,NA,
+coppock_2014,results_f3_low_stronger_than_high,"Text, p. 166",Direct effects are stronger in low-support than in high-support districts,NA,0,NA,-0.2875,NA,1,NA,
+coppock_2014,conclusion_treated,"Text, p. 167",Treated legislators in the article's arithmetic,NA,35,NA,35,1,NA,NA,
+coppock_2014,conclusion_dim_estimate,"Text, p. 167",Difference-in-means estimate in the article's arithmetic,NA,-0.16,NA,-0.15999999999999998,1,NA,NA,
+coppock_2014,conclusion_votes_changed,"Text, p. 167",Votes the difference in means implies were changed,NA,-5.6,NA,-5.599999999999999,1,NA,NA,
+coppock_2014,conclusion_votes_spelled,"Text, p. 167",The same quantity written out as five and a half votes,NA,5.5,NA,5.5,NA,1,NA,
+coppock_2014,conclusion_uniformity_yeas,"Text, p. 167",Yea votes in the uniformity trial,NA,61,NA,61.456128025590544,1,NA,NA,"The uniformity trial sums to 61.46, which the article rounds to 61"
+coppock_2014,conclusion_actual_yeas,"Text, p. 167",Legislators who actually voted yea,NA,51,NA,51,1,NA,NA,
+coppock_2014,conclusion_total_effect,"Text, p. 167",Total causal effect in votes,NA,10,NA,10.456128025590544,1,NA,NA,"The difference is 10.46, which the article rounds to 10"
+coppock_2014,conclusion_nearly_doubled,"Text, p. 167",The magnitude of the total causal effect has nearly doubled,NA,2,NA,1.8671657188554547,NA,1,NA,
+coppock_2014,app_eq1_score_range,"Appendix, section 1",Equation (1) gives a score between zero and 1 for all legislator pairs,NA,1,NA,1,NA,1,NA,
+coppock_2014,app_eq2_denominator,"Appendix, Equation (2)",Largest possible difference between two ideal point ranks,NA,67,NA,67,1,NA,NA,
+coppock_2014,app_a2_both_negative,"Appendix, section 1.1",Both rank model point estimates are negative,NA,,NA,-0.2,NA,1,NA,The article states no number here; the value recorded is the less negative of the two estimates
+coppock_2014,app_eq3_higher_than_eq1,"Appendix, section 1.2",Equation (3) returns a higher value than Equation (1) for any pair of ideal points,NA,0,NA,0,NA,1,NA,"The excess is strictly positive for every pair whose ideal points differ and exactly zero for the one pair whose ideal points are identical, so the claim holds weakly rather than strictly"
+coppock_2014,app_a3_same_sign_more_uncertain,"Appendix, section 1.2",The squared-distance estimates carry the same sign as the main analysis and are more uncertain,NA,,NA,0.4250000000000001,NA,1,NA,The article states no number here; the value recorded is how much wider the squared-distance direct interval is
+coppock_2014,app_a3_zero_supported,"Appendix, section 1.2",The squared-distance model supports the hypothesis that both effects are zero,NA,0.05,NA,0.766,NA,1,NA,
+coppock_2014,app_a4_direct_crosses_zero,"Appendix, section 1.3",The geographic placebo direct confidence region crosses zero,NA,0,NA,0.09,NA,1,NA,
+coppock_2014,app_a4_zero_indirect_large_p,"Appendix, section 1.3",Many hypotheses with a zero indirect effect get large p-values under the geographic placebo,NA,0.05,NA,0.912,NA,1,NA,
+coppock_2014,app_four_parameters,"Appendix, section 2",Parameters in the generalized causal model,NA,4,NA,4,1,NA,NA,
+coppock_2014,app_a5_same_results,"Appendix, section 2",The four-parameter model gives the same substantive results as Figure 3,NA,,NA,4,NA,1,NA,The article states no number here; the value recorded is how many of the four parameters share a sign with Figure 3
+coppock_2014,app_randomizations,"Appendix, section 4",Matched pair randomizations the first archive script generates,NA,10000,NA,10000,1,NA,NA,
+coppock_2014,t1_ns_direct,Appendix Table 1,"Direct Effect, no_spillover",NA,-0.16,NA,-0.16,1,NA,NA,
+coppock_2014,t1_ns_direct_lo,Appendix Table 1,"Direct 95% CI, no_spillover, bound 1",NA,-0.34,NA,-0.34,1,NA,NA,
+coppock_2014,t1_ns_direct_hi,Appendix Table 1,"Direct 95% CI, no_spillover, bound 2",NA,0.02,NA,0.02,1,NA,NA,
+coppock_2014,t1_ad_direct,Appendix Table 1,"Direct Effect, absolute_distance_uncorrected",NA,-0.3,NA,-0.3,1,NA,NA,
+coppock_2014,t1_ad_direct_lo,Appendix Table 1,"Direct 95% CI, absolute_distance_uncorrected, bound 1",NA,-0.5,NA,-0.5,1,NA,NA,
+coppock_2014,t1_ad_direct_hi,Appendix Table 1,"Direct 95% CI, absolute_distance_uncorrected, bound 2",NA,-0.075,NA,-0.075,1,NA,NA,
+coppock_2014,t1_ad_indirect,Appendix Table 1,"Indirect Effect, absolute_distance_uncorrected",NA,-0.225,NA,-0.225,1,NA,NA,
+coppock_2014,t1_ad_indirect_lo,Appendix Table 1,"Indirect 95% CI, absolute_distance_uncorrected, bound 1",NA,-0.3,NA,-0.325,1,NA,NA,
+coppock_2014,t1_ad_indirect_hi,Appendix Table 1,"Indirect 95% CI, absolute_distance_uncorrected, bound 2",NA,-0.1,NA,-0.1,1,NA,NA,
+coppock_2014,t1_rd_direct,Appendix Table 1,"Direct Effect, rank_distance",NA,-0.225,NA,-0.225,1,NA,NA,
+coppock_2014,t1_rd_direct_lo,Appendix Table 1,"Direct 95% CI, rank_distance, bound 1",NA,-0.45,NA,-0.45,1,NA,NA,
+coppock_2014,t1_rd_direct_hi,Appendix Table 1,"Direct 95% CI, rank_distance, bound 2",NA,0.1,NA,0.1,1,NA,NA,
+coppock_2014,t1_rd_indirect,Appendix Table 1,"Indirect Effect, rank_distance",NA,-0.2,NA,-0.2,1,NA,NA,
+coppock_2014,t1_rd_indirect_lo,Appendix Table 1,"Indirect 95% CI, rank_distance, bound 1",NA,-0.325,NA,-0.325,1,NA,NA,
+coppock_2014,t1_rd_indirect_hi,Appendix Table 1,"Indirect 95% CI, rank_distance, bound 2",NA,0.175,NA,0.15,0,NA,unresolved,"One grid step from the published bound. The rewrite reproduces the archive's p-value surface for this figure cell for cell, and keeps the current sampler where the analysis predates R 3.6; the sampler check in text_sampler_reproducibility.csv covers Figure 2 only, so the cause is not established here"
+coppock_2014,t1_sd_direct,Appendix Table 1,"Direct Effect, squared_distance",NA,-0.25,NA,-0.25,1,NA,NA,
+coppock_2014,t1_sd_direct_lo,Appendix Table 1,"Direct 95% CI, squared_distance, bound 1",NA,-0.525,NA,-0.525,1,NA,NA,
+coppock_2014,t1_sd_direct_hi,Appendix Table 1,"Direct 95% CI, squared_distance, bound 2",NA,0.325,NA,0.325,1,NA,NA,
+coppock_2014,t1_sd_indirect,Appendix Table 1,"Indirect Effect, squared_distance",NA,-0.175,NA,-0.175,1,NA,NA,
+coppock_2014,t1_sd_indirect_lo,Appendix Table 1,"Indirect 95% CI, squared_distance, bound 1",NA,-0.35,NA,-0.325,0,NA,unresolved,One grid step from the published bound; see the rank distance note above
+coppock_2014,t1_sd_indirect_hi,Appendix Table 1,"Indirect 95% CI, squared_distance, bound 2",NA,0.525,NA,0.525,1,NA,NA,
+coppock_2014,t1_gc_direct,Appendix Table 1,"Direct Effect, geographic_contiguity",NA,-0.15,NA,-0.15,1,NA,NA,
+coppock_2014,t1_gc_direct_lo,Appendix Table 1,"Direct 95% CI, geographic_contiguity, bound 1",NA,-0.38,NA,-0.37,0,NA,archive,"CoppockJEPS_appendixfigure4.R is the one figure script in the deposit that never calls set.seed, so the published Appendix Figure 4 is one unlabelled draw and cannot be reproduced by anyone"
+coppock_2014,t1_gc_direct_hi,Appendix Table 1,"Direct 95% CI, geographic_contiguity, bound 2",NA,0.08,NA,0.09,0,NA,archive,Appendix Figure 4 is unseeded in the deposit
+coppock_2014,t1_gc_indirect,Appendix Table 1,"Indirect Effect, geographic_contiguity",NA,-0.025,NA,0.025,0,NA,archive,"Appendix Figure 4 is unseeded in the deposit. The estimate sits either side of zero across draws, so the published sign is a property of one draw rather than of the data"
+coppock_2014,t1_gc_indirect_lo,Appendix Table 1,"Indirect 95% CI, geographic_contiguity, bound 1",NA,-0.095,NA,-0.095,1,NA,NA,
+coppock_2014,t1_gc_indirect_hi,Appendix Table 1,"Indirect 95% CI, geographic_contiguity, bound 2",NA,0.145,NA,0.15,0,NA,archive,Appendix Figure 4 is unseeded in the deposit
+coppock_2014,t2_ns_high_direct,Appendix Table 2,"Direct Effect, High Support, no_spillover",NA,0.05,NA,0.05,1,NA,NA,
+coppock_2014,t2_ns_high_direct_lo,Appendix Table 2,"Direct 95% CI, High Support, no_spillover, bound 1",NA,-0.225,NA,-0.225,1,NA,NA,
+coppock_2014,t2_ns_high_direct_hi,Appendix Table 2,"Direct 95% CI, High Support, no_spillover, bound 2",NA,0.35,NA,0.35,1,NA,NA,
+coppock_2014,t2_ns_low_direct,Appendix Table 2,"Direct Effect, Low Support, no_spillover",NA,-0.375,NA,-0.375,1,NA,NA,
+coppock_2014,t2_ns_low_direct_lo,Appendix Table 2,"Direct 95% CI, Low Support, no_spillover, bound 1",NA,-0.675,NA,-0.675,1,NA,NA,
+coppock_2014,t2_ns_low_direct_hi,Appendix Table 2,"Direct 95% CI, Low Support, no_spillover, bound 2",NA,-0.05,NA,-0.05,1,NA,NA,
+coppock_2014,t2_ad_high_direct,Appendix Table 2,"Direct Effect, High Support, absolute_distance_uncorrected",NA,-0.175,NA,-0.1875,0,NA,archive,Plateau indexing in CoppockJEPS_figure3code.R
+coppock_2014,t2_ad_high_direct_lo,Appendix Table 2,"Direct 95% CI, High Support, absolute_distance_uncorrected, bound 1",NA,-0.45,NA,-0.4,0,NA,unresolved,Two grid steps from the published bound. The rewrite reproduces the archive's surface for this figure cell for cell under the current sampler; the sampler check covers Figure 2 only
+coppock_2014,t2_ad_high_direct_hi,Appendix Table 2,"Direct 95% CI, High Support, absolute_distance_uncorrected, bound 2",NA,0.075,NA,0.075,1,NA,NA,
+coppock_2014,t2_ad_high_indirect,Appendix Table 2,"Indirect Effect, High Support, absolute_distance_uncorrected",NA,-0.3,NA,-0.3,1,NA,NA,
+coppock_2014,t2_ad_high_indirect_lo,Appendix Table 2,"Indirect 95% CI, High Support, absolute_distance_uncorrected, bound 1",NA,-0.425,NA,-0.425,1,NA,NA,
+coppock_2014,t2_ad_high_indirect_hi,Appendix Table 2,"Indirect 95% CI, High Support, absolute_distance_uncorrected, bound 2",NA,-0.175,NA,-0.175,1,NA,NA,
+coppock_2014,t2_ad_low_direct,Appendix Table 2,"Direct Effect, Low Support, absolute_distance_uncorrected",NA,-0.55,NA,-0.475,0,NA,archive,Plateau indexing in CoppockJEPS_figure3code.R; the lower-support plateau spans 77 cells
+coppock_2014,t2_ad_low_direct_lo,Appendix Table 2,"Direct 95% CI, Low Support, absolute_distance_uncorrected, bound 1",NA,-0.825,NA,-0.8,0,NA,unresolved,One grid step from the published bound; see the higher-support note above
+coppock_2014,t2_ad_low_direct_hi,Appendix Table 2,"Direct 95% CI, Low Support, absolute_distance_uncorrected, bound 2",NA,-0.125,NA,-0.125,1,NA,NA,
+coppock_2014,t2_ad_low_indirect,Appendix Table 2,"Indirect Effect, Low Support, absolute_distance_uncorrected",NA,-0.125,NA,-0.175,0,NA,archive,Plateau indexing in CoppockJEPS_figure3code.R
+coppock_2014,t2_ad_low_indirect_lo,Appendix Table 2,"Indirect 95% CI, Low Support, absolute_distance_uncorrected, bound 1",NA,-0.325,NA,-0.325,1,NA,NA,
+coppock_2014,t2_ad_low_indirect_hi,Appendix Table 2,"Indirect 95% CI, Low Support, absolute_distance_uncorrected, bound 2",NA,0,NA,0,1,NA,NA,
+coppock_2016,corr_nearly_twice,"Corrigendum, p. 206",The 2014 total effect was estimated to be nearly twice as large,NA,2,NA,1.8671657188554547,NA,1,NA,
+coppock_2016,corr_uncertainty_larger,"Corrigendum, p. 206",The corrected indirect estimates carry more uncertainty,NA,,NA,0.29999999999999993,NA,1,NA,The corrigendum states no number here; the value recorded is how much wider the corrected indirect interval is
+coppock_2016,corr_orig_indirect_point,figure_2 uncorrected,indirect effect,NA,-0.225,NA,-0.225,1,NA,NA,
+coppock_2016,corr_orig_direct_point,figure_2 uncorrected,direct effect,NA,-0.300,NA,-0.3,1,NA,NA,
+coppock_2016,corr_orig_indirect_ci_lower,figure_2 uncorrected,indirect 95% CI lower,NA,-0.325,NA,-0.325,1,NA,NA,
+coppock_2016,corr_orig_indirect_ci_upper,figure_2 uncorrected,indirect 95% CI upper,NA,-0.025,NA,-0.1,0,NA,paper_internal,Appendix Table 1 of the 2014 article states -0.1 and the deposited scripts produce it; the corrigendum restates it as -0.025
+coppock_2016,corr_orig_direct_ci_lower,figure_2 uncorrected,direct 95% CI lower,NA,-0.575,NA,-0.5,0,NA,paper_internal,Appendix Table 1 of the 2014 article states -0.5 and the deposited scripts produce it; the corrigendum restates it as -0.575
+coppock_2016,corr_orig_direct_ci_upper,figure_2 uncorrected,direct 95% CI upper,NA,0.000,NA,-0.075,0,NA,paper_internal,Appendix Table 1 of the 2014 article states -0.075 and the deposited scripts produce it; the corrigendum restates it as 0.000
+coppock_2016,corr_new_indirect_point,figure_2 corrected,indirect effect,NA,-0.150,NA,-0.15,1,NA,NA,Reproduces exactly once the corrected analysis uses the Version 3 ideal points
+coppock_2016,corr_new_direct_point,figure_2 corrected,direct effect,NA,-0.250,NA,-0.25,1,NA,NA,Reproduces exactly once the corrected analysis uses the Version 3 ideal points
+coppock_2016,corr_new_indirect_ci_lower,figure_2 corrected,indirect 95% CI lower,NA,-0.325,NA,-0.35,0,NA,environment,"One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv"
+coppock_2016,corr_new_indirect_ci_upper,figure_2 corrected,indirect 95% CI upper,NA,0.200,NA,0.175,0,NA,environment,"One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv"
+coppock_2016,corr_new_direct_ci_lower,figure_2 corrected,direct 95% CI lower,NA,-0.625,NA,-0.625,1,NA,NA,Reproduces exactly once the corrected analysis uses the Version 3 ideal points
+coppock_2016,corr_new_direct_ci_upper,figure_2 corrected,direct 95% CI upper,NA,0.175,NA,NA,NA,NA,paper_internal,"Not identified: the confidence region reaches 0.2, the top of the grid, in the corrigendum's own surface as well as this one, so the published 0.175 is the last interior grid point rather than a bound the data support"
+coppock_2016,corr_wider_cis,"Corrigendum, pp. 206-207",The corrected confidence intervals are much wider,NA,,NA,-0.125,NA,1,NA,The corrigendum states no number here; the value recorded is how much further down the corrected direct interval reaches
+coppock_2016,corr_insufficient_evidence,"Corrigendum, p. 206",There is insufficient evidence that indirect exposure altered legislator behavior,NA,,NA,0.175,NA,1,NA,"The corrigendum states no number here; the value recorded is the corrected indirect upper bound, and the interval covers zero"
+coppock_2014,NA,Appendix Figure 1,Ideal points the histogram plots,NA,NA,NA,68,NA,NA,NA,The appendix states no count. Two of the 70 legislators cast too few votes for wnominate's minvotes threshold and have no score
