@@ -36,6 +36,10 @@ totals <- out("text_total_causal_effect.csv")
 ideal_points <- out("figure_a1_ideal_points.csv")
 four_parameter <- out("figure_a5_four_parameter.csv")
 figure_1a <- out("figure_1a_no_spillover.csv")
+# Read for the plateau sizes only. Every Figure 2 estimate in this table comes through
+# table_1_constant_effects.csv, so the two instruments still reach each cell by
+# separate routes.
+figure_2 <- out("figure_2_ideo_spillover.csv")
 figure_3 <- out("figure_3_hetero_spillover.csv")
 figure_a2 <- out("figure_a2_rank_spillover.csv")
 figure_a3 <- out("figure_a3_squared_spillover.csv")
@@ -98,6 +102,14 @@ f3_points <- c(
   cell(table_2, "Direct Effect, High Support", "absolute_distance_uncorrected"),
   cell(table_2, "Indirect Effect, High Support", "absolute_distance_uncorrected")
 )
+
+# How many cells attain the highest p-value on each Figure 2 surface. The corrigendum
+# names a pair the median over the plateau does not return on its own panel, and the
+# size of that plateau is the reason, so the note that says so is generated rather than
+# typed.
+plateau <- function(version) {
+  pick(figure_2, "Figure 2: cells attaining the highest p-value", version)
+}
 
 # Interval widths, for the claims about precision.
 width_1 <- function(quantity, column) {
@@ -413,8 +425,11 @@ table_rows <- table_cells |>
 
 # The corrigendum ----
 # Coppock (2016) prints two sets of values: the corrected estimates it substitutes,
-# and a restatement of the original ones it is correcting. Both are recorded, and the
-# restatement disagrees with the article it restates.
+# and a restatement of the original ones it is correcting. Both are recorded, and both
+# are compared against the corrigendum's own two panels rather than against the
+# article's figure. Its original panel is the published analysis re-run on the ideal
+# points of the archive the corrigendum was computed in, which is not the surface the
+# 2014 appendix reports; see the header of maintained/figure_2_ideo_spillover.R.
 corrigendum_rows <- tribble(
   ~claim_id, ~table_figure, ~claim, ~paper_printed, ~value_rewrite, ~holds, ~defect_locus, ~notes,
 
@@ -424,56 +439,60 @@ corrigendum_rows <- tribble(
   "corr_uncertainty_larger", "Corrigendum, p. 206",
     "The corrected indirect estimates carry more uncertainty",
     "", width_1("Indirect 95% CI", "absolute_distance") -
-      width_1("Indirect 95% CI", "absolute_distance_uncorrected"),
+      width_1("Indirect 95% CI", "absolute_distance_corrigendum_original"),
     as.numeric(width_1("Indirect 95% CI", "absolute_distance") >
-                 width_1("Indirect 95% CI", "absolute_distance_uncorrected")), NA,
-    "The corrigendum states no number here; the value recorded is how much wider the corrected indirect interval is",
+                 width_1("Indirect 95% CI", "absolute_distance_corrigendum_original")), NA,
+    "The corrigendum states no number here; the value recorded is how much wider the corrected indirect interval is than the one on its own original panel",
 
-  "corr_orig_indirect_point", "figure_2 uncorrected", "indirect effect",
-    "-0.225", cell(table_1, "Indirect Effect", "absolute_distance_uncorrected"), NA, NA, "",
-  "corr_orig_direct_point", "figure_2 uncorrected", "direct effect",
-    "-0.300", cell(table_1, "Direct Effect", "absolute_distance_uncorrected"), NA, NA, "",
-  "corr_orig_indirect_ci_lower", "figure_2 uncorrected", "indirect 95% CI lower",
-    "-0.325", bound(table_1, "Indirect 95% CI", "absolute_distance_uncorrected", 1), NA, NA, "",
-  "corr_orig_indirect_ci_upper", "figure_2 uncorrected", "indirect 95% CI upper",
-    "-0.025", bound(table_1, "Indirect 95% CI", "absolute_distance_uncorrected", 2),
-    NA, "paper_internal",
-    "Appendix Table 1 of the 2014 article states -0.1 and the deposited scripts produce it; the corrigendum restates it as -0.025",
-  "corr_orig_direct_ci_lower", "figure_2 uncorrected", "direct 95% CI lower",
-    "-0.575", bound(table_1, "Direct 95% CI", "absolute_distance_uncorrected", 1),
-    NA, "paper_internal",
-    "Appendix Table 1 of the 2014 article states -0.5 and the deposited scripts produce it; the corrigendum restates it as -0.575",
-  "corr_orig_direct_ci_upper", "figure_2 uncorrected", "direct 95% CI upper",
-    "0.000", bound(table_1, "Direct 95% CI", "absolute_distance_uncorrected", 2),
-    NA, "paper_internal",
-    "Appendix Table 1 of the 2014 article states -0.075 and the deposited scripts produce it; the corrigendum restates it as 0.000",
+  "corr_orig_indirect_point", "Corrigendum Figure 1, original panel", "indirect effect",
+    "-0.225", cell(table_1, "Indirect Effect", "absolute_distance_uncorrected"), NA, NA,
+    as.character(str_glue("The pair the corrigendum restates is the pair the 2014 article reported, which is what its sentence describes, so this row is laid against the article's surface. It attains the highest p-value on the corrigendum's own redrawn panel too, where {plateau('corrigendum_original')} cells are tied at the top against {plateau('uncorrected')} on the article's, which is why the median over the plateau does not return it there")),
+  "corr_orig_direct_point", "Corrigendum Figure 1, original panel", "direct effect",
+    "-0.300", cell(table_1, "Direct Effect", "absolute_distance_uncorrected"), NA, NA,
+    "See the note on the indirect point estimate",
+  "corr_orig_indirect_ci_lower", "Corrigendum Figure 1, original panel", "indirect 95% CI lower",
+    "-0.325", bound(table_1, "Indirect 95% CI", "absolute_distance_corrigendum_original", 1),
+    NA, NA,
+    "Reproduces exactly on the corrigendum's own original panel. The 2014 appendix states -0.3 for the same bound, and that reproduces too, on the article's surface",
+  "corr_orig_indirect_ci_upper", "Corrigendum Figure 1, original panel", "indirect 95% CI upper",
+    "-0.025", bound(table_1, "Indirect 95% CI", "absolute_distance_corrigendum_original", 2),
+    NA, NA,
+    "Reproduces exactly on the corrigendum's own original panel. The 2014 appendix states -0.1 for the same bound, and that reproduces too, on the article's surface",
+  "corr_orig_direct_ci_lower", "Corrigendum Figure 1, original panel", "direct 95% CI lower",
+    "-0.575", bound(table_1, "Direct 95% CI", "absolute_distance_corrigendum_original", 1),
+    NA, NA,
+    "Reproduces exactly on the corrigendum's own original panel. The 2014 appendix states -0.5 for the same bound, and that reproduces too, on the article's surface",
+  "corr_orig_direct_ci_upper", "Corrigendum Figure 1, original panel", "direct 95% CI upper",
+    "0.000", bound(table_1, "Direct 95% CI", "absolute_distance_corrigendum_original", 2),
+    NA, NA,
+    "Reproduces exactly on the corrigendum's own original panel. The 2014 appendix states -0.075 for the same bound, and that reproduces too, on the article's surface",
 
-  "corr_new_indirect_point", "figure_2 corrected", "indirect effect",
+  "corr_new_indirect_point", "Corrigendum Figure 1, corrected panel", "indirect effect",
     "-0.150", cell(table_1, "Indirect Effect", "absolute_distance"), NA, NA,
     "Reproduces exactly once the corrected analysis uses the Version 3 ideal points",
-  "corr_new_direct_point", "figure_2 corrected", "direct effect",
+  "corr_new_direct_point", "Corrigendum Figure 1, corrected panel", "direct effect",
     "-0.250", cell(table_1, "Direct Effect", "absolute_distance"), NA, NA,
     "Reproduces exactly once the corrected analysis uses the Version 3 ideal points",
-  "corr_new_indirect_ci_lower", "figure_2 corrected", "indirect 95% CI lower",
+  "corr_new_indirect_ci_lower", "Corrigendum Figure 1, corrected panel", "indirect 95% CI lower",
     "-0.325", bound(table_1, "Indirect 95% CI", "absolute_distance", 1), NA, "environment",
     "One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv",
-  "corr_new_indirect_ci_upper", "figure_2 corrected", "indirect 95% CI upper",
+  "corr_new_indirect_ci_upper", "Corrigendum Figure 1, corrected panel", "indirect 95% CI upper",
     "0.200", bound(table_1, "Indirect 95% CI", "absolute_distance", 2), NA, "environment",
     "One grid step from the published value. The rewrite uses the current sampler by design; under RNGkind(Rounding), the sampler of 2016, it reproduces exactly. See maintained/output/text_sampler_reproducibility.csv",
-  "corr_new_direct_ci_lower", "figure_2 corrected", "direct 95% CI lower",
+  "corr_new_direct_ci_lower", "Corrigendum Figure 1, corrected panel", "direct 95% CI lower",
     "-0.625", bound(table_1, "Direct 95% CI", "absolute_distance", 1), NA, NA,
     "Reproduces exactly once the corrected analysis uses the Version 3 ideal points",
-  "corr_new_direct_ci_upper", "figure_2 corrected", "direct 95% CI upper",
+  "corr_new_direct_ci_upper", "Corrigendum Figure 1, corrected panel", "direct 95% CI upper",
     "0.175", bound(table_1, "Direct 95% CI", "absolute_distance", 2), NA, "paper_internal",
     "Not identified: the confidence region reaches 0.2, the top of the grid, in the corrigendum's own surface as well as this one, so the published 0.175 is the last interior grid point rather than a bound the data support",
 
   "corr_wider_cis", "Corrigendum, pp. 206-207",
     "The corrected confidence intervals are much wider",
     "", bound(table_1, "Direct 95% CI", "absolute_distance", 1) -
-      bound(table_1, "Direct 95% CI", "absolute_distance_uncorrected", 1),
+      bound(table_1, "Direct 95% CI", "absolute_distance_corrigendum_original", 1),
     as.numeric(bound(table_1, "Direct 95% CI", "absolute_distance", 1) <
-                 bound(table_1, "Direct 95% CI", "absolute_distance_uncorrected", 1)), NA,
-    "The corrigendum states no number here; the value recorded is how much further down the corrected direct interval reaches",
+                 bound(table_1, "Direct 95% CI", "absolute_distance_corrigendum_original", 1)), NA,
+    "The corrigendum states no number here; the value recorded is how much further down the corrected direct interval reaches than the one on its own original panel",
   "corr_insufficient_evidence", "Corrigendum, p. 206",
     "There is insufficient evidence that indirect exposure altered legislator behavior",
     "", bound(table_1, "Indirect 95% CI", "absolute_distance", 2),

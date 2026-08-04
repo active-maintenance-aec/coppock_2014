@@ -80,8 +80,11 @@ write_csv(estimates,
 print(estimates)
 
 # Figure ----
-gg_df <- expand_grid(x = cates_high, y = cates_low) |>
-  mutate(z = as.vector(pmat))
+# The higher-support axis is the row index of pmat and as.vector reads column-major,
+# so it has to vary fastest here. See the note on tile_grid() in helpers.R.
+gg_df <- expand_grid(y = cates_low, x = cates_high) |>
+  mutate(z = as.vector(pmat)) |>
+  select(x, y, z)
 
 g <- make_pvalue_tile(
   gg_df,

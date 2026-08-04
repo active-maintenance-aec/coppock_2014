@@ -3,10 +3,12 @@
 # Depends on: maintained/data/figure_1a.rds, figure_2.rds, figure_a2.rds,
 #             figure_a3.rds, figure_a4.rds, helpers.R
 # Description: Appendix Table 1, the summary of the constant effects models. The
-#   absolute distance column appears twice: once from the corrected ideological
-#   similarity matrix, and once from the all-ones matrix the deposit stores, which is
-#   the column the appendix prints. Every cell is read from a figure script's saved
-#   fit; none is transcribed from the article.
+#   absolute distance column appears three times: once from the corrected ideological
+#   similarity matrix, once from the all-ones matrix the deposit stores, which is the
+#   column the appendix prints, and once from the all-ones matrix on the corrigendum
+#   archive's ideal points, which is the surface the corrigendum's own original panel
+#   shows. Every cell is read from a figure script's saved fit; none is transcribed
+#   from the article.
 
 source(here::here("maintained", "helpers.R"))
 
@@ -35,6 +37,8 @@ table_1 <- tibble(
                    NA, NA, "1a"),
   absolute_distance = spillover_column(figure_2$corrected, "2"),
   absolute_distance_uncorrected = spillover_column(figure_2$uncorrected, "2"),
+  absolute_distance_corrigendum_original =
+    spillover_column(figure_2$corrigendum_original, "2"),
   rank_distance = spillover_column(figure_a2, "A2"),
   squared_distance = spillover_column(figure_a3, "A3"),
   geographic_contiguity = spillover_column(figure_a4, "A4")

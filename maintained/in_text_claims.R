@@ -449,31 +449,43 @@ claim("corr_nearly_twice", doubling,
 corrected_indirect_width <-
   pick(f2, "Figure 2: indirect 95% CI upper", "corrected") -
   pick(f2, "Figure 2: indirect 95% CI lower", "corrected")
-uncorrected_indirect_width <- f2_indirect_upper -
-  pick(f2, "Figure 2: indirect 95% CI lower", "uncorrected")
-claim("corr_uncertainty_larger", corrected_indirect_width - uncorrected_indirect_width,
-      str_glue("the corrected indirect interval is {round(corrected_indirect_width, 3)} wide against the uncorrected {round(uncorrected_indirect_width, 3)}"), 3)
+original_indirect_width <-
+  pick(f2, "Figure 2: indirect 95% CI upper", "corrigendum_original") -
+  pick(f2, "Figure 2: indirect 95% CI lower", "corrigendum_original")
+claim("corr_uncertainty_larger", corrected_indirect_width - original_indirect_width,
+      str_glue("the corrected indirect interval is {round(corrected_indirect_width, 3)} wide against the {round(original_indirect_width, 3)} of the corrigendum's own original panel"), 3)
 
 # "The original map led to the incorrect conclusion that the highest p-value treatment
 #  effect pair was -0.225 for the indirect effect and -0.300 for the direct effect."
+#
+# The pair is the article's, and the article's surface returns it as the median over
+# its plateau, so these two are laid against that surface. It also attains the highest
+# p-value on the corrigendum's redrawn original panel, which
+# figure_2_ideo_spillover.csv records alongside the size of the plateau there.
 claim("corr_orig_indirect_point", f2_indirect,
-      "indirect effect under the deposited similarity matrix", 3)
+      "indirect effect on the article's surface", 3)
 claim("corr_orig_direct_point", f2_direct,
-      "direct effect under the deposited similarity matrix", 3)
+      "direct effect on the article's surface", 3)
 
 # "This pair of treatment effects was relatively precisely estimated, with 95%
 #  confidence intervals extending from -0.325 to -0.025 for the indirect effect and
 #  -0.575 to 0.000 for the direct effect."
+#
+# These four are laid against the corrigendum's own original panel, which is the
+# published analysis re-run on the ideal points of the archive it was computed in. The
+# article's surface gives a narrower interval, and the appendix prints that one.
 claim("corr_orig_indirect_ci_lower",
-      pick(f2, "Figure 2: indirect 95% CI lower", "uncorrected"),
-      "indirect lower bound under the deposited similarity matrix", 3)
-claim("corr_orig_indirect_ci_upper", f2_indirect_upper,
-      "indirect upper bound under the deposited similarity matrix; appendix Table 1 of the article gives -0.1", 3)
+      pick(f2, "Figure 2: indirect 95% CI lower", "corrigendum_original"),
+      "indirect lower bound on the corrigendum's original panel; appendix Table 1 of the article gives -0.3", 3)
+claim("corr_orig_indirect_ci_upper",
+      pick(f2, "Figure 2: indirect 95% CI upper", "corrigendum_original"),
+      "indirect upper bound on the corrigendum's original panel; appendix Table 1 of the article gives -0.1", 3)
 claim("corr_orig_direct_ci_lower",
-      pick(f2, "Figure 2: direct 95% CI lower", "uncorrected"),
-      "direct lower bound under the deposited similarity matrix; appendix Table 1 of the article gives -0.5", 3)
-claim("corr_orig_direct_ci_upper", f2_direct_upper,
-      "direct upper bound under the deposited similarity matrix; appendix Table 1 of the article gives -0.075", 3)
+      pick(f2, "Figure 2: direct 95% CI lower", "corrigendum_original"),
+      "direct lower bound on the corrigendum's original panel; appendix Table 1 of the article gives -0.5", 3)
+claim("corr_orig_direct_ci_upper",
+      pick(f2, "Figure 2: direct 95% CI upper", "corrigendum_original"),
+      "direct upper bound on the corrigendum's original panel; appendix Table 1 of the article gives -0.075", 3)
 
 # "Instead, the highest p-value pair is -0.150 for the indirect effect and -0.250 for
 #  the direct effect. The 95% confidence intervals are much wider, at [-0.325, 0.200]
@@ -497,8 +509,8 @@ claim("corr_new_direct_ci_upper",
 
 claim("corr_wider_cis",
       pick(f2, "Figure 2: direct 95% CI lower", "corrected") -
-        pick(f2, "Figure 2: direct 95% CI lower", "uncorrected"),
-      "how much further down the corrected direct interval reaches than the uncorrected one", 3)
+        pick(f2, "Figure 2: direct 95% CI lower", "corrigendum_original"),
+      "how much further down the corrected direct interval reaches than the one on the corrigendum's own original panel", 3)
 
 # "There is insufficient statistical evidence to conclude that indirect exposure to
 #  information altered legislator behavior."

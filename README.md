@@ -127,9 +127,16 @@ are the ones the corrigendum retracts.
 
 ## Does the maintained rewrite reproduce the corrigendum?
 
-Yes. 3 of the 5 corrected values return exactly, and the two that sit
-one grid step away do so for a reason recorded below and not because the
-analysis differs.
+Yes, and both of its panels rather than only the corrected one. 3 of the
+5 corrected values return exactly, and the two that sit one grid step
+away do so for a reason recorded below and not because the analysis
+differs. The six values the corrigendum restates from the original
+analysis return exactly as well: its four confidence bounds once that
+analysis is run on the ideal points the corrigendum used rather than the
+deposited ones, and its two point estimates on the article’s own
+surface, which is what its sentence describes. That last point took a
+while to establish, and it reverses a reading this repository carried
+earlier; the section “The corrigendum” below sets out both.
 
 Getting there required two things that are worth stating, because either
 one alone leaves the corrigendum looking irreproducible.
@@ -165,12 +172,15 @@ repository produces is identical to the one saved in the corrigendum’s
 own archive: all 1,369 cells, maximum difference exactly zero.
 
 Those are two different questions and they are kept apart.
-`text_sampler_reproducibility.R` re-runs the analysis under
-`RNGkind(sample.kind = "Rounding")`, because whether the archive
-reproduces is a question about the archive. The rewrite itself keeps the
-current sampler, because it is the code we would write now. The two
-remaining differences are one grid step each and are recorded as
-belonging to the environment.
+`text_sampler_reproducibility.R` re-runs both of the corrigendum’s
+panels under `RNGkind(sample.kind = "Rounding")`, because whether the
+archive reproduces is a question about the archive. The rewrite itself
+keeps the current sampler, because it is the code we would write now.
+The two remaining differences are one grid step each and are recorded as
+belonging to the environment. The sampler matters to the corrected panel
+and not to the original one, which returns the same four bounds either
+way, and that asymmetry is what rules the sampler out as the explanation
+of the discrepancy taken up below.
 
 One published value is not identified rather than unreproduced. The
 confidence region reaches 0.2, the top of the grid, in the corrigendum’s
@@ -299,40 +309,69 @@ reference distribution is far too narrow, and the confidence regions
 that come out of it are far too tight. That is the mechanism behind the
 corrigendum.
 
-| Version     | Quantity              | Corrigendum | Rewrite |
-|:------------|:----------------------|:------------|:--------|
-| Uncorrected | indirect effect       | -0.225      | -0.225  |
-| Uncorrected | direct effect         | -0.300      | -0.3    |
-| Uncorrected | indirect 95% CI lower | -0.325      | -0.325  |
-| Uncorrected | indirect 95% CI upper | -0.025      | -0.1    |
-| Uncorrected | direct 95% CI lower   | -0.575      | -0.5    |
-| Uncorrected | direct 95% CI upper   | 0.000       | -0.075  |
-| Corrected   | indirect effect       | -0.150      | -0.15   |
-| Corrected   | direct effect         | -0.250      | -0.25   |
-| Corrected   | indirect 95% CI lower | -0.325      | -0.35   |
-| Corrected   | indirect 95% CI upper | 0.200       | 0.175   |
-| Corrected   | direct 95% CI lower   | -0.625      | -0.625  |
-| Corrected   | direct 95% CI upper   | 0.175       |         |
+| Panel     | Quantity              | Corrigendum | Rewrite |
+|:----------|:----------------------|:------------|:--------|
+| Original  | indirect effect       | -0.225      | -0.225  |
+| Original  | direct effect         | -0.300      | -0.3    |
+| Original  | indirect 95% CI lower | -0.325      | -0.325  |
+| Original  | indirect 95% CI upper | -0.025      | -0.025  |
+| Original  | direct 95% CI lower   | -0.575      | -0.575  |
+| Original  | direct 95% CI upper   | 0.000       | 0       |
+| Corrected | indirect effect       | -0.150      | -0.15   |
+| Corrected | direct effect         | -0.250      | -0.25   |
+| Corrected | indirect 95% CI lower | -0.325      | -0.35   |
+| Corrected | indirect 95% CI upper | 0.200       | 0.175   |
+| Corrected | direct 95% CI lower   | -0.625      | -0.625  |
+| Corrected | direct 95% CI upper   | 0.175       |         |
 
-Figure 2 as the corrigendum states it and as the maintained rewrite
-produces it. The uncorrected rows are the analysis the article
-published; the corrected rows are the correction the corrigendum
-substitutes.
+The two panels of the corrigendum’s Figure 1 as it states them and as
+the maintained rewrite produces them. The original panel is the analysis
+the article published, re-run on the ideal points the corrigendum used;
+the corrected panel is the correction it substitutes.
 
 Three things in that table are worth separating.
 
-**The corrigendum’s account of the uncorrected result does not match the
-uncorrected result.** It reports the original 95% confidence intervals
-as running from -0.325 to -0.025 for the indirect effect and from -0.575
-to 0.000 for the direct effect. Appendix Table 1 of the 2014 article
-gives \[-0.3, -0.1\] and \[-0.5, -0.075\], and those are what the
-deposited scripts produce today. The point estimates agree; the interval
-endpoints are three grid steps apart on the direct effect. The most
-likely explanation is that the corrigendum re-ran the uncorrected model
-rather than quoting the article, and got a differently seeded surface,
-which is the same instability documented above. It is nonetheless a
-discrepancy inside the published record: two articles state different
-confidence intervals for the same estimate.
+**The corrigendum’s restatement of the original result describes its own
+redrawn panel, and both documents are right.** The corrigendum reports
+the original 95% confidence intervals as running from -0.325 to -0.025
+for the indirect effect and from -0.575 to 0.000 for the direct effect.
+Appendix Table 1 of the 2014 article gives \[-0.3, -0.1\] and \[-0.5,
+-0.075\]. The two disagree, and the reason is the ideal points rather
+than an error in either.
+
+The uncorrected analysis is not independent of the ideal points, which
+is not obvious and is why the disagreement looked for a while like a
+defect. Under the all-ones matrix every unit’s raw exposure is the
+number of treated colleagues, the same for everyone, so the simulated
+exposure varies only through the expected-exposure term of Equation (5),
+and that term is built from the similarity matrix the scores define. Run
+on the deposited scores the uncorrected model returns the appendix’s
+intervals at the precision the appendix prints; run on the scores the
+corrigendum was computed from it returns the corrigendum’s, all four
+bounds exactly. Each document reports what its own materials produce,
+and the sampler is not what separates them: unlike the corrected panel,
+this surface gives the same four bounds under the sampler of 2016 and
+the current one alike. The point estimates the corrigendum restates are
+the article’s own, and they attain the highest p-value on both surfaces,
+so no number in that sentence is unsupported.
+
+The corrigendum’s printed figure says the same thing independently. Its
+“Original” panel is not the map the 2014 article printed: the article’s
+is a rounded blob stopping well short of the vertical zero line, and the
+corrigendum’s is wider, tilted along the diagonal, and reaches almost to
+zero on the direct axis. Both maps are drawn under Figure verification
+below and differ in exactly that way. The difference is a plateau of 90
+tied cells against one of 28. The corrigendum redrew the original
+analysis rather than reprinting it.
+
+The wider plateau is also why the median over it no longer returns the
+pair the corrigendum names. That pair is still at the top of the
+corrigendum’s own surface, with a p-value of 1, alongside 89 other cells
+tied with it.
+
+All three surfaces are computed here. The article’s Figure 2 and the
+corrigendum’s two panels are separate objects in `maintained/output/`,
+and no number is transcribed from either document.
 
 **The correction reproduces exactly, once two things are supplied that
 the deposit does not carry.** Rebuilding the ideological similarity
@@ -361,12 +400,11 @@ The corrigendum prints two sets of values: the corrected estimates it
 substitutes, and a restatement of the original ones it is correcting.
 Both are recorded.
 
-Of the corrected set, 3 of 5 return exactly. Of the restatement, three
-of six disagree with the article they restate. The corrigendum gives the
-original direct interval as -0.575 to 0.000, where the 2014 appendix
-gives a narrower one, and the deposited scripts produce the appendix’s.
-Two published documents state different intervals for the same estimate,
-and this repository reproduces the earlier one.
+Of the corrected set, 3 of 5 return exactly. Of the restatement, all six
+return exactly, once each is laid against the panel it describes. The
+corrigendum gives the original direct interval as -0.575 to 0.000 where
+the 2014 appendix gives a narrower one, and this repository reproduces
+both.
 
 # The extraction and the two instruments
 
@@ -386,8 +424,8 @@ pipeline can reach, and each must be printed by a claim block.
 
 **The ground truth.** `ground_truth/coppock_2014_ground_truth.csv` has
 116 rows, each pairing what a document prints against what
-`maintained/output/` produces. 89 carry a value comparison, of which 69
-agree at the precision the page prints and 20 do not; 25 are descriptive
+`maintained/output/` produces. 89 carry a value comparison, of which 72
+agree at the precision the page prints and 17 do not; 25 are descriptive
 claims carrying a computed truth value instead, and all 25 hold. It is
 generated by `ground_truth/build_ground_truth.R`, which reads every
 rewrite value out of `maintained/output/` rather than transcribing it.
@@ -455,7 +493,7 @@ property of one draw.
 | Document                    | Rows | Compared | Agreeing | Descriptive | Holding |
 |:----------------------------|-----:|---------:|---------:|------------:|--------:|
 | Article and appendix (2014) |  100 |       78 |       63 |          21 |      21 |
-| Corrigendum (2016)          |   16 |       11 |        6 |           4 |       4 |
+| Corrigendum (2016)          |   16 |       11 |        9 |           4 |       4 |
 
 The ground truth by document. Every published number in both is covered;
 the full table is the committed ground truth CSV.
@@ -512,20 +550,19 @@ corrigendum.
 | Appendix Table 2 | Direct Effect, Low Support, absolute_distance_uncorrected | -0.55 | -0.475 | archive |
 | Appendix Table 2 | Direct 95% CI, Low Support, absolute_distance_uncorrected, bound 1 | -0.825 | -0.8 | unresolved |
 | Appendix Table 2 | Indirect Effect, Low Support, absolute_distance_uncorrected | -0.125 | -0.175 | archive |
-| figure_2 uncorrected | indirect 95% CI upper | -0.025 | -0.1 | paper_internal |
-| figure_2 uncorrected | direct 95% CI lower | -0.575 | -0.5 | paper_internal |
-| figure_2 uncorrected | direct 95% CI upper | 0.000 | -0.075 | paper_internal |
-| figure_2 corrected | indirect 95% CI lower | -0.325 | -0.35 | environment |
-| figure_2 corrected | indirect 95% CI upper | 0.200 | 0.175 | environment |
-| figure_2 corrected | direct 95% CI upper | 0.175 | not identified | paper_internal |
+| Corrigendum Figure 1, corrected panel | indirect 95% CI lower | -0.325 | -0.35 | environment |
+| Corrigendum Figure 1, corrected panel | indirect 95% CI upper | 0.200 | 0.175 | environment |
+| Corrigendum Figure 1, corrected panel | direct 95% CI upper | 0.175 | not identified | paper_internal |
 
 Every row where a published value and this repository disagree, with the
 cause.
 
 # Maintained rewrite
 
-The rewrite lives in `maintained/`: one cleaning script, nine figure
-scripts, two table scripts and one script for the in-text quantities.
+The rewrite lives in `maintained/`: a cleaning script and a helpers
+file, nine figure scripts, two table scripts, two scripts for the
+in-text quantities, the sampler reproducibility check, and
+`in_text_claims.R`.
 
 ## Architecture
 
@@ -539,9 +576,11 @@ matrix alongside the corrected one so that the uncorrected figures can
 be reproduced rather than described.
 
 Every spillover figure is therefore computed twice, once from each
-matrix, and both versions go into `output/`. Nothing is transcribed: the
-corrigendum’s numbers appear in the ground truth as comparison targets
-and nowhere in the code.
+matrix, and both versions go into `output/`. Figure 2 is computed three
+times, because the corrigendum’s original panel is a third surface: the
+published all-ones matrix on the corrigendum archive’s ideal points.
+Nothing is transcribed: the corrigendum’s numbers appear in the ground
+truth as comparison targets and nowhere in the code.
 
 The p-value grid itself is one function, `pvalue_grid()` in `helpers.R`,
 taking the similarity matrix, the expected exposures and the observed
@@ -560,6 +599,19 @@ Figure 4 is the exception, and only because its script sets no seed.
 Agreement at that level is what makes the point-estimate differences
 interpretable: the surfaces are the same, so any difference in what is
 read off them is a difference in the reading.
+
+**One defect that comparison could not catch, and a published figure
+did.** `tile_grid()` turned a p-value matrix into long form with
+`expand_grid(x = directs, y = indirects)`, a direct port of the
+deposit’s `expand.grid` call. Base `expand.grid` varies its first
+argument fastest and tidyr’s `expand_grid` varies its last, and the
+matrix is read column-major, so the two axes were swapped and every
+p-value map this repository drew was the transpose of its own estimates.
+No estimate was affected: point estimates and confidence regions come
+from the fit object rather than from the plot, which is why cell-by-cell
+agreement with the archive’s matrices passed throughout. It surfaced
+only when a map was laid beside the one the corrigendum prints. The
+argument order and the reason for it are now recorded in `helpers.R`.
 
 The test statistic goes through `.lm.fit` rather than `lm`. The rewrite
 fits about eleven million regressions; `lm` takes 0.295 milliseconds
@@ -586,16 +638,18 @@ Deprecated patterns and their replacements in the maintained rewrite.
 
 ## Summary tables
 
-|  | No spillover | Absolute distance | Absolute distance (uncorrected) | Rank distance | Squared distance | Geographic |
-|:---|:---|:---|:---|:---|:---|:---|
-| Direct Effect | -0.16 | -0.25 | -0.3 | -0.225 | -0.25 | -0.15 |
-| Direct 95% CI | \[-0.34,0.02\] | \[-0.625,NA\] | \[-0.5,-0.075\] | \[-0.45,0.1\] | \[-0.525,0.325\] | \[-0.37,0.09\] |
-| Indirect Effect |  | -0.15 | -0.225 | -0.2 | -0.175 | 0.025 |
-| Indirect 95% CI |  | \[-0.35,0.175\] | \[-0.325,-0.1\] | \[-0.325,0.15\] | \[-0.325,0.525\] | \[-0.095,0.15\] |
-| Corresponding Figure | 1a | 2 | 2 | A2 | A3 | A4 |
+|  | No spillover | Absolute distance | Absolute distance (uncorrected) | Absolute distance (corrigendum’s original panel) | Rank distance | Squared distance | Geographic |
+|:---|:---|:---|:---|:---|:---|:---|:---|
+| Direct Effect | -0.16 | -0.25 | -0.3 | -0.3 | -0.225 | -0.25 | -0.15 |
+| Direct 95% CI | \[-0.34,0.02\] | \[-0.625,NA\] | \[-0.5,-0.075\] | \[-0.575,0\] | \[-0.45,0.1\] | \[-0.525,0.325\] | \[-0.37,0.09\] |
+| Indirect Effect |  | -0.15 | -0.225 | -0.175 | -0.2 | -0.175 | 0.025 |
+| Indirect 95% CI |  | \[-0.35,0.175\] | \[-0.325,-0.1\] | \[-0.325,-0.025\] | \[-0.325,0.15\] | \[-0.325,0.525\] | \[-0.095,0.15\] |
+| Corresponding Figure | 1a | 2 | 2 | 2 | A2 | A3 | A4 |
 
 Appendix Table 1, constant effects models, as the maintained rewrite
-produces it.
+produces it. The uncorrected column is the analysis the article
+published; the column beside it is that same analysis on the ideal
+points the corrigendum used.
 
 |  | No spillover | Absolute distance | Absolute distance (uncorrected) |
 |:---|:---|:---|:---|
@@ -639,14 +693,24 @@ can be distinguished from zero.
 
 The correction’s visible consequence is the width of the shaded region.
 The uncorrected map is a tight blob well away from both axes; the
-corrected map spreads across zero on both.
+corrected map spreads across zero on both. The third map is the same
+uncorrected analysis on the corrigendum’s ideal points, and it sits
+between them: still short of zero on the indirect axis, but reaching it
+on the direct one. The corrigendum prints two panels, and they are the
+first and third of these; the second is the article’s own Figure 2,
+which the corrigendum does not reprint.
 
 <img src="maintained/output/figure_2_ideo_spillover.png"
 style="width:70.0%" alt="Figure 2, corrected similarity matrix." />
 
 <img src="maintained/output/figure_2_ideo_spillover_uncorrected.png"
 style="width:70.0%"
-alt="Figure 2 as published, all-ones similarity matrix." />
+alt="Figure 2 as published, all-ones similarity matrix on the deposited ideal points." />
+
+<img
+src="maintained/output/figure_2_ideo_spillover_corrigendum_original.png"
+style="width:70.0%"
+alt="The corrigendum’s own original panel: the same all-ones matrix on the ideal points the corrigendum was computed from. The wider plateau is why its restated intervals are wider than the article’s." />
 
 <img src="maintained/output/figure_3a_hetero_spillover_low.png"
 style="width:70.0%"

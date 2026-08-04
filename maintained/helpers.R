@@ -124,10 +124,16 @@ pvalue_grid <- function(y_obs, z_obs, exposure_obs, similarity, expected_1, expe
 }
 
 # tile_grid ----
-# Long form of a p-value matrix, for geom_tile.
+# Long form of a p-value matrix, for geom_tile. The argument order is load-bearing:
+# `as.vector` reads the matrix column-major, so the row index has to be the
+# fastest-varying column, and the p-value matrix is indexed [direct, indirect]. Base
+# `expand.grid`, which the deposited scripts call, varies its FIRST argument fastest;
+# tidyr's `expand_grid` varies its LAST. Porting one to the other without reversing
+# the arguments transposes the map.
 tile_grid <- function(fit) {
-  expand_grid(x = fit$directs, y = fit$indirects) |>
-    mutate(z = as.vector(fit$pmat))
+  expand_grid(y = fit$indirects, x = fit$directs) |>
+    mutate(z = as.vector(fit$pmat)) |>
+    select(x, y, z)
 }
 
 # make_pvalue_tile ----

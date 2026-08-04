@@ -1,7 +1,13 @@
-claim,corrigendum,rounding_sampler,reproduces
-direct effect,-0.25,-0.24999999999999994,TRUE
-direct 95% CI lower,-0.625,-0.625,TRUE
-direct 95% CI upper,0.175,NA,FALSE
-indirect effect,-0.15,-0.1499999999999999,TRUE
-indirect 95% CI lower,-0.325,-0.32499999999999996,TRUE
-indirect 95% CI upper,0.2,0.2,TRUE
+panel,claim,corrigendum,rounding_sampler,reproduces,note
+corrected,direct effect,-0.25,-0.24999999999999994,TRUE,
+corrected,direct 95% CI lower,-0.625,-0.625,TRUE,
+corrected,direct 95% CI upper,0.175,NA,FALSE,"censored: the confidence region reaches the top of the grid, so no interior bound exists"
+corrected,indirect effect,-0.15,-0.1499999999999999,TRUE,
+corrected,indirect 95% CI lower,-0.325,-0.32499999999999996,TRUE,
+corrected,indirect 95% CI upper,0.2,0.2,TRUE,
+original,direct effect,-0.3,-0.29999999999999993,TRUE,
+original,direct 95% CI lower,-0.575,-0.575,TRUE,
+original,direct 95% CI upper,0,1.1102230246251565e-16,TRUE,
+original,indirect effect,-0.225,-0.17499999999999993,FALSE,the corrigendum names a cell of the maximum p-value plateau rather than its median; figure_2_ideo_spillover.csv records how wide that plateau is
+original,indirect 95% CI lower,-0.325,-0.32499999999999996,TRUE,
+original,indirect 95% CI upper,-0.025,-0.02499999999999991,TRUE,

@@ -18,3 +18,11 @@ exposures to 3.6e-15, so they are the whole of what needs carrying across.
 
 The corrected analysis uses these. The as-published 2014 figures continue to use
 the deposit, because that is what reproduces what was printed.
+
+So does the corrigendum's own original panel, which is the published uncorrected
+analysis rerun in the Version 3 archive. That is easy to miss: under the all-ones
+matrix every unit's raw exposure is identical, so the simulated exposure varies only
+through the expected-exposure term, which these scores build. The uncorrected model
+therefore moves with the ideal points too, and on these scores it returns the
+confidence intervals the corrigendum restates rather than the ones appendix Table 1
+prints.
