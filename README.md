@@ -465,13 +465,18 @@ is recorded below and has not been written up unilaterally.
 Four claims outside the corrigendum’s scope, none of them reachable by a
 check organized around published floats.
 
-The first is the only one that could warrant a correction of its own.
-The article writes the number of possible matched-pair random
+The first is the only one that could have warranted a correction of its
+own. The article writes the number of possible matched-pair random
 assignments twice: once as $2^{35} = 3.4 \times 10^{10}$, which the
 deposit confirms, and once, two sentences later, as “the 30 trillion
 random assignments”. Thirty trillion is $3 \times 10^{13}$, three orders
 of magnitude above the count the same paragraph gives. Nothing turns on
-it, no estimate moves, and the corrigendum does not mention it.
+it, no estimate moves, and the corrigendum does not mention it. It is
+recorded here and deliberately not issued as an erratum: this article
+already carries a published corrigendum, and a second correction
+document for a single stray number in a paragraph that states the right
+figure two sentences earlier would clutter the record more than it
+clarifies it.
 
 The second is not an error. Appendix Table 2 gives -0.375 and the
 pipeline reproduces it; the main text prints -0.37, which is the same
