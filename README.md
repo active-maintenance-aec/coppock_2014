@@ -134,9 +134,7 @@ differs. The six values the corrigendum restates from the original
 analysis return exactly as well: its four confidence bounds once that
 analysis is run on the ideal points the corrigendum used rather than the
 deposited ones, and its two point estimates on the article’s own
-surface, which is what its sentence describes. That last point took a
-while to establish, and it reverses a reading this repository carried
-earlier; the section “The corrigendum” below sets out both.
+surface, which is what its sentence describes.
 
 Getting there required two things that are worth stating, because either
 one alone leaves the corrigendum looking irreproducible.
@@ -744,7 +742,7 @@ alt="Appendix Figure 5a as published: every p-value is 0 or 1." />
 |:----------|:-----------------------|
 | R version | 4.6.0                  |
 | Platform  | aarch64-apple-darwin23 |
-| Date run  | 2026-08-03             |
+| Date run  | 2026-08-08             |
 
 | Package | Version |
 |:--------|:--------|

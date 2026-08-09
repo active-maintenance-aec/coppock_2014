@@ -123,7 +123,7 @@ What the archive does not contain is any trace of the correction. The deposited 
 
 ## Does the maintained rewrite reproduce the corrigendum?
 
-Yes, and both of its panels rather than only the corrected one. `r n_corrected_match` of the `r n_corrected_check` corrected values return exactly, and the two that sit one grid step away do so for a reason recorded below and not because the analysis differs. The six values the corrigendum restates from the original analysis return exactly as well: its four confidence bounds once that analysis is run on the ideal points the corrigendum used rather than the deposited ones, and its two point estimates on the article's own surface, which is what its sentence describes. That last point took a while to establish, and it reverses a reading this repository carried earlier; the section "The corrigendum" below sets out both.
+Yes, and both of its panels rather than only the corrected one. `r n_corrected_match` of the `r n_corrected_check` corrected values return exactly, and the two that sit one grid step away do so for a reason recorded below and not because the analysis differs. The six values the corrigendum restates from the original analysis return exactly as well: its four confidence bounds once that analysis is run on the ideal points the corrigendum used rather than the deposited ones, and its two point estimates on the article's own surface, which is what its sentence describes.
 
 Getting there required two things that are worth stating, because either one alone leaves the corrigendum looking irreproducible.
 
