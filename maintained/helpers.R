@@ -8,6 +8,8 @@ library(tidyverse)
 library(sf)
 library(spdep)
 
+here::i_am("maintained/helpers.R")
+
 # ssr ----
 # Sum of squared residuals from an OLS fit of y on the design matrix X, dropping
 # rows where y is missing. This is the test statistic of Bowers, Fredrickson and
@@ -166,4 +168,19 @@ save_figure <- function(plot, name, width = 7, height = 7) {
          plot = plot, width = width, height = height)
   ggsave(here::here("maintained", "output", str_glue("{name}.png")),
          plot = plot, width = width, height = height, dpi = 300)
+}
+
+# Blank a figure PDF's embedded timestamps ----
+# R's pdf() device stamps /CreationDate and /ModDate with the wall clock, so an
+# otherwise deterministic pipeline writes a different file on every run. The epoch
+# string is the same width as what it replaces, which keeps the cross-reference byte
+# offsets valid, and a file with no timestamp is left alone.
+blank_pdf_timestamps <- function(path) {
+  epoch <- charToRaw("D:19700101000000")
+  raw_pdf <- readBin(path, "raw", file.size(path))
+  hits <- grepRaw("D:[0-9]{14}", raw_pdf, all = TRUE)
+  if (length(hits) == 0) return(invisible(path))
+  for (h in hits) raw_pdf[h:(h + length(epoch) - 1L)] <- epoch
+  writeBin(raw_pdf, path)
+  invisible(path)
 }

@@ -37,6 +37,17 @@ source(here::here("maintained", "table_2_hetero_effects.R"))
 source(here::here("maintained", "text_total_causal_effect.R"))
 source(here::here("maintained", "text_design_parameters.R"))
 
+# Figure timestamps ----
+# R's pdf() device stamps a wall-clock /CreationDate and /ModDate into every figure it
+# writes, and those two fields are the only reason two runs of this pipeline produce
+# differing files. Blanking them lets the determinism check cover every file the
+# pipeline writes rather than all but the figures.
+source(here::here("maintained", "helpers.R"))
+walk(
+  list.files(here::here("maintained", "output"), pattern = "\\.pdf$", full.names = TRUE),
+  blank_pdf_timestamps
+)
+
 # Ground truth and the coverage gate ----
 # build_ground_truth.R assembles the comparison table and then runs in_text_claims.R
 # under capture.output, so a claim block that errors or prints nothing stops the build.
