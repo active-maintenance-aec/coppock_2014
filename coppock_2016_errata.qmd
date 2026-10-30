@@ -34,24 +34,27 @@ entries <- tribble(
   ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note, ~claim_ids,
 
   1, "quantity", "pipeline", "brief",
-  "Neither upper confidence bound of the corrected analysis is the one the data support",
-  "published p. 207",
-  "at [-0.325, [[0.200]]] for the indirect effect and [-0.625, [[0.175]]] for the direct effect",
-  "at [-0.325, [[0.175]]] for the indirect effect and [-0.625, [[0.200 or higher]]] for the direct effect",
-  paste("The bounds are read off the p-value surface saved in the corrigendum's own",
-        "archive (doi:10.7910/DVN/H47CC6, fig2.rdata). The function that located them",
-        "returned the first grid point after each edge of the confidence region, which is",
-        "the first point inside at the lower edge and the first point outside at the",
-        "upper edge, so the indirect bound sits one step of 0.025 too high. The direct",
-        "region runs to 0.2, the top of the grid searched, where the function returns no",
-        "bound at all: the printed 0.175 has no origin in the code, and the data place",
-        "the bound no lower than 0.2. Both corrected intervals still include zero, which",
-        "is the corrigendum's conclusion."),
-  "corr_new_indirect_ci_upper; corr_new_direct_ci_upper",
+  "None of the four upper confidence bounds is the one the data support",
+  "published pp. 206--207",
+  "with 95% confidence intervals extending from -0.325 to [[-0.025]] for the indirect effect and -0.575 to [[0.000]] for the direct effect. [...] The 95% confidence intervals are much wider, at [-0.325, [[0.200]]] for the indirect effect and [-0.625, [[0.175]]] for the direct effect",
+  "with 95% confidence intervals extending from -0.325 to [[-0.050]] for the indirect effect and -0.575 to [[-0.025]] for the direct effect. [...] The 95% confidence intervals are much wider, at [-0.325, [[0.175]]] for the indirect effect and [-0.625, [[0.200 or higher]]] for the direct effect",
+  paste("The bounds are read off the p-value surfaces saved in the corrigendum's own",
+        "archive (doi:10.7910/DVN/H47CC6, fig2.rdata), the original panel for the first",
+        "pair of intervals and the corrected panel for the second. The function that",
+        "located them returned the first grid point after each edge of the confidence",
+        "region, which is the first point inside at the lower edge and the first point",
+        "outside at the upper edge, so three of the four upper bounds sit one step of",
+        "0.025 too high. The fourth, the corrected direct bound, lies at the top of the",
+        "grid searched: the region runs to 0.2, where the function returns no bound at",
+        "all, so the printed 0.175 has no origin in the code, and the data place the",
+        "bound no lower than 0.2. The lower bounds are correct. Corrected, the original",
+        "intervals still exclude zero and the corrected ones still include it, which is",
+        "the corrigendum's conclusion."),
+  "corr_orig_indirect_ci_upper; corr_orig_direct_ci_upper; corr_new_indirect_ci_upper; corr_new_direct_ci_upper",
 
   2, "text", "reading", "brief",
   "A name in the acknowledgments is misspelled",
-  "published acknowledgments",
+  "published p. 208",
   "I am grateful to Peter M. Aronow, Jake Bowers, and Mark M. [[Frederickson]]",
   "I am grateful to Peter M. Aronow, Jake Bowers, and Mark M. [[Fredrickson]]",
   "The corrigendum's own reference list spells the name correctly, in Bowers, Fredrickson, and Panagopoulos (2013).",
@@ -59,7 +62,7 @@ entries <- tribble(
 
   3, "text", "reading", "brief",
   "A reference gives the wrong second author",
-  "published references",
+  "published p. 208, references",
   "Butler, D. M., and [[David, W. N.]] (2011). Can learning constituency opinion affect how legislators vote?",
   "Butler, D. M., and [[Nickerson, D. W.]] (2011). Can learning constituency opinion affect how legislators vote?",
   paste("The second author of the experiment the article reanalyzes is David W. Nickerson,",
@@ -81,7 +84,7 @@ spell <- function(n) {
 bold <- function(x) str_replace_all(x, "\\[\\[(.*?)\\]\\]", "**\\1**")
 ```
 
-This note lists `r spell(nrow(entries))` corrections to the corrigendum to "Information Spillovers: Another Look at Experimental Estimates of Legislator Responsiveness," published in *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8). **None changes the corrigendum's conclusion.** The first moves two confidence bounds, and both corrected intervals still include zero; the other two are names.
+This note lists `r spell(nrow(entries))` corrections to the corrigendum to "Information Spillovers: Another Look at Experimental Estimates of Legislator Responsiveness," published in *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8). **None changes the corrigendum's conclusion.** The first moves four upper confidence bounds, and both corrected intervals still include zero; the other two are names.
 
 The corrigendum corrects Coppock (2014), *Journal of Experimental Political Science* 1(2):159--169, doi [10.1017/xps.2014.9](https://doi.org/10.1017/xps.2014.9), which has an errata note of its own. The data and code behind the corrigendum are deposited at doi [10.7910/DVN/H47CC6](https://doi.org/10.7910/DVN/H47CC6), and the maintained analysis that reproduces it is at [github.com/active-maintenance-aec/coppock_2014](https://github.com/active-maintenance-aec/coppock_2014).
 

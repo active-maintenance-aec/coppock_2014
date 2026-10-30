@@ -474,8 +474,9 @@ empty selection fails it.
 records that its upper confidence bounds sit one grid step high; every
 other value in the article that the data do not support is already
 corrected by the corrigendum. `coppock_2016_errata.pdf` corrects the
-corrigendum: the sentence giving its corrected intervals, whose upper
-bounds come from the same rule, and two misspelled names.
+corrigendum: the two sentences giving its original and corrected
+intervals, whose upper bounds come from the same rule, and two
+misspelled names.
 
 ## What the extraction found that the ground truth had not
 

@@ -294,7 +294,7 @@ Two things stand between a published sentence and a silent error, and they are s
 
 **The gate.** `build_ground_truth.R` runs the claims file as a program, under `capture.output` and in its own environment, and stops the build unless the number of printed claims equals the number of extraction rows that require one, the two sets of identifiers are equal in both directions, every printed value equals the ground truth's at the same precision, every extracted transcription equals the ground truth's, and every row carrying an adverse verdict from either instrument names where the fault lies. A block that errors, prints nothing, or quietly reads an empty selection fails it.
 
-**There are two errata notes, one for each published document.** `coppock_2014_errata.pdf` corrects a count the article misstates and records that its upper confidence bounds sit one grid step high; every other value in the article that the data do not support is already corrected by the corrigendum. `coppock_2016_errata.pdf` corrects the corrigendum: the sentence giving its corrected intervals, whose upper bounds come from the same rule, and two misspelled names.
+**There are two errata notes, one for each published document.** `coppock_2014_errata.pdf` corrects a count the article misstates and records that its upper confidence bounds sit one grid step high; every other value in the article that the data do not support is already corrected by the corrigendum. `coppock_2016_errata.pdf` corrects the corrigendum: the two sentences giving its original and corrected intervals, whose upper bounds come from the same rule, and two misspelled names.
 
 ## What the extraction found that the ground truth had not
 

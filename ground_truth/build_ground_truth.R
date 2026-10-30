@@ -467,7 +467,7 @@ corrigendum_rows <- tribble(
   "corr_orig_indirect_ci_upper", "Corrigendum Figure 1, original panel", "indirect 95% CI upper",
     "-0.025", bound(table_1, "Indirect 95% CI", "absolute_distance_corrigendum_original", 2),
     NA, "archive",
-    "On the corrigendum's own original panel, under the archive's upper-edge rule: the printed value is the first grid point outside the region, one step above its last point inside (see find_breaks in the notes on the appendix upper bounds). The 2014 appendix states -0.1 for the same bound, which is the same rule applied to the article's surface",
+    "On the corrigendum's own original panel, under the archive's upper-edge rule: the printed value is the first grid point outside the region, one step above its last point inside (entry 1 of coppock_2016_errata.qmd; see find_breaks in the notes on the appendix upper bounds). The 2014 appendix states -0.1 for the same bound, which is the same rule applied to the article's surface",
   "corr_orig_direct_ci_lower", "Corrigendum Figure 1, original panel", "direct 95% CI lower",
     "-0.575", bound(table_1, "Direct 95% CI", "absolute_distance_corrigendum_original", 1),
     NA, NA,
@@ -475,7 +475,7 @@ corrigendum_rows <- tribble(
   "corr_orig_direct_ci_upper", "Corrigendum Figure 1, original panel", "direct 95% CI upper",
     "0.000", bound(table_1, "Direct 95% CI", "absolute_distance_corrigendum_original", 2),
     NA, "archive",
-    "On the corrigendum's own original panel, under the archive's upper-edge rule: the printed value is the first grid point outside the region, one step above its last point inside (see find_breaks in the notes on the appendix upper bounds). The 2014 appendix states -0.075 for the same bound, which is the same rule applied to the article's surface",
+    "On the corrigendum's own original panel, under the archive's upper-edge rule: the printed value is the first grid point outside the region, one step above its last point inside (entry 1 of coppock_2016_errata.qmd; see find_breaks in the notes on the appendix upper bounds). The 2014 appendix states -0.075 for the same bound, which is the same rule applied to the article's surface",
 
   "corr_new_indirect_point", "Corrigendum Figure 1, corrected panel", "indirect effect",
     "-0.150", cell(table_1, "Indirect Effect", "absolute_distance"), NA, NA,

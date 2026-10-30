@@ -135,7 +135,7 @@ corr_new_direct_point,"Corrigendum, p. 206",pipeline,-0.250,TRUE,The corrected h
 corr_new_indirect_ci_lower,"Corrigendum, p. 206",pipeline,-0.325,TRUE,"The corrected indirect 95% confidence interval, lower bound",
 corr_new_indirect_ci_upper,"Corrigendum, p. 206",pipeline,0.200,TRUE,"The corrected indirect 95% confidence interval, upper bound",
 corr_new_direct_ci_lower,"Corrigendum, p. 206",pipeline,-0.625,TRUE,"The corrected direct 95% confidence interval, lower bound",
-corr_new_direct_ci_upper,"Corrigendum, p. 207",pipeline,0.175,TRUE,"The corrected direct 95% confidence interval, upper bound",
+corr_new_direct_ci_upper,"Corrigendum, p. 206",pipeline,0.175,TRUE,"The corrected direct 95% confidence interval, upper bound",
 corr_wider_cis,"Corrigendum, pp. 206-207",descriptive,,TRUE,The corrected 95% confidence intervals are much wider than the original ones,
 corr_insufficient_evidence,"Corrigendum, p. 206",descriptive,,TRUE,There is insufficient statistical evidence to conclude that indirect exposure altered legislator behavior,
 corr_figure_numbers,"Corrigendum, pp. 207-208",structural,,FALSE,The corrigendum's own Figure 1 and Figure 2 numbering,"Float numerals, not claims"
