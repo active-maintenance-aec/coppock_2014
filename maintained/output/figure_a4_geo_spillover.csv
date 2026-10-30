@@ -1,8 +1,8 @@
 claim,value
 figure_a4: direct effect,-0.15
 figure_a4: direct 95% CI lower,-0.37
-figure_a4: direct 95% CI upper,0.09
+figure_a4: direct 95% CI upper,0.08
 figure_a4: indirect effect,0.025
 figure_a4: indirect 95% CI lower,-0.095
-figure_a4: indirect 95% CI upper,0.15
+figure_a4: indirect 95% CI upper,0.145
 figure_a4: highest p-value at a zero indirect effect,0.912

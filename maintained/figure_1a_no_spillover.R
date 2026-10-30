@@ -42,7 +42,7 @@ fit <- list(
   pmat = pmat,
   ates = ates,
   ate_point = ates[which.max(pmat)],
-  ate_ci = ates[find_breaks(pmat > 0.05)]
+  ate_ci = ates[region_bounds(pmat > 0.05)]
 )
 write_rds(fit, here::here("maintained", "data", "figure_1a.rds"))
 

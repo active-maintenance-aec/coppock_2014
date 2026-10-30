@@ -1,7 +1,7 @@
 claim,value
 "Figure 1b: effect, higher support",0.05
 Figure 1b: higher support 95% CI lower,-0.225
-Figure 1b: higher support 95% CI upper,0.35
+Figure 1b: higher support 95% CI upper,0.325
 "Figure 1b: effect, lower support",-0.375
 Figure 1b: lower support 95% CI lower,-0.675
-Figure 1b: lower support 95% CI upper,-0.05
+Figure 1b: lower support 95% CI upper,-0.075

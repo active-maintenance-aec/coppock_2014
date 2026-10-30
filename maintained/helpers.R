@@ -20,16 +20,23 @@ ssr <- function(y, X) {
   sum(.lm.fit(X[observed, , drop = FALSE], y[observed])$residuals^2)
 }
 
-# find_breaks ----
-# Indices at which a logical vector changes value. Used on the "some hypothesis
-# in this row or column has p > 0.05" indicator to locate the edges of the 95%
-# confidence region.
-find_breaks <- function(x) {
-  breaks <- rep(NA, length(x))
-  for (i in seq_len(length(x) - 1)) {
-    breaks[i + 1] <- x[i] != x[i + 1]
-  }
-  which(breaks)
+# region_bounds ----
+# Grid indices of the lower and upper edges of a 95% confidence region, given the
+# "some hypothesis in this row or column has p > 0.05" indicator: the first and last
+# points inside the region. A bound is NA where the region reaches the edge of the grid,
+# because there the data do not place it and the grid does.
+#
+# The archive's find_breaks() returned the index after each change in the indicator.
+# At the lower edge that is the first point inside; at the upper edge it is the first
+# point outside, so every upper bound it produced sits one grid step too high. Where the
+# region reached the bottom of the grid it returned only the upper break, which then
+# read as the lower bound.
+region_bounds <- function(inside) {
+  points_inside <- which(inside)
+  if (any(diff(points_inside) != 1)) stop("The 95% region is not contiguous.")
+  bounds <- range(points_inside)
+  bounds[bounds == 1 | bounds == length(inside)] <- NA
+  bounds
 }
 
 # similarity_from_scores ----
@@ -86,8 +93,8 @@ summarize_pvalue_grid <- function(pmat, directs, indirects) {
     indirects = indirects,
     direct_point = median(directs[peak[, 1]]),
     indirect_point = median(indirects[peak[, 2]]),
-    direct_ci = directs[find_breaks(apply(pmat, 1, max) > 0.05)],
-    indirect_ci = indirects[find_breaks(apply(pmat, 2, max) > 0.05)]
+    direct_ci = directs[region_bounds(apply(pmat, 1, max) > 0.05)],
+    indirect_ci = indirects[region_bounds(apply(pmat, 2, max) > 0.05)]
   )
 }
 

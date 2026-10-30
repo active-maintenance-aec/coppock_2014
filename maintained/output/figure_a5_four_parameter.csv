@@ -1,11 +1,11 @@
 claim,version,value,ci_lower,ci_upper
-Appendix Figure A5: low_direct,corrected,-0.5,0.4,NA
-Appendix Figure A5: low_indirect,corrected,-0.1,-0.4,0.4
+Appendix Figure A5: low_direct,corrected,-0.5,NA,0.3
+Appendix Figure A5: low_indirect,corrected,-0.1,-0.4,0.3
 Appendix Figure A5: high_direct,corrected,-0.1,-0.7,NA
-Appendix Figure A5: high_indirect,corrected,-0.2,-0.5,0.4
-Appendix Figure A5: low_direct,uncorrected,-0.5,-0.6,-0.2
-Appendix Figure A5: low_indirect,uncorrected,-0.2,-0.2,0
-Appendix Figure A5: high_direct,uncorrected,-0.2,-0.3,0
-Appendix Figure A5: high_indirect,uncorrected,-0.3,-0.3,-0.1
+Appendix Figure A5: high_indirect,corrected,-0.2,-0.5,0.3
+Appendix Figure A5: low_direct,uncorrected,-0.5,-0.6,-0.3
+Appendix Figure A5: low_indirect,uncorrected,-0.2,-0.2,-0.1
+Appendix Figure A5: high_direct,uncorrected,-0.2,-0.3,-0.1
+Appendix Figure A5: high_indirect,uncorrected,-0.3,-0.3,-0.2
 Appendix Figure A5: distinct p-values in the array,corrected,31,NA,NA
 Appendix Figure A5: distinct p-values in the array,uncorrected,2,NA,NA

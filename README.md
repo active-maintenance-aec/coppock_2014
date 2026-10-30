@@ -43,6 +43,7 @@ to a set of published archives.
 | Article | [10.1017/xps.2014.9](https://doi.org/10.1017/xps.2014.9) |
 | Corrigendum | [10.1017/xps.2016.8](https://doi.org/10.1017/xps.2016.8) |
 | Replication archive | [10.7910/DVN/28664](https://doi.org/10.7910/DVN/28664) |
+| Corrigendum’s archive | [10.7910/DVN/H47CC6](https://doi.org/10.7910/DVN/H47CC6) |
 | Reanalyzed experiment | Butler and Nickerson (2011), [10.1561/100.00011019](https://doi.org/10.1561/100.00011019) |
 
 The corrigendum is a separately published article with its own DOI, its
@@ -57,7 +58,9 @@ files and lives at Harvard Dataverse, which is the only copy this
 repository points at. `download_original.R` fetches it and verifies
 every file; `original_manifest.csv` pins the file identifiers, sizes and
 checksums, so the exact bytes this code was written against are recorded
-in version control even though the bytes themselves are not.
+in version control even though the bytes themselves are not. The
+corrigendum’s deposit is fetched and verified the same way, against
+`original_corrigendum_manifest.csv`, into `original_corrigendum/`.
 
 **Repository layout.** `maintained/` is the maintained rewrite: one
 script per published figure or table, writing to `output/`, which is
@@ -68,9 +71,10 @@ the published record makes, each beside the sentence that makes it.
 it: `published_claims.csv` is the extraction of every number the
 article, its appendix and the corrigendum print, and
 `build_ground_truth.R` assembles the comparison and runs the coverage
-gate. `original/` is created by the download script and is deliberately
-absent from the repository. This file is the reproducibility report,
-also available as a PDF in `report/`.
+gate. `original/` and `original_corrigendum/` are created by the
+download script and are deliberately absent from the repository. This
+file is the reproducibility report, also available as a PDF in
+`report/`.
 
 **License.** CC0 1.0 Universal, matching the terms of the deposit this
 repository maintains. See `LICENSE`.
@@ -127,14 +131,21 @@ are the ones the corrigendum retracts.
 
 ## Does the maintained rewrite reproduce the corrigendum?
 
-Yes, and both of its panels rather than only the corrected one. 3 of the
-5 corrected values return exactly, and the two that sit one grid step
-away do so for a reason recorded below and not because the analysis
-differs. The six values the corrigendum restates from the original
-analysis return exactly as well: its four confidence bounds once that
-analysis is run on the ideal points the corrigendum used rather than the
-deposited ones, and its two point estimates on the article’s own
-surface, which is what its sentence describes.
+Yes, and both of its panels rather than only the corrected one. Under
+the sampler of the day, and reading each confidence bound off the
+p-value surface by the archive’s own rule, ten of the twelve values the
+corrigendum prints return exactly, and the other two are explained below
+rather than unreproduced. That rule is itself a defect. The deposited
+code reports the first hypothesis outside each 95% region as its upper
+bound, one grid step above the last hypothesis inside it, so every upper
+bound printed by the article, its appendix and the corrigendum sits one
+step high. The rewrite reports the last point inside, and the errata
+notes record what that changes, which is no conclusion. The six values
+the corrigendum restates from the original analysis return under the
+archive’s rule: its four confidence bounds once that analysis is run on
+the ideal points the corrigendum used rather than the deposited ones,
+and its two point estimates on the article’s own surface, which is what
+its sentence describes.
 
 Getting there required two things that are worth stating, because either
 one alone leaves the corrigendum looking irreproducible.
@@ -160,8 +171,11 @@ which is the signature of an estimator that moved. The deposited
 `datapreparation.R` can no longer regenerate the deposited scores, and
 nothing in it says so.
 
-The 70 scores are in `recovered/`, committed because they exist nowhere
-public.
+The 70 scores are in the corrigendum’s own deposit, doi
+[10.7910/DVN/H47CC6](https://doi.org/10.7910/DVN/H47CC6), which
+`download_original.R` fetches into `original_corrigendum/` beside the
+2014 deposit. Every other column of its data frame matches the 2014
+deposit’s.
 
 **The analysis predates R 3.6.** The p-value surface draws 685,000
 times, and R 3.6.0 replaced the algorithm behind `sample()`. Under the
@@ -181,9 +195,10 @@ way, and that asymmetry is what rules the sampler out as the explanation
 of the discrepancy taken up below.
 
 One published value is not identified rather than unreproduced. The
-confidence region reaches 0.2, the top of the grid, in the corrigendum’s
-surface as well as this one, so the printed 0.175 is the last interior
-grid point rather than a bound the data support.
+corrected direct region reaches 0.2, the top of the grid, in the
+corrigendum’s surface as well as this one, so no upper bound exists
+below 0.2 and the deposited code returns none. The printed 0.175 has no
+origin in the code; the corrigendum’s errata note corrects it.
 
 ## What this repository does not certify
 
@@ -194,7 +209,9 @@ of what the deposit does rather than as results anyone should now use:
 the corrigendum supersedes the two figures that carry the coding error,
 and the rewrite reads its point estimates by the method the article
 describes rather than the one its code implements, which moves three of
-them.
+them. It also reads each upper confidence bound as the last hypothesis
+inside the 95% region rather than the first one outside it, which moves
+every upper bound down a grid step.
 
 Three coding defects in the deposit are worth recording even so, since
 none is mentioned by the corrigendum. `CoppockJEPS_appendixfigure4.R`
@@ -312,13 +329,13 @@ corrigendum.
 | Original  | indirect effect       | -0.225      | -0.225  |
 | Original  | direct effect         | -0.300      | -0.3    |
 | Original  | indirect 95% CI lower | -0.325      | -0.325  |
-| Original  | indirect 95% CI upper | -0.025      | -0.025  |
+| Original  | indirect 95% CI upper | -0.025      | -0.05   |
 | Original  | direct 95% CI lower   | -0.575      | -0.575  |
-| Original  | direct 95% CI upper   | 0.000       | 0       |
+| Original  | direct 95% CI upper   | 0.000       | -0.025  |
 | Corrected | indirect effect       | -0.150      | -0.15   |
 | Corrected | direct effect         | -0.250      | -0.25   |
 | Corrected | indirect 95% CI lower | -0.325      | -0.35   |
-| Corrected | indirect 95% CI upper | 0.200       | 0.175   |
+| Corrected | indirect 95% CI upper | 0.200       | 0.15    |
 | Corrected | direct 95% CI lower   | -0.625      | -0.625  |
 | Corrected | direct 95% CI upper   | 0.175       |         |
 
@@ -346,12 +363,13 @@ and that term is built from the similarity matrix the scores define. Run
 on the deposited scores the uncorrected model returns the appendix’s
 intervals at the precision the appendix prints; run on the scores the
 corrigendum was computed from it returns the corrigendum’s, all four
-bounds exactly. Each document reports what its own materials produce,
-and the sampler is not what separates them: unlike the corrected panel,
-this surface gives the same four bounds under the sampler of 2016 and
-the current one alike. The point estimates the corrigendum restates are
-the article’s own, and they attain the highest p-value on both surfaces,
-so no number in that sentence is unsupported.
+bounds exactly under the archive’s rule for reading an upper bound. Each
+document reports what its own materials produce, and the sampler is not
+what separates them: unlike the corrected panel, this surface gives the
+same four bounds under the sampler of 2016 and the current one alike.
+The point estimates the corrigendum restates are the article’s own, and
+they attain the highest p-value on both surfaces, so no number in that
+sentence is unsupported.
 
 The corrigendum’s printed figure says the same thing independently. Its
 “Original” panel is not the map the 2014 article printed: the article’s
@@ -384,25 +402,28 @@ different set of W-NOMINATE scores than the deposit carries, and the
 difference traces to an unpinned package, as the Summary sets out. With
 those scores, and with the sampler of the day restored, the p-value
 surface this repository produces is identical to the one saved in the
-corrigendum’s own working archive: all 1,369 cells, maximum difference
-exactly zero.
+corrigendum’s own archive: all 1,369 cells, maximum difference exactly
+zero.
 
-**The archive nonetheless records none of that.** It was released in
-2015 and never revised, so a reader who downloads it today gets the
+**The 2014 archive nonetheless records none of that.** It was released
+in 2015 and never revised, so a reader who downloads it today gets the
 retracted figures, the scores that no longer regenerate, and no
-indication that either is the case. A corrigendum that corrects a
-published analysis is itself a published analysis, and this one was
-never deposited.
+indication that either is the case. The corrigendum’s own archive went
+undeposited for a decade, until it was posted at doi
+[10.7910/DVN/H47CC6](https://doi.org/10.7910/DVN/H47CC6) in 2026.
 
 The corrigendum prints two sets of values: the corrected estimates it
 substitutes, and a restatement of the original ones it is correcting.
 Both are recorded.
 
-Of the corrected set, 3 of 5 return exactly. Of the restatement, all six
-return exactly, once each is laid against the panel it describes. The
+Of the corrected set, 3 of 5 return exactly in the rewrite; the rest sit
+one or two grid steps away, for the two reasons above, or are not
+identified. Of the restatement, the two point estimates and two lower
+bounds return exactly once each is laid against the panel it describes,
+and the two upper bounds return under the archive’s rule. The
 corrigendum gives the original direct interval as -0.575 to 0.000 where
 the 2014 appendix gives a narrower one, and this repository reproduces
-both.
+both under that rule.
 
 # The extraction and the two instruments
 
@@ -422,11 +443,14 @@ pipeline can reach, and each must be printed by a claim block.
 
 **The ground truth.** `ground_truth/coppock_2014_ground_truth.csv` has
 116 rows, each pairing what a document prints against what
-`maintained/output/` produces. 89 carry a value comparison, of which 72
-agree at the precision the page prints and 17 do not; 25 are descriptive
-claims carrying a computed truth value instead, and all 25 hold. It is
-generated by `ground_truth/build_ground_truth.R`, which reads every
-rewrite value out of `maintained/output/` rather than transcribing it.
+`maintained/output/` produces. 89 carry a value comparison, of which 62
+agree at the precision the page prints and 27 do not; 25 are descriptive
+claims carrying a computed truth value instead, of which 24 hold. The
+one that does not is the sentence placing Figure 3a’s indirect region up
+to zero, which describes the archive’s upper bound rather than the
+region’s. It is generated by `ground_truth/build_ground_truth.R`, which
+reads every rewrite value out of `maintained/output/` rather than
+transcribing it.
 
 **The second instrument.** `maintained/in_text_claims.R` carries each
 sentence verbatim in a block comment and recomputes its number from the
@@ -445,11 +469,13 @@ every row carrying an adverse verdict from either instrument names where
 the fault lies. A block that errors, prints nothing, or quietly reads an
 empty selection fails it.
 
-**There is no errata document.** Every value in this article that the
-data do not support is already corrected by a published corrigendum,
-which carries its own DOI and its own citation, so a note here would
-duplicate the published record rather than add to it. The one exception
-is recorded below and has not been written up unilaterally.
+**There are two errata notes, one for each published document.**
+`coppock_2014_errata.pdf` corrects a count the article misstates and
+records that its upper confidence bounds sit one grid step high; every
+other value in the article that the data do not support is already
+corrected by the corrigendum. `coppock_2016_errata.pdf` corrects the
+corrigendum: the sentence giving its corrected intervals, whose upper
+bounds come from the same rule, and two misspelled names.
 
 ## What the extraction found that the ground truth had not
 
@@ -463,18 +489,14 @@ is recorded below and has not been written up unilaterally.
 Four claims outside the corrigendum’s scope, none of them reachable by a
 check organized around published floats.
 
-The first is the only one that could have warranted a correction of its
-own. The article writes the number of possible matched-pair random
-assignments twice: once as $2^{35} = 3.4 \times 10^{10}$, which the
-deposit confirms, and once, two sentences later, as “the 30 trillion
-random assignments”. Thirty trillion is $3 \times 10^{13}$, three orders
-of magnitude above the count the same paragraph gives. Nothing turns on
-it, no estimate moves, and the corrigendum does not mention it. It is
-recorded here and deliberately not issued as an erratum: this article
-already carries a published corrigendum, and a second correction
-document for a single stray number in a paragraph that states the right
-figure two sentences earlier would clutter the record more than it
-clarifies it.
+The first is the only one that warrants a correction of its own. The
+article writes the number of possible matched-pair random assignments
+twice: once as $2^{35} = 3.4 \times 10^{10}$, which the deposit
+confirms, and once, two sentences later, as “the 30 trillion random
+assignments”. Thirty trillion is $3 \times 10^{13}$, three orders of
+magnitude above the count the same paragraph gives. Nothing turns on it,
+no estimate moves, and the corrigendum does not mention it. It is the
+entry in the errata note on the article.
 
 The second is not an error. Appendix Table 2 gives -0.375 and the
 pipeline reproduces it; the main text prints -0.37, which is the same
@@ -495,8 +517,8 @@ property of one draw.
 
 | Document                    | Rows | Compared | Agreeing | Descriptive | Holding |
 |:----------------------------|-----:|---------:|---------:|------------:|--------:|
-| Article and appendix (2014) |  100 |       78 |       63 |          21 |      21 |
-| Corrigendum (2016)          |   16 |       11 |        9 |           4 |       4 |
+| Article and appendix (2014) |  100 |       78 |       55 |          21 |      20 |
+| Corrigendum (2016)          |   16 |       11 |        7 |           4 |       4 |
 
 The ground truth by document. Every published number in both is covered;
 the full table is the committed ground truth CSV.
@@ -539,22 +561,33 @@ corrigendum.
 | Location | Quantity | Published | Here | Where the fault lies |
 |:---|:---|:---|:---|:---|
 | Text, p. 162 | The same set of random assignments, in units of 10^12 | 30 | 0.03436 | paper_internal |
+| Text, p. 165 | Figure 1a confidence region upper bound | 0.02 | 0.01 | archive |
 | Text, p. 166 | Figure 3a direct effect, lower-support districts | -0.550 | -0.475 | archive |
 | Text, p. 166 | Figure 3a indirect effect, lower-support districts | -0.125 | -0.175 | archive |
+| Text, p. 166 | The Figure 3a indirect confidence region extends up to but not across zero | 0 | -0.025 | archive |
 | Text, p. 166 | Figure 3b direct effect, higher-support districts | -0.175 | -0.1875 | archive |
-| Appendix Table 1 | Indirect 95% CI, rank_distance, bound 2 | 0.175 | 0.15 | unresolved |
+| Appendix Table 1 | Direct 95% CI, no_spillover, bound 2 | 0.02 | 0.01 | archive |
+| Appendix Table 1 | Direct 95% CI, absolute_distance_uncorrected, bound 2 | -0.075 | -0.1 | archive |
+| Appendix Table 1 | Indirect 95% CI, rank_distance, bound 2 | 0.175 | 0.125 | unresolved |
+| Appendix Table 1 | Direct 95% CI, squared_distance, bound 2 | 0.325 | 0.3 | archive |
 | Appendix Table 1 | Indirect 95% CI, squared_distance, bound 1 | -0.35 | -0.325 | unresolved |
+| Appendix Table 1 | Indirect 95% CI, squared_distance, bound 2 | 0.525 | 0.5 | archive |
 | Appendix Table 1 | Direct 95% CI, geographic_contiguity, bound 1 | -0.38 | -0.37 | archive |
-| Appendix Table 1 | Direct 95% CI, geographic_contiguity, bound 2 | 0.08 | 0.09 | archive |
 | Appendix Table 1 | Indirect Effect, geographic_contiguity | -0.025 | 0.025 | archive |
-| Appendix Table 1 | Indirect 95% CI, geographic_contiguity, bound 2 | 0.145 | 0.15 | archive |
+| Appendix Table 2 | Direct 95% CI, High Support, no_spillover, bound 2 | 0.35 | 0.325 | archive |
+| Appendix Table 2 | Direct 95% CI, Low Support, no_spillover, bound 2 | -0.05 | -0.075 | archive |
 | Appendix Table 2 | Direct Effect, High Support, absolute_distance_uncorrected | -0.175 | -0.1875 | archive |
 | Appendix Table 2 | Direct 95% CI, High Support, absolute_distance_uncorrected, bound 1 | -0.45 | -0.4 | unresolved |
+| Appendix Table 2 | Direct 95% CI, High Support, absolute_distance_uncorrected, bound 2 | 0.075 | 0.05 | archive |
+| Appendix Table 2 | Indirect 95% CI, High Support, absolute_distance_uncorrected, bound 2 | -0.175 | -0.2 | archive |
 | Appendix Table 2 | Direct Effect, Low Support, absolute_distance_uncorrected | -0.55 | -0.475 | archive |
 | Appendix Table 2 | Direct 95% CI, Low Support, absolute_distance_uncorrected, bound 1 | -0.825 | -0.8 | unresolved |
+| Appendix Table 2 | Direct 95% CI, Low Support, absolute_distance_uncorrected, bound 2 | -0.125 | -0.15 | archive |
 | Appendix Table 2 | Indirect Effect, Low Support, absolute_distance_uncorrected | -0.125 | -0.175 | archive |
+| Corrigendum Figure 1, original panel | indirect 95% CI upper | -0.025 | -0.05 | archive |
+| Corrigendum Figure 1, original panel | direct 95% CI upper | 0.000 | -0.025 | archive |
 | Corrigendum Figure 1, corrected panel | indirect 95% CI lower | -0.325 | -0.35 | environment |
-| Corrigendum Figure 1, corrected panel | indirect 95% CI upper | 0.200 | 0.175 | environment |
+| Corrigendum Figure 1, corrected panel | indirect 95% CI upper | 0.200 | 0.15 | archive |
 | Corrigendum Figure 1, corrected panel | direct 95% CI upper | 0.175 | not identified | paper_internal |
 
 Every row where a published value and this repository disagree, with the
@@ -644,9 +677,9 @@ Deprecated patterns and their replacements in the maintained rewrite.
 |  | No spillover | Absolute distance | Absolute distance (uncorrected) | Absolute distance (corrigendum’s original panel) | Rank distance | Squared distance | Geographic |
 |:---|:---|:---|:---|:---|:---|:---|:---|
 | Direct Effect | -0.16 | -0.25 | -0.3 | -0.3 | -0.225 | -0.25 | -0.15 |
-| Direct 95% CI | \[-0.34,0.02\] | \[-0.625,NA\] | \[-0.5,-0.075\] | \[-0.575,0\] | \[-0.45,0.1\] | \[-0.525,0.325\] | \[-0.37,0.09\] |
+| Direct 95% CI | \[-0.34,0.01\] | \[-0.625,NA\] | \[-0.5,-0.1\] | \[-0.575,-0.025\] | \[-0.45,0.075\] | \[-0.525,0.3\] | \[-0.37,0.08\] |
 | Indirect Effect |  | -0.15 | -0.225 | -0.175 | -0.2 | -0.175 | 0.025 |
-| Indirect 95% CI |  | \[-0.35,0.175\] | \[-0.325,-0.1\] | \[-0.325,-0.025\] | \[-0.325,0.15\] | \[-0.325,0.525\] | \[-0.095,0.15\] |
+| Indirect 95% CI |  | \[-0.35,0.15\] | \[-0.325,-0.125\] | \[-0.325,-0.05\] | \[-0.325,0.125\] | \[-0.325,0.5\] | \[-0.095,0.145\] |
 | Corresponding Figure | 1a | 2 | 2 | 2 | A2 | A3 | A4 |
 
 Appendix Table 1, constant effects models, as the maintained rewrite
@@ -657,13 +690,13 @@ points the corrigendum used.
 |  | No spillover | Absolute distance | Absolute distance (uncorrected) |
 |:---|:---|:---|:---|
 | Direct Effect, High Support | 0.05 | -0.125 | -0.1875 |
-| Direct 95% CI, High Support | \[-0.225,0.35\] | \[-0.65,NA\] | \[-0.4,0.075\] |
+| Direct 95% CI, High Support | \[-0.225,0.325\] | \[-0.65,NA\] | \[-0.4,0.05\] |
 | Indirect Effect, High Support |  | -0.225 | -0.3 |
-| Indirect 95% CI, High Support |  | \[-0.45,NA\] | \[-0.425,-0.175\] |
+| Indirect 95% CI, High Support |  | \[-0.45,NA\] | \[-0.425,-0.2\] |
 | Direct Effect, Low Support | -0.375 | -0.425 | -0.475 |
-| Direct 95% CI, Low Support | \[-0.675,-0.05\] | \[-0.775,0.05\] | \[-0.8,-0.125\] |
+| Direct 95% CI, Low Support | \[-0.675,-0.075\] | \[-0.775,0.025\] | \[-0.8,-0.15\] |
 | Indirect Effect, Low Support |  | -0.1 | -0.175 |
-| Indirect 95% CI, Low Support |  | \[-0.325,0.15\] | \[-0.325,0\] |
+| Indirect 95% CI, Low Support |  | \[-0.325,0.125\] | \[-0.325,-0.025\] |
 | Corresponding Figure | 1b | 3 | 3 |
 
 Appendix Table 2, heterogeneous effects models, as the maintained
@@ -740,9 +773,9 @@ alt="Appendix Figure 5a as published: every p-value is 0 or 1." />
 
 | Item      | Value                  |
 |:----------|:-----------------------|
-| R version | 4.6.0                  |
+| R version | 4.6.1                  |
 | Platform  | aarch64-apple-darwin23 |
-| Date run  | 2026-08-08             |
+| Date run  | 2026-10-29             |
 
 | Package | Version |
 |:--------|:--------|

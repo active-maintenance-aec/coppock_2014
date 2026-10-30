@@ -1,7 +1,7 @@
 claim,value
 figure_a2: direct effect,-0.225
 figure_a2: direct 95% CI lower,-0.45
-figure_a2: direct 95% CI upper,0.1
+figure_a2: direct 95% CI upper,0.075
 figure_a2: indirect effect,-0.2
 figure_a2: indirect 95% CI lower,-0.325
-figure_a2: indirect 95% CI upper,0.15
+figure_a2: indirect 95% CI upper,0.125

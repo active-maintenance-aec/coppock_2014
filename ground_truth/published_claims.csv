@@ -20,7 +20,7 @@ method_eq1_range,"Method, p. 162",descriptive,1,TRUE,"For ideology values betwee
 method_remaining_legislators,"Method, p. 163",structural,69,TRUE,Legislators remaining once one is treated,
 method_remaining_treated,"Method, p. 163",structural,34,TRUE,"Of the remaining legislators, the number that can still be treated",
 method_sd_increase,"Method, p. 163",definitional,1,FALSE,One standard deviation increase in net exposure,A units statement; the standardization is at the call site in net_exposure()
-method_confidence_level,"Method, p. 164",definitional,95,FALSE,"Confidence level, used throughout the article and appendix",Verified at the call site: find_breaks(max p > 0.05)
+method_confidence_level,"Method, p. 164",definitional,95,FALSE,"Confidence level, used throughout the article and appendix",Verified at the call site: region_bounds(max p > 0.05)
 results_f1a_point,"Results, p. 165",pipeline,-0.16,TRUE,Figure 1a: the p-value is maximized at -0.16,
 results_f1a_p_at_zero,"Results, p. 165",descriptive,0.05,TRUE,Figure 1a: the p-value at the zero hypothesis is slightly higher than 0.05,
 results_f1a_ci_lower,"Results, p. 165",pipeline,-0.34,TRUE,Figure 1a: 95% confidence region lower bound,

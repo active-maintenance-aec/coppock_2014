@@ -4,20 +4,20 @@ Figure 2: direct 95% CI lower,corrected,-0.625
 Figure 2: direct 95% CI upper,corrected,NA
 Figure 2: indirect effect,corrected,-0.15
 Figure 2: indirect 95% CI lower,corrected,-0.35
-Figure 2: indirect 95% CI upper,corrected,0.175
+Figure 2: indirect 95% CI upper,corrected,0.15
 Figure 2: cells attaining the highest p-value,corrected,1
 Figure 2: direct effect,uncorrected,-0.3
 Figure 2: direct 95% CI lower,uncorrected,-0.5
-Figure 2: direct 95% CI upper,uncorrected,-0.075
+Figure 2: direct 95% CI upper,uncorrected,-0.1
 Figure 2: indirect effect,uncorrected,-0.225
 Figure 2: indirect 95% CI lower,uncorrected,-0.325
-Figure 2: indirect 95% CI upper,uncorrected,-0.1
+Figure 2: indirect 95% CI upper,uncorrected,-0.125
 Figure 2: cells attaining the highest p-value,uncorrected,28
 Figure 2: direct effect,corrigendum_original,-0.3
 Figure 2: direct 95% CI lower,corrigendum_original,-0.575
-Figure 2: direct 95% CI upper,corrigendum_original,0
+Figure 2: direct 95% CI upper,corrigendum_original,-0.025
 Figure 2: indirect effect,corrigendum_original,-0.175
 Figure 2: indirect 95% CI lower,corrigendum_original,-0.325
-Figure 2: indirect 95% CI upper,corrigendum_original,-0.025
+Figure 2: indirect 95% CI upper,corrigendum_original,-0.05
 Figure 2: cells attaining the highest p-value,corrigendum_original,90
 Figure 2: p-value at the uncorrected pair,corrigendum_original,1

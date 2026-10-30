@@ -84,7 +84,7 @@ four_parameter_array <- function(similarity, exposure, resample) {
   # The 95% confidence region for each parameter maximizes the p-value over the other
   # three, which is the Berger and Boos (1994) construction the original script names.
   axes <- list(directs, indirects, directs, indirects)
-  interval <- map(1:4, \(d) axes[[d]][find_breaks(apply(pmat, d, max) > 0.05)])
+  interval <- map(1:4, \(d) axes[[d]][region_bounds(apply(pmat, d, max) > 0.05)])
   names(interval) <- names(point)
   # The maps are the two-dimensional slices through the array at the other subgroup's
   # point estimate, which is how the appendix presents them.

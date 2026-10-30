@@ -1,6 +1,7 @@
 # coppock_2014/maintained/clean_data.R
 # Output: maintained/data/spillovers.rds
-# Depends on: original/CoppockJEPS.RData, original/hd_court_ordered.shp, helpers.R
+# Depends on: original/CoppockJEPS.RData, original/hd_court_ordered.shp,
+#   original_corrigendum/CoppockJEPS.rdata, helpers.R
 # Description: Builds every object the figure scripts need: the analysis frame, the
 #   10,000 admissible randomizations, the four similarity matrices, and the expected
 #   and observed net exposures that go with each.
@@ -8,8 +9,8 @@
 #   The deposited CoppockJEPS.RData carries a similarity.matrix.dw that is 1 off the
 #   diagonal and 0 on it, which says every pair of legislators is maximally and equally
 #   close in ideological space. That is the coding error the corrigendum reports
-#   (Coppock 2016, JEPS 3(2): 206-208). The matrix is rebuilt here from the deposited
-#   W-NOMINATE scores using Equation (1). The rank, squared-distance and geographic
+#   (Coppock 2016, JEPS 3(2): 206-208). The matrix is rebuilt here using Equation (1)
+#   from the W-NOMINATE scores in the corrigendum's own deposit. The rank, squared-distance and geographic
 #   matrices in the deposit are correct and are rebuilt and checked against it.
 #
 #   The deposited all-ones matrix is kept under similarity_dw_deposited so the figure
@@ -25,13 +26,15 @@ dat <- as_tibble(CoppockJEPS)
 # The three appendix parameterizations are rebuilt from the same deposited ideal points
 # and agree with the deposit exactly, which is what isolates the defect to the main
 # ideological similarity matrix.
-# The corrected analysis uses the ideal points from the working archive behind the
-# 2016 corrigendum, not the deposited ones. 68 of the 70 differ, by up to 0.533. The
+# The corrected analysis uses the ideal points from the corrigendum's deposit
+# (doi:10.7910/DVN/H47CC6), not the 2014 ones. 68 of the 70 differ, by up to 0.533. The
 # transform is the same in both archives, so the matrices differ only because their
 # inputs do, and that difference is the whole reason the corrigendum's numbers cannot
-# be recovered from the deposit. See recovered/README.md.
-dwnom_corrigendum <- read_csv(here::here("recovered", "dwnom_scores_version_3.csv"),
-                              show_col_types = FALSE)$dwnom_score
+# be recovered from the 2014 deposit. Every other column of the two data frames agrees,
+# so the rows align.
+corrigendum <- new.env()
+load(here::here("original_corrigendum", "CoppockJEPS.rdata"), envir = corrigendum)
+dwnom_corrigendum <- corrigendum$CoppockJEPS$dwnom_scores
 similarity_dw <- similarity_from_scores(dwnom_corrigendum)
 
 # The three appendix parameterizations stay on the deposited scores, which is what

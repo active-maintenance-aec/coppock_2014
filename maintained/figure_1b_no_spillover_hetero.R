@@ -58,8 +58,8 @@ fit <- list(
   cates_low = cates_low,
   high_point = median(cates_high[peak[, 1]]),
   low_point = median(cates_low[peak[, 2]]),
-  high_ci = cates_high[find_breaks(apply(pmat, 1, max) > 0.05)],
-  low_ci = cates_low[find_breaks(apply(pmat, 2, max) > 0.05)]
+  high_ci = cates_high[region_bounds(apply(pmat, 1, max) > 0.05)],
+  low_ci = cates_low[region_bounds(apply(pmat, 2, max) > 0.05)]
 )
 write_rds(fit, here::here("maintained", "data", "figure_1b.rds"))
 estimates <- tibble(

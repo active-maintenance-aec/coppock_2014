@@ -57,6 +57,8 @@ bold <- function(x) str_replace_all(x, "\\[\\[(.*?)\\]\\]", "**\\1**")
 
 This note lists `r spell(nrow(entries))` correction to "Information Spillovers: Another Look at Experimental Estimates of Legislator Responsiveness," published in *Journal of Experimental Political Science* 1(2):159--169, doi [10.1017/xps.2014.9](https://doi.org/10.1017/xps.2014.9). **It changes no estimate and no conclusion**: it is a count stated correctly once and misstated two sentences later.
 
+Separately, the upper confidence bounds in the article and its appendix each sit one grid step too high, because the deposited code reports the first hypothesis outside each 95% region rather than the last one inside it; the maintained code corrects the rule, and no conclusion the article draws from those bounds changes.
+
 The article's substantive correction is the 2016 corrigendum, *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8), which this note supplements and does not replace. The code supporting the maintained analysis, which reproduces both the article and the corrigendum, is at [github.com/active-maintenance-aec/coppock_2014](https://github.com/active-maintenance-aec/coppock_2014).
 
 # The text

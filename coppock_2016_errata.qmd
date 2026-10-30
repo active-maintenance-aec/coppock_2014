@@ -1,0 +1,106 @@
+---
+title: "Errata"
+subtitle: "On Coppock (2016), the corrigendum to Coppock (2014), *Journal of Experimental Political Science* 3(2)"
+format:
+  pdf:
+    output-file: coppock_2016_errata.pdf
+    geometry: margin=1.25in
+    fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(here)
+library(tidyverse)
+here::i_am("coppock_2016_errata.qmd")
+```
+
+```{r entries}
+# THE ERRATA SPINE for the corrigendum, kept apart from errata.qmd's because the
+# corrigendum is a separately published article with its own DOI and its own numbering.
+# Every entry is defined once, here, and rendered from here: into this document, and into
+# whatever else needs it, which reads the coppock_2016_errata_entries.csv written at the
+# bottom of this file rather than keeping a second hand-typed copy.
+#
+# [[...]] marks the span that changes. Each renderer supplies its own markup for it: bold
+# here, \was{} in an edition. Nothing else in a field is markup, so the same string can be
+# set by either.
+#
+# Numbering is APPEND-ONLY once this note is published: an entry can already have been
+# cited, so a later finding is added at the end and never interleaved.
+#
+# claim_ids names the ground-truth rows an entry corrects, semicolon-separated.
+entries <- tribble(
+  ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note, ~claim_ids,
+
+  1, "quantity", "pipeline", "brief",
+  "Neither upper confidence bound of the corrected analysis is the one the data support",
+  "published p. 207",
+  "at [-0.325, [[0.200]]] for the indirect effect and [-0.625, [[0.175]]] for the direct effect",
+  "at [-0.325, [[0.175]]] for the indirect effect and [-0.625, [[0.200 or higher]]] for the direct effect",
+  paste("The bounds are read off the p-value surface saved in the corrigendum's own",
+        "archive (doi:10.7910/DVN/H47CC6, fig2.rdata). The function that located them",
+        "returned the first grid point after each edge of the confidence region, which is",
+        "the first point inside at the lower edge and the first point outside at the",
+        "upper edge, so the indirect bound sits one step of 0.025 too high. The direct",
+        "region runs to 0.2, the top of the grid searched, where the function returns no",
+        "bound at all: the printed 0.175 has no origin in the code, and the data place",
+        "the bound no lower than 0.2. Both corrected intervals still include zero, which",
+        "is the corrigendum's conclusion."),
+  "corr_new_indirect_ci_upper; corr_new_direct_ci_upper",
+
+  2, "text", "reading", "brief",
+  "A name in the acknowledgments is misspelled",
+  "published acknowledgments",
+  "I am grateful to Peter M. Aronow, Jake Bowers, and Mark M. [[Frederickson]]",
+  "I am grateful to Peter M. Aronow, Jake Bowers, and Mark M. [[Fredrickson]]",
+  "The corrigendum's own reference list spells the name correctly, in Bowers, Fredrickson, and Panagopoulos (2013).",
+  NA,
+
+  3, "text", "reading", "brief",
+  "A reference gives the wrong second author",
+  "published references",
+  "Butler, D. M., and [[David, W. N.]] (2011). Can learning constituency opinion affect how legislators vote?",
+  "Butler, D. M., and [[Nickerson, D. W.]] (2011). Can learning constituency opinion affect how legislators vote?",
+  paste("The second author of the experiment the article reanalyzes is David W. Nickerson,",
+        "whose given and family names the printed entry reverses. The 2014 article",
+        "cites the same paper correctly."),
+  NA
+) |>
+  mutate(across(c(title, published, corrected, note, claim_ids), as.character))
+
+stopifnot(nrow(entries) == max(entries$entry), !anyDuplicated(entries$entry))
+
+spell <- function(n) {
+  words <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+  stopifnot(n >= 1, n <= length(words))
+  words[n]
+}
+
+# The spine's markup, resolved for this document. Another renderer resolves it differently.
+bold <- function(x) str_replace_all(x, "\\[\\[(.*?)\\]\\]", "**\\1**")
+```
+
+This note lists `r spell(nrow(entries))` corrections to the corrigendum to "Information Spillovers: Another Look at Experimental Estimates of Legislator Responsiveness," published in *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8). **None changes the corrigendum's conclusion.** The first moves two confidence bounds, and both corrected intervals still include zero; the other two are names.
+
+The corrigendum corrects Coppock (2014), *Journal of Experimental Political Science* 1(2):159--169, doi [10.1017/xps.2014.9](https://doi.org/10.1017/xps.2014.9), which has an errata note of its own. The data and code behind the corrigendum are deposited at doi [10.7910/DVN/H47CC6](https://doi.org/10.7910/DVN/H47CC6), and the maintained analysis that reproduces it is at [github.com/active-maintenance-aec/coppock_2014](https://github.com/active-maintenance-aec/coppock_2014).
+
+# The text
+
+```{r text-entries, results="asis"}
+# A heading is only a heading when a blank line precedes it, which is why every emitted
+# entry opens with one.
+walk(entries$entry, function(n) {
+  e <- entries |> filter(entry == n)
+  cat("\n\n## ", e$entry, ". ", e$title, "\n\nPublished, ",
+      str_remove(e$location, "^published "), ":\n\n> ", bold(e$published),
+      "\n\nCorrected:\n\n> ", bold(e$corrected), "\n\n", e$note, "\n", sep = "")
+})
+```
+
+```{r emit-spine}
+# The machine-readable spine, written wherever this document is rendered. Anything else
+# that needs these entries reads it rather than keeping its own copy, so the two cannot
+# drift.
+write_csv(entries, here("coppock_2016_errata_entries.csv"))
+```
