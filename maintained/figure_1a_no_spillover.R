@@ -65,7 +65,10 @@ print(estimates)
 gg_df <- tibble(ate = ates, pvalue = pmat)
 
 g <- ggplot(gg_df, aes(x = ate, y = pvalue)) +
-  geom_point(aes(fill = pvalue), shape = 21, size = 2, colour = "black",
+  # The original's filled circles (pch = 21). At size 2 the edition, which sets this
+  # panel at about half its width, prints them about 1 mm across and they read as
+  # diamonds; at 3.5 they read as circles (Alex, 2026-11-03).
+  geom_point(aes(fill = pvalue), shape = 21, size = 3.5, colour = "black",
              show.legend = FALSE) +
   scale_fill_gradient(low = "white", high = "black", limits = c(0, 1)) +
   geom_vline(xintercept = 0, linetype = "dashed") +

@@ -109,7 +109,12 @@ draw_map <- function(fit, arrow_y, arrow_x) {
 }
 
 save_figure(draw_map(corrected$low, 0.1, -0.1), "figure_3a_hetero_spillover_low")
-save_figure(draw_map(corrected$high, -0.1, -0.5), "figure_3b_hetero_spillover_high")
+# The original drew panel B's bars at y = -0.1 and x = -0.5, which sat in empty space
+# on the uncorrected map. The corrected region reaches both grid tops, so both bars
+# would cross it there; they go where every p-value is at or below 0.05: the two rows
+# under the indirect lower bound (-0.45) and the columns left of the direct lower bound
+# (-0.65) (Alex, 2026-11-03).
+save_figure(draw_map(corrected$high, -0.4875, -0.8), "figure_3b_hetero_spillover_high")
 save_figure(draw_map(uncorrected$low, 0.1, -0.1),
             "figure_3a_hetero_spillover_low_uncorrected")
 save_figure(draw_map(uncorrected$high, -0.1, -0.5),

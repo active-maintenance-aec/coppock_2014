@@ -91,6 +91,9 @@ g <- make_pvalue_tile(
   xlab = "Hypothesized effect in higher-support districts",
   ylab = "Hypothesized effect in lower-support districts"
 ) +
+  # The original's ticks, seq(-1, .5, by = .2) on both axes (Alex, 2026-11-03).
+  scale_x_continuous(breaks = round(seq(-1, 0.5, by = 0.2), 1)) +
+  scale_y_continuous(breaks = round(seq(-1, 0.5, by = 0.2), 1)) +
   ci_arrow(x = fit$high_ci[1], xend = fit$high_ci[2], y = 0.15, yend = 0.15) +
   ci_arrow(x = -0.35, xend = -0.35, y = fit$low_ci[1], yend = fit$low_ci[2])
 
