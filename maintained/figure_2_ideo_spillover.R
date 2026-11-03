@@ -133,8 +133,10 @@ print(estimates, n = nrow(estimates))
 # Figures ----
 draw_map <- function(fit) {
   make_pvalue_tile(tile_grid(fit)) +
-    ci_arrow(x = fit$direct_ci[1], xend = fit$direct_ci[2], y = -0.5, yend = -0.5) +
-    ci_arrow(x = -0.6, xend = -0.6, y = fit$indirect_ci[1], yend = fit$indirect_ci[2])
+    ci_arrow(x = fit$direct_ci[1], xend = fit$direct_ci[2], y = -0.5, yend = -0.5,
+             edge = max(fit$directs)) +
+    ci_arrow(x = -0.6, xend = -0.6, y = fit$indirect_ci[1], yend = fit$indirect_ci[2],
+             edge = max(fit$indirects))
 }
 
 save_figure(draw_map(corrected), "figure_2_ideo_spillover")

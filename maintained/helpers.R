@@ -163,9 +163,17 @@ make_pvalue_tile <- function(grid,
 
 # ci_arrow ----
 # The double-headed 95% confidence region bars the original drew with lattice::larrows.
-ci_arrow <- function(x, xend, y, yend) {
-  annotate("segment", x = x, xend = xend, y = y, yend = yend,
-           arrow = arrow(ends = "both", angle = 90, length = unit(0.05, "inches")))
+# A region that reaches the top of the hypothesis grid has no upper bound (NA), and
+# annotate() drops a segment with an NA end without a warning. Such a bar runs to
+# `edge`, the grid's last hypothesis, and is capped only at its bounded end, so it
+# reads "or higher" rather than claiming a bound at the edge (Alex, 2026-11-03).
+ci_arrow <- function(x, xend, y, yend, edge = NA_real_) {
+  open <- is.na(xend) || is.na(yend)
+  stopifnot(!is.na(x), !is.na(y), !open || !is.na(edge))
+  annotate("segment", x = x, xend = replace_na(xend, edge),
+           y = y, yend = replace_na(yend, edge),
+           arrow = arrow(ends = if (open) "first" else "both", angle = 90,
+                         length = unit(0.05, "inches")))
 }
 
 # save_figure ----

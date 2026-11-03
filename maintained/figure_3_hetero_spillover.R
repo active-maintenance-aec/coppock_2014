@@ -102,8 +102,10 @@ print(estimates, n = 24)
 # Figures ----
 draw_map <- function(fit, arrow_y, arrow_x) {
   make_pvalue_tile(tile_grid(fit)) +
-    ci_arrow(x = fit$direct_ci[1], xend = fit$direct_ci[2], y = arrow_y, yend = arrow_y) +
-    ci_arrow(x = arrow_x, xend = arrow_x, y = fit$indirect_ci[1], yend = fit$indirect_ci[2])
+    ci_arrow(x = fit$direct_ci[1], xend = fit$direct_ci[2], y = arrow_y, yend = arrow_y,
+             edge = max(fit$directs)) +
+    ci_arrow(x = arrow_x, xend = arrow_x, y = fit$indirect_ci[1], yend = fit$indirect_ci[2],
+             edge = max(fit$indirects))
 }
 
 save_figure(draw_map(corrected$low, 0.1, -0.1), "figure_3a_hetero_spillover_low")
