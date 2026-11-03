@@ -286,7 +286,31 @@ entries <- tribble(
         "corrected analysis."),
   paste("t2_ad_high_direct; t2_ad_high_direct_lo; t2_ad_high_direct_hi; t2_ad_high_indirect;",
         "t2_ad_high_indirect_lo; t2_ad_high_indirect_hi; t2_ad_low_direct; t2_ad_low_direct_lo;",
-        "t2_ad_low_direct_hi; t2_ad_low_indirect; t2_ad_low_indirect_lo; t2_ad_low_indirect_hi")
+        "t2_ad_low_direct_hi; t2_ad_low_indirect; t2_ad_low_indirect_lo; t2_ad_low_indirect_hi"),
+
+  24, "quantity", "pipeline", "brief",
+  "Appendix Table 1's Squared Distance indirect lower bound is one grid step too low",
+  "published app. p. 5, Table 1",
+  "Squared Distance, Indirect Effect: 95% CI [[−0.35]] to 0.525",
+  "Squared Distance, Indirect Effect: 95% CI [[−0.325]] to 0.525",
+  paste("The step is unexplained: the maintained code reproduces the deposited $p$-value surface",
+        "for Appendix Figure 3 cell for cell, and that surface puts the lowest point inside the",
+        "region at −0.325. Entry 20 corrects the upper bound of the same interval."),
+  "t1_sd_indirect_lo",
+
+  25, "quantity", "pipeline", "brief",
+  "Appendix Table 1's Geographic Contiguity column reports one unseeded draw",
+  "published app. p. 5, Table 1",
+  paste("Geographic Contiguity: Direct Effect −0.15, 95% CI [[−0.38]] to 0.08;",
+        "Indirect Effect [[−0.025]], 95% CI −0.095 to 0.145"),
+  paste("Geographic Contiguity: Direct Effect −0.15, 95% CI [[−0.37]] to 0.08;",
+        "Indirect Effect [[0.025]], 95% CI −0.095 to 0.145"),
+  paste("The column reports Appendix Figure 4, and the deposited script for that figure is the",
+        "only one in the deposit that sets no random seed, so the published column is one draw",
+        "that cannot be reproduced. The corrected values come from the maintained code with a",
+        "fixed seed. The indirect estimate falls on either side of zero across draws, so its sign",
+        "is not identified."),
+  "t1_gc_direct_lo; t1_gc_indirect"
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
 
@@ -312,7 +336,7 @@ This note lists `r spell(n_corrections)` corrections and `r spell(n_notes)` note
 
 The article's substantive correction is the 2016 corrigendum, *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8). A coding error in the ideological similarity matrix moved every estimate the article reports from Figures 2 and 3, and the corrigendum concludes that "there is insufficient statistical evidence to conclude that indirect exposure to information altered legislator behavior." This note carries that correction into the article's own text. Each number the corrected analysis changes is corrected; the corrigendum states the corrected Figure 2 estimates, and the Figure 3 estimates, the total causal effect, and the appendix's Absolute Distance columns come from the maintained code, which applies the same repair. Each sentence whose conclusion the corrigendum withdraws is reproduced as published and listed as a note, because correcting it would mean rewriting the argument rather than correcting the record.
 
-Two further sources contribute. `r str_to_sentence(spell(n_bounds))` entries correct upper confidence bounds that sit one grid step too high (in one case, two), because the deposited code reports the first hypothesis outside each 95% region rather than the last one inside it; no conclusion the article draws from those bounds changes. Entry 1 is a count stated correctly once and misstated two sentences later.
+The remaining corrections have other sources. `r str_to_sentence(spell(n_bounds))` entries correct upper confidence bounds that sit one grid step too high (in one case, two), because the deposited code reports the first hypothesis outside each 95% region rather than the last one inside it; no conclusion the article draws from those bounds changes. Entry 1 is a count stated correctly once and misstated two sentences later. Entry 24 is a lower bound one grid step from the one the deposited code's own surface returns, for reasons not established. Entry 25 is an appendix column whose deposited script sets no random seed, so its published values are one draw that no one can reproduce.
 
 The code supporting the maintained analysis, which reproduces both the article and the corrigendum, is at [github.com/active-maintenance-aec/coppock_2014](https://github.com/active-maintenance-aec/coppock_2014).
 
