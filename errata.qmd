@@ -309,8 +309,44 @@ entries <- tribble(
         "only one in the deposit that sets no random seed, so the published column is one draw",
         "that cannot be reproduced. The corrected values come from the maintained code with a",
         "fixed seed. The indirect estimate falls on either side of zero across draws, so its sign",
-        "is not identified."),
-  "t1_gc_direct_lo; t1_gc_indirect"
+        "is not identified. Appendix Figure 4 is regenerated from the seeded analysis."),
+  "t1_gc_direct_lo; t1_gc_indirect",
+
+  26, "float", "pipeline", "brief",
+  "Appendix Figure 5 maps the faulty similarity matrix",
+  "published app. p. 4, Figure 5",
+  "[[both panels of Figure 5]]",
+  "[[the same maps on the corrected similarity matrix]]",
+  paste("Figure 5 generalizes Figure 3 to four parameters and uses the similarity matrix the",
+        "corrigendum corrects (entry 4). On the corrected surfaces the 95% region for the indirect",
+        "effect includes zero among lower-support districts (−0.1, from −0.4 to 0.3) and among",
+        "higher-support districts (−0.2, from −0.5 to 0.3). Figure 5 is regenerated from the",
+        "corrected analysis."),
+  NA,
+
+  27, "interpretation", "publisher record", "note",
+  "The appendix reads the Rank Distance model as agreeing with the spillovers the corrigendum withdraws",
+  "published app. p. 2",
+  paste("The substantive findings when using this measure are similar to those reported in the",
+        "main analysis: [[both direct and indirect exposure to information appear to decrease the",
+        "probability of voting for SB24]]."),
+  NA,
+  paste("The Rank Distance model does not use the faulty matrix, and its indirect region includes",
+        "zero as published and as corrected (entry 18). The main analysis the sentence compares it",
+        "with is the one the corrigendum withdraws:", withdrawn, "The sentence is reproduced as",
+        "published."),
+  NA,
+
+  28, "interpretation", "publisher record", "note",
+  "The appendix reports that Figure 5 agrees with the Figure 3 the corrigendum withdraws",
+  "published app. p. 4",
+  paste("Nevertheless, as can been seen by a comparison of Figure 5 below and Figure 3 in the main",
+        "paper, [[the substantive results are the same]]."),
+  NA,
+  paste("Both figures are regenerated from the corrected analysis (entries 8, 10, and 26). The",
+        "corrigendum withdraws the finding the two figures were read as sharing:", withdrawn,
+        "The sentence is reproduced as published."),
+  "app_a5_same_results"
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
 
@@ -334,7 +370,7 @@ bold <- function(x) str_replace_all(x, "\\[\\[(.*?)\\]\\]", "**\\1**")
 
 This note lists `r spell(n_corrections)` corrections and `r spell(n_notes)` notes to "Information Spillovers: Another Look at Experimental Estimates of Legislator Responsiveness," published in *Journal of Experimental Political Science* 1(2):159--169, doi [10.1017/xps.2014.9](https://doi.org/10.1017/xps.2014.9), and its appendix.
 
-The article's substantive correction is the 2016 corrigendum, *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8). A coding error in the ideological similarity matrix moved every estimate the article reports from Figures 2 and 3, and the corrigendum concludes that "there is insufficient statistical evidence to conclude that indirect exposure to information altered legislator behavior." This note carries that correction into the article's own text. Each number the corrected analysis changes is corrected; the corrigendum states the corrected Figure 2 estimates, and the Figure 3 estimates, the total causal effect, and the appendix's Absolute Distance columns come from the maintained code, which applies the same repair. Each sentence whose conclusion the corrigendum withdraws is reproduced as published and listed as a note, because correcting it would mean rewriting the argument rather than correcting the record.
+The article's substantive correction is the 2016 corrigendum, *Journal of Experimental Political Science* 3(2):206--208, doi [10.1017/XPS.2016.8](https://doi.org/10.1017/XPS.2016.8). A coding error in the ideological similarity matrix moved every estimate the article reports from Figures 2 and 3, and the corrigendum concludes that "there is insufficient statistical evidence to conclude that indirect exposure to information altered legislator behavior." This note carries that correction into the article's own text. Each number the corrected analysis changes is corrected; the corrigendum states the corrected Figure 2 estimates, and the Figure 3 estimates, the total causal effect, the appendix's Absolute Distance columns, and its Figure 5 come from the maintained code, which applies the same repair. Each sentence whose conclusion the corrigendum withdraws is reproduced as published and listed as a note, because correcting it would mean rewriting the argument rather than correcting the record.
 
 The remaining corrections have other sources. `r str_to_sentence(spell(n_bounds))` entries correct upper confidence bounds that sit one grid step too high (in one case, two), because the deposited code reports the first hypothesis outside each 95% region rather than the last one inside it; no conclusion the article draws from those bounds changes. Entry 1 is a count stated correctly once and misstated two sentences later. Entry 24 is a lower bound one grid step from the one the deposited code's own surface returns, for reasons not established. Entry 25 is an appendix column whose deposited script sets no random seed, so its published values are one draw that no one can reproduce.
 
