@@ -44,9 +44,23 @@ withdrawn <- paste("“There is insufficient statistical evidence to conclude th
 # The corrected quantities, one per claim, as plain numbers with an ASCII minus. The same
 # value builds the corrected sentence (through str_glue(), with m() restoring the article's
 # minus sign for display) and the corrected_values column, so the two are written once.
+# Entries 1 and 13 read the deposit's own output. Their sentences print rounded tokens, and
+# their corrected_values carry the claims' values.
+maintained_output <- function(f) read_csv(here("maintained", "output", f), show_col_types = FALSE)
+design_value <- function(tbl, label) {
+  value <- tbl$value[tbl$claim == label]
+  stopifnot(length(value) == 1)
+  value
+}
+n_assignments <- design_value(maintained_output("text_design_parameters.csv"),
+                              "Possible matched-pair random assignments")
+totals <- maintained_output("text_total_causal_effect.csv")
+yeas_corrected <- design_value(totals, "Yea votes in the uniformity trial, corrected")
+effect_corrected <- design_value(totals, "Total causal effect in votes, corrected")
+
 cv <- list(
-  e1 = "34 billion", e3 = "0.01", e4d = "-0.250", e4i = "-0.150", e5 = "25", e6 = "15",
-  e8d = "-0.425", e8i = "-0.100", e10d = "-0.125", e10i = "-0.225", e13a = "60", e13b = "9",
+  e1 = str_c(round(n_assignments / 1e9), " billion"), e3 = "0.01", e4d = "-0.250", e4i = "-0.150", e5 = "25", e6 = "15",
+  e8d = "-0.425", e8i = "-0.100", e10d = "-0.125", e10i = "-0.225", e13a = sprintf("%.0f", yeas_corrected), e13b = sprintf("%.0f", effect_corrected),
   e15 = "0.01", e16d = "-0.25", e16dlo = "-0.625", e16dhi = "0.2", e16i = "-0.15",
   e16ilo = "-0.35", e16ihi = "0.15", e17 = "0.075", e18 = "0.125", e19 = "0.3", e20 = "0.5",
   e21 = "0.325", e22 = "-0.075",
@@ -69,7 +83,7 @@ entries <- tribble(
         "$2^{35} = 3.4 \\times 10^{10}$, which the deposit confirms: 35 matched pairs, so",
         "34,359,738,368 possible assignments. Thirty trillion is $3 \\times 10^{13}$."),
   "method_assignments_trillion",
-  cv$e1,
+  format(n_assignments / 1e12, digits = 3),
 
   2, "interpretation", "publisher record", "note",
   "The abstract reports the spillovers the 2016 corrigendum withdraws",
@@ -221,7 +235,7 @@ entries <- tribble(
         "61.46 and 10.46 on the uncorrected model. Entry 14 concerns the comparison the conclusion",
         "draws from these numbers."),
   "conclusion_uniformity_yeas; conclusion_total_effect",
-  str_c(cv$e13a, ";", cv$e13b),
+  str_c(sprintf("%.2f", yeas_corrected), ";", sprintf("%.2f", effect_corrected)),
 
   14, "interpretation", "publisher record", "note",
   "The total causal effect has not nearly doubled",
@@ -416,6 +430,17 @@ spell <- function(n) {
   words[n]
 }
 
+# values_in_spans is FALSE where the claim's scale is not the sentence's, under PROCEDURES'
+# rule that corrected_values is always on the claim's scale. Such an entry's note must say why.
+off_claim_scale <- c(1, 13)
+entries <- entries |>
+  mutate(values_in_spans = case_when(
+    is.na(corrected_values) ~ NA,
+    entry %in% off_claim_scale ~ FALSE,
+    .default = TRUE
+  ))
+stopifnot(all(str_length(entries$note[!replace_na(entries$values_in_spans, TRUE)]) > 0))
+
 # Gate: corrected_values agrees with the sentence it was glued into ----
 # The column and the sentence are written from one expression, so they begin in agreement
 # and this gate exists for the edit that separates them: a value moved from one marked span
@@ -426,7 +451,7 @@ spell <- function(n) {
 marked_spans <- function(x) ascii_minus(str_match_all(x, "\\[\\[(.*?)\\]\\]")[[1]][, 2])
 
 quantified <- entries |>
-  filter(!is.na(corrected_values)) |>
+  filter(!is.na(corrected_values), values_in_spans) |>
   mutate(ids = str_split(claim_ids, ";"), values = str_split(corrected_values, ";"),
          spans = map(corrected, marked_spans))
 
