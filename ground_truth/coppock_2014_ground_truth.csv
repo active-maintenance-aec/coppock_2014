@@ -14,7 +14,7 @@ coppock_2014,method_eq1_range,"Text, p. 162",Equation (1) varies between 0 and 1
 coppock_2014,method_remaining_legislators,"Text, p. 163",Legislators remaining once one is treated,NA,69,NA,69,1,NA,NA,
 coppock_2014,method_remaining_treated,"Text, p. 163","Of those, the number that can still be treated",NA,34,NA,34,1,NA,NA,
 coppock_2014,results_f1a_point,"Text, p. 165",Figure 1a point estimate,NA,-0.16,NA,-0.16,1,NA,NA,
-coppock_2014,results_f1a_p_at_zero,"Text, p. 165",Figure 1a p-value at the sharp null is slightly higher than 0.05,NA,0.05,NA,0.07,NA,1,NA,
+coppock_2014,results_f1a_p_at_zero,"Text, p. 165",Figure 1a p-value at the sharp null is slightly higher than 0.05,NA,0.05,NA,0.06,NA,1,NA,
 coppock_2014,results_f1a_ci_lower,"Text, p. 165",Figure 1a confidence region lower bound,NA,-0.34,NA,-0.34,1,NA,NA,
 coppock_2014,results_f1a_ci_upper,"Text, p. 165",Figure 1a confidence region upper bound,NA,0.02,NA,0.01,0,NA,archive,"The archive's find_breaks() reports the first grid point outside the region as its upper bound, so the published value is one grid step high; the rewrite reports the last point inside. Applying the archive's rule to the rewrite's surface returns the published value"
 coppock_2014,results_f1b_high_point,"Text, p. 165","Figure 1b point estimate, higher-support districts",NA,0.05,NA,0.05,1,NA,NA,

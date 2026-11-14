@@ -47,7 +47,7 @@ for (j in seq_along(cates_high)) {
         y_sim[z_sim == 1 & low_support == 1] + cate_low
       ssr(y_sim, design(z_sim))
     })
-    pmat[j, k] <- mean(ssr_obs > ssr_sims)
+    pmat[j, k] <- p_exceeds(ssr_obs, ssr_sims)
   }
 }
 

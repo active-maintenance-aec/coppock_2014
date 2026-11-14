@@ -35,7 +35,7 @@ pmat <- map_dbl(ates, function(ate_sim) {
     y_sim[z_sim == 1] <- y_sim[z_sim == 1] + ate_sim
     ssr(y_sim, cbind(1, z_sim))
   })
-  mean(ssr_obs > ssr_sims)
+  p_exceeds(ssr_obs, ssr_sims)
 })
 
 fit <- list(

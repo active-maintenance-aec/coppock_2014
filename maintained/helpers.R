@@ -20,6 +20,15 @@ ssr <- function(y, X) {
   sum(.lm.fit(X[observed, , drop = FALSE], y[observed])$residuals^2)
 }
 
+# p_exceeds ----
+# Share of simulated SSRs the observed SSR strictly exceeds. A simulated assignment can
+# fit exactly as well as the observed one (identical SSR in exact arithmetic), and the
+# last bits of the two sums then depend on the platform's BLAS; a relative difference
+# under 1e-9 is a tie, and a tie is not "exceeds".
+p_exceeds <- function(ssr_obs, ssr_sims) {
+  mean(ssr_obs - ssr_sims > 1e-9 * ssr_obs)
+}
+
 # region_bounds ----
 # Grid indices of the lower and upper edges of a 95% confidence region, given the
 # "some hypothesis in this row or column has p > 0.05" indicator: the first and last
@@ -126,7 +135,7 @@ pvalue_grid <- function(y_obs, z_obs, exposure_obs, similarity, expected_1, expe
         y_sim <- pure_y0 + direct_sim * z_sim + indirect_sim * exposure_sim
         ssr_sims[i] <- ssr(y_sim, cbind(1, z_sim, exposure_sim))
       }
-      pmat[j, k] <- mean(ssr_obs > ssr_sims)
+      pmat[j, k] <- p_exceeds(ssr_obs, ssr_sims)
     }
   }
   summarize_pvalue_grid(pmat, directs, indirects)

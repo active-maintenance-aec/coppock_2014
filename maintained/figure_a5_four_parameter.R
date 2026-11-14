@@ -71,7 +71,7 @@ four_parameter_array <- function(similarity, exposure, resample) {
               exposure_sim * if_else(low_support == 1, indirect_low, indirect_high)
             ssr_sims[i] <- ssr(y_sim, design(z_sim, exposure_sim))
           }
-          pmat[j, k, l, m] <- mean(ssr_obs > ssr_sims)
+          pmat[j, k, l, m] <- p_exceeds(ssr_obs, ssr_sims)
         }
       }
     }
