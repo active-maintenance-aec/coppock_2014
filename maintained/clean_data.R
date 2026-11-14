@@ -122,4 +122,6 @@ spillovers <- list(
   exposure_geo = exposure_geo
 )
 
+# maintained/data/ is gitignored, so a fresh clone does not have it.
+dir.create(here::here("maintained", "data"), showWarnings = FALSE)
 write_rds(spillovers, here::here("maintained", "data", "spillovers.rds"))
