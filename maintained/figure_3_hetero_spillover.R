@@ -59,8 +59,8 @@ subgroup_grids <- function(similarity, exposure) {
         ssr_sims_low[i] <- ssr(y_sim[low_support == 1], design[low_support == 1, ])
         ssr_sims_high[i] <- ssr(y_sim[low_support == 0], design[low_support == 0, ])
       }
-      pmat_low[j, k] <- mean(ssr_obs_low > ssr_sims_low)
-      pmat_high[j, k] <- mean(ssr_obs_high > ssr_sims_high)
+      pmat_low[j, k] <- p_exceeds(ssr_obs_low, ssr_sims_low)
+      pmat_high[j, k] <- p_exceeds(ssr_obs_high, ssr_sims_high)
     }
   }
   list(low = summarize_pvalue_grid(pmat_low, directs, indirects),
